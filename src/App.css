@@ -1,74 +1,65 @@
-/* Global Modern Styling */
+/* Global Book-like Styling with Warm Tones */
 
 :root {
-  --blue-600: #2563eb;
-  --indigo-600: #4f46e5;
-  --slate-900: #0f172a;
-  --slate-800: #1e293b;
-  --slate-700: #334155;
-  --slate-50: #f8fafc;
+  /* Colores cálidos tipo libro antiguo */
+  --parchment: #faf6f1;
+  --parchment-dark: #f5f0e8;
+  --text-dark: #3d2817;
+  --text-light: #5d4a38;
+  --accent-brown: #8b7355;
+  --accent-gold: #d4a574;
+  --border-color: #e8dcc8;
+  --shadow-color: rgba(61, 40, 23, 0.1);
 }
 
 body {
-  font-family: 'Segoe UI', -apple-system, system-ui, 'Helvetica Neue', sans-serif;
+  font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #faf6f1 0%, #f5f0e8 100%);
+  color: var(--text-dark);
+  min-height: 100vh;
 }
 
 /* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
+  background: linear-gradient(135deg, #faf6f1 0%, #f5f0e8 100%);
 }
 
 /* Custom scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--parchment);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #3b82f6, #6366f1);
-  border-radius: 10px;
+  background: linear-gradient(180deg, #c9a876, #a0826d);
+  border-radius: 5px;
   transition: background 0.3s ease;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #2563eb, #4f46e5);
-}
-
-/* Dark mode scrollbar */
-.dark .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #1e40af, #4c1d95);
-}
-
-.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #1e3a8a, #3f0f64);
+  background: linear-gradient(180deg, #8b7355, #6d5a47);
 }
 
 /* Firefox scrollbar */
 .custom-scrollbar {
-  scrollbar-color: #3b82f6 transparent;
+  scrollbar-color: #c9a876 var(--parchment);
   scrollbar-width: thin;
 }
 
-.dark .custom-scrollbar {
-  scrollbar-color: #1e40af transparent;
-}
-
-/* Highlight de búsqueda más moderno */
+/* Highlight de búsqueda tipo libro */
 mark {
-  background-color: #fef08a;
+  background-color: #fef3c7;
   padding: 0 0.25rem;
   border-radius: 0.25rem;
   font-weight: 600;
-}
-
-.dark mark {
-  background-color: rgba(234, 179, 8, 0.5);
+  color: #78350f;
 }
 
 /* Animaciones personalizadas */
@@ -100,19 +91,6 @@ mark {
   animation: fadeIn 0.3s ease-out;
 }
 
-/* Gradientes modernos */
-.gradient-blue {
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-}
-
-.gradient-warm {
-  background: linear-gradient(135deg, #f97316, #d97706);
-}
-
-.gradient-cool {
-  background: linear-gradient(135deg, #06b6d4, #0ea5e9);
-}
-
 /* Efectos de hover mejorados */
 .hover-lift {
   transition: all 0.3s ease;
@@ -120,20 +98,30 @@ mark {
 
 .hover-lift:hover {
   transform: translateY(-2px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px -3px var(--shadow-color);
 }
 
 /* Backdrop blur para efectos de cristal */
 .glass {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(250, 246, 241, 0.95);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--border-color);
 }
 
-.dark .glass {
-  background: rgba(30, 41, 59, 0.95);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(71, 85, 105, 0.2);
+/* Estilos específicos para modo claro libro */
+.book-light {
+  background: var(--parchment);
+  color: var(--text-dark);
+}
+
+.book-light-subtle {
+  background: var(--parchment-dark);
+  color: var(--text-light);
+  border: 1px solid var(--border-color);
+}
+
+.book-light-shadow {
+  box-shadow: 0 4px 6px -1px var(--shadow-color);
 }
 
 /* Responsividad mejorada */
@@ -146,5 +134,3 @@ mark {
     padding: 1rem;
   }
 }
-
-

@@ -17,10 +17,10 @@ function App() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-amber-50 to-orange-50">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-4 border-slate-200 dark:border-slate-700 border-t-blue-600 mx-auto mb-6"></div>
-          <p className="text-slate-600 dark:text-slate-300 font-medium">Cargando Biblia Digital...</p>
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-amber-200 border-t-amber-700 mx-auto mb-6"></div>
+          <p className="text-amber-800 font-medium">Cargando Biblia Digital...</p>
         </div>
       </div>
     );
@@ -28,10 +28,10 @@ function App() {
 
   if (!data) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
-        <div className="text-center p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-xl">
-          <p className="text-red-600 dark:text-red-400 font-semibold">Error al cargar</p>
-          <p className="text-slate-500 dark:text-slate-400 text-sm mt-2">Recarga la página</p>
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-amber-50 to-orange-50">
+        <div className="text-center p-8 bg-white rounded-2xl shadow-xl border border-amber-100">
+          <p className="text-amber-900 font-semibold">Error al cargar</p>
+          <p className="text-amber-700 text-sm mt-2">Recarga la página</p>
         </div>
       </div>
     );
@@ -51,9 +51,9 @@ function App() {
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark' : ''}`}>
-      <div className="bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-slate-100">
-        <header className="bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-700 dark:to-indigo-700 text-white shadow-lg">
+    <div className="min-h-screen transition-colors duration-300">
+      <div className="bg-gradient-to-br from-amber-50 to-orange-50 text-amber-900">
+        <header className="bg-gradient-to-r from-amber-700 to-orange-700 text-amber-50 shadow-lg border-b-4 border-amber-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-4 flex-1 min-w-0">
@@ -67,7 +67,7 @@ function App() {
                   </svg>
                 </button>
                 <div onClick={handleClearAll} className="cursor-pointer hover:opacity-90 transition-opacity flex-shrink-0">
-                  <h1 className="text-3xl font-bold">📖 Biblia Digital</h1>
+                  <h1 className="text-3xl font-bold" style={{fontFamily: 'Georgia, serif'}}>📖 Biblia Digital</h1>
                 </div>
 
                 {/* Search Bar - Inline */}
