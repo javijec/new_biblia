@@ -8,6 +8,7 @@ export default function VerseItem({ verse, isSelected, onToggle, onWordSearch })
     if (!onWordSearch) return verse.text;
 
     const words = verse.text.split(/(\s+)/); // Mantener espacios
+    const punctuationSet = new Set('.,;:!?"\'""\'\'—-«»');
     
     return words.map((word, index) => {
       // Mantener espacios como está
@@ -15,8 +16,23 @@ export default function VerseItem({ verse, isSelected, onToggle, onWordSearch })
         return <span key={index}>{word}</span>;
       }
 
-      // Limpiar puntuación para verificar si es una palabra válida
-      const cleanWord = word.replace(/[.,;:!?""''—-]/g, '');
+      // Encontrar donde comienza y termina la palabra real (sin puntuación)
+      let startIdx = 0;
+      let endIdx = word.length;
+      
+      // Remover puntuación del inicio
+      while (startIdx < word.length && punctuationSet.has(word[startIdx])) {
+        startIdx++;
+      }
+      
+      // Remover puntuación del final
+      while (endIdx > startIdx && punctuationSet.has(word[endIdx - 1])) {
+        endIdx--;
+      }
+
+      const leadingPunctuation = word.slice(0, startIdx);
+      const cleanWord = word.slice(startIdx, endIdx);
+      const trailingPunctuation = word.slice(endIdx);
       
       if (cleanWord.length <= 2) {
         return <span key={index}>{word}</span>;
@@ -25,11 +41,9 @@ export default function VerseItem({ verse, isSelected, onToggle, onWordSearch })
       // Normalizar para búsqueda (remover acentos)
       const normalizedWord = cleanWord.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
-      // Separar puntuación final
-      const punctuation = word.slice(cleanWord.length);
-
       return (
         <span key={index}>
+          <span>{leadingPunctuation}</span>
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -45,7 +59,7 @@ export default function VerseItem({ verse, isSelected, onToggle, onWordSearch })
           >
             {cleanWord}
           </button>
-          <span>{punctuation}</span>
+          <span>{trailingPunctuation}</span>
         </span>
       );
     });
