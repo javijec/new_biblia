@@ -50,7 +50,7 @@ export default function VerseItem({ verse, isSelected, onToggle, onWordSearch })
               setHighlightedWord(cleanWord);
               onWordSearch?.(normalizedWord);
             }}
-            className={`px-1.5 rounded font-medium transition-all duration-150 cursor-pointer ${
+            className={`px-0 rounded font-medium transition-all duration-150 cursor-pointer ${
               highlightedWord === cleanWord
                 ? 'bg-amber-400 dark:bg-amber-500 text-slate-900 dark:text-white shadow-md'
                 : 'bg-transparent hover:bg-amber-200 dark:hover:bg-amber-600/60 text-slate-800 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white hover:shadow-sm'
