@@ -16,6 +16,25 @@ export function BibleProvider({ children }) {
     const organized = organizeIndex(bookIndex);
     setData(organized);
     setLoading(false);
+
+    // Precarga de libros en background (después de 2 segundos)
+    const preloadTimer = setTimeout(() => {
+      preloadAllBooks(organized.bookIndex.books);
+    }, 2000);
+
+    return () => clearTimeout(preloadTimer);
+  }, []);
+
+  const preloadAllBooks = useCallback(async (books) => {
+    // Precarga todos los libros en background sin bloquear
+    for (const bookInfo of books) {
+      // Usar requestIdleCallback si disponible, si no, usar setTimeout
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => loadBook(bookInfo.id));
+      } else {
+        setTimeout(() => loadBook(bookInfo.id), 100);
+      }
+    }
   }, []);
 
   const loadBook = useCallback(async (bookId) => {

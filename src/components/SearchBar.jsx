@@ -15,7 +15,12 @@ export default function SearchBar({ data, onSearch, clearOnChapterSelect, initia
     }
 
     setSearching(true);
-    const results = await searchAllBooks(term);
+    const results = await searchAllBooks(term, (progress) => {
+      // Actualizar resultados progresivamente
+      if (progress.results.length > 0) {
+        onSearch(progress.results);
+      }
+    });
     setSearching(false);
     onSearch(results);
   }, [searchAllBooks, onSearch]);
