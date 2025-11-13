@@ -9,6 +9,14 @@ export default function VerseItem({ verse, isSelected, onToggle, onWordSearch })
 
     const words = verse.text.split(/(\s+)/); // Mantener espacios
     const punctuationSet = new Set('.,;:!?"\'""\'\'—-«»');
+    // Palabras comunes no seleccionables (conectores, artículos, preposiciones)
+    const commonWords = new Set([
+      'a', 'o', 'y', 'e', 'u', 'de', 'del', 'el', 'la', 'lo', 'las', 'los', 'un', 'una', 'unos', 'unas',
+      'al', 'en', 'con', 'por', 'para', 'sin', 'sobre', 'entre', 'hasta', 'ante', 'bajo', 'cabe', 'desde',
+      'es', 'era', 'eres', 'soy', 'somos', 'son', 'sea', 'sean', 'fue', 'fueron', 'ser', 'seré',
+      'hay', 'haya', 'había', 'habría', 'habla', 'hablan', 'hablaban', 'hablará',
+      'que', 'cual', 'cuales', 'quien', 'quienes', 'donde', 'cuando', 'como', 'cuanto', 'cuantos'
+    ]);
     
     return words.map((word, index) => {
       // Mantener espacios como está
@@ -34,7 +42,8 @@ export default function VerseItem({ verse, isSelected, onToggle, onWordSearch })
       const cleanWord = word.slice(startIdx, endIdx);
       const trailingPunctuation = word.slice(endIdx);
       
-      if (cleanWord.length <= 2) {
+      // No hacer seleccionables palabras muy cortas o conectores comunes
+      if (cleanWord.length <= 2 || commonWords.has(cleanWord.toLowerCase())) {
         return <span key={index}>{word}</span>;
       }
 
