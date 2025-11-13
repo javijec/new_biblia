@@ -10,13 +10,15 @@ export function useBibleSearch() {
       return [];
     }
 
-    const cacheKey = term.toLowerCase();
+    // Normalizar término de búsqueda (remover acentos)
+    const normalizedTerm = term.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const cacheKey = normalizedTerm;
     if (searchCacheRef.current[cacheKey]) {
       return searchCacheRef.current[cacheKey];
     }
 
     const results = [];
-    const searchRegex = new RegExp(`\\b${term.toLowerCase()}\\b`, 'g');
+    const searchRegex = new RegExp(`\\b${normalizedTerm}\\b`, 'g');
 
     if (!data || !data.bookIndex) {
       return [];
@@ -33,7 +35,9 @@ export function useBibleSearch() {
         if (!chapter.verses) return;
 
         chapter.verses.forEach((verse) => {
-          if (verse.text && searchRegex.test(verse.text.toLowerCase())) {
+          // Normalizar texto para comparación
+          const normalizedText = verse.text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+          if (verse.text && searchRegex.test(normalizedText)) {
             results.push({
               bookTitle: book.name,
               chapterNumber: chapter.number,

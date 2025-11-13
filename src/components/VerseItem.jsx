@@ -22,6 +22,9 @@ export default function VerseItem({ verse, isSelected, onToggle, onWordSearch })
         return <span key={index}>{word}</span>;
       }
 
+      // Normalizar para búsqueda (remover acentos)
+      const normalizedWord = cleanWord.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
       // Separar puntuación final
       const punctuation = word.slice(cleanWord.length);
 
@@ -31,7 +34,7 @@ export default function VerseItem({ verse, isSelected, onToggle, onWordSearch })
             onClick={(e) => {
               e.stopPropagation();
               setHighlightedWord(cleanWord);
-              onWordSearch?.(cleanWord);
+              onWordSearch?.(normalizedWord);
             }}
             className={`px-1.5 rounded font-medium transition-all duration-150 cursor-pointer ${
               highlightedWord === cleanWord
