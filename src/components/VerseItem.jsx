@@ -1,19 +1,51 @@
 import React, { useState } from 'react';
 
 export default function VerseItem({ verse, isSelected, onToggle, onWordSearch }) {
-  const [showWordMenu, setShowWordMenu] = useState(false);
+  const [highlightedWord, setHighlightedWord] = useState(null);
 
-  // Extraer palabras del versículo (solo palabras de más de 2 caracteres)
-  const words = verse.text
-    .split(/\s+/)
-    .filter(word => word.length > 2)
-    .map(word => word.replace(/[.,;:!?""''—-]/g, ''))
-    .filter((word, index, self) => word.length > 0 && self.indexOf(word) === index) // Remover duplicados
-    .sort();
+  // Renderizar el texto con palabras clickeables
+  const renderClickableText = () => {
+    if (!onWordSearch) return verse.text;
 
-  const handleWordClick = (word) => {
-    setShowWordMenu(false);
-    onWordSearch?.(word);
+    const words = verse.text.split(/(\s+)/); // Mantener espacios
+    
+    return words.map((word, index) => {
+      // Mantener espacios como está
+      if (/^\s+$/.test(word)) {
+        return <span key={index}>{word}</span>;
+      }
+
+      // Limpiar puntuación para verificar si es una palabra válida
+      const cleanWord = word.replace(/[.,;:!?""''—-]/g, '');
+      
+      if (cleanWord.length <= 2) {
+        return <span key={index}>{word}</span>;
+      }
+
+      // Separar puntuación final
+      const punctuation = word.slice(cleanWord.length);
+
+      return (
+        <span key={index}>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setHighlightedWord(cleanWord);
+              onWordSearch?.(cleanWord);
+            }}
+            className={`px-1.5 rounded font-medium transition-all duration-150 cursor-pointer ${
+              highlightedWord === cleanWord
+                ? 'bg-amber-400 dark:bg-amber-500 text-slate-900 dark:text-white shadow-md'
+                : 'bg-transparent hover:bg-amber-200 dark:hover:bg-amber-600/60 text-slate-800 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white hover:shadow-sm'
+            }`}
+            title="Haz clic para buscar esta palabra"
+          >
+            {cleanWord}
+          </button>
+          <span>{punctuation}</span>
+        </span>
+      );
+    });
   };
 
   return (
@@ -31,45 +63,9 @@ export default function VerseItem({ verse, isSelected, onToggle, onWordSearch })
       </div>
 
       {/* Verse Text */}
-      <div className="flex-grow text-slate-800 dark:text-slate-200 leading-relaxed">
-        {verse.text}
+      <div className="flex-grow text-slate-800 dark:text-slate-200 leading-relaxed text-base">
+        {renderClickableText()}
       </div>
-
-      {/* Word Search Button */}
-      {onWordSearch && (
-        <div className="flex-shrink-0 relative">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setShowWordMenu(!showWordMenu);
-            }}
-            className="p-2 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-lg transition-colors text-blue-600 dark:text-blue-400"
-            title="Buscar palabra en este versículo"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </button>
-
-          {/* Word Menu */}
-          {showWordMenu && words.length > 0 && (
-            <div className="absolute right-0 mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg z-10 max-h-48 overflow-y-auto min-w-max">
-              {words.map((word) => (
-                <button
-                  key={word}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleWordClick(word);
-                  }}
-                  className="block w-full text-left px-4 py-2 hover:bg-blue-100 dark:hover:bg-blue-900/30 text-slate-800 dark:text-slate-200 text-sm transition-colors"
-                >
-                  {word}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
 
       {/* Selection indicator */}
       {isSelected && (
