@@ -98,17 +98,53 @@ export default function MainContent({
 // Helper to highlight matches (returns an array of React nodes)
 function highlight(text, query) {
   if (!query || !text) return text;
-  const re = new RegExp(`(${escapeRegExp(query)})`, 'ig');
-  const parts = text.split(re);
-  return parts.map((part, i) =>
-    re.test(part) ? (
-      <mark key={i} className="bg-yellow-300 dark:bg-yellow-500/50 px-1 rounded font-semibold">
-        {part}
+
+  // Normalizar tanto el texto como la query para comparación
+  const normalizeText = (str) => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const normalizedText = normalizeText(text);
+  const normalizedQuery = normalizeText(query);
+
+  // Crear regex con word boundaries usando texto normalizado
+  const re = new RegExp(`\\b${escapeRegExp(normalizedQuery)}\\b`, 'gi');
+  
+  // Encontrar todas las coincidencias
+  const matches = [];
+  let match;
+  while ((match = re.exec(normalizedText)) !== null) {
+    matches.push({
+      start: match.index,
+      end: match.index + match[0].length,
+    });
+  }
+
+  if (matches.length === 0) return text;
+
+  // Reconstruir el texto con resaltados
+  const result = [];
+  let lastIndex = 0;
+
+  matches.forEach((matchPos) => {
+    // Agregar texto antes del match
+    if (matchPos.start > lastIndex) {
+      result.push(<span key={`text-${lastIndex}`}>{text.slice(lastIndex, matchPos.start)}</span>);
+    }
+
+    // Agregar texto resaltado
+    result.push(
+      <mark key={`mark-${matchPos.start}`} className="bg-yellow-300 dark:bg-yellow-500/50 px-1 rounded font-semibold">
+        {text.slice(matchPos.start, matchPos.end)}
       </mark>
-    ) : (
-      <span key={i}>{part}</span>
-    )
-  );
+    );
+
+    lastIndex = matchPos.end;
+  });
+
+  // Agregar texto restante
+  if (lastIndex < text.length) {
+    result.push(<span key={`text-${lastIndex}`}>{text.slice(lastIndex)}</span>);
+  }
+
+  return result;
 }
 
 function escapeRegExp(string) {
