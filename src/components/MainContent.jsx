@@ -1,6 +1,7 @@
 import React, { useMemo, useCallback } from 'react';
 import ChapterView from './ChapterView';
 import { useBibleSearch } from '../hooks/useBibleSearch';
+import { verbConjugations, normalizeVerb } from '../hooks/verbConjugations';
 
 export default function MainContent({
   data,
@@ -21,13 +22,51 @@ export default function MainContent({
     onSearch(results); // Pasar resultados como array
   }, [searchAllBooks, onSearch]);
 
+  // Contar apariciones totales de la palabra en los resultados
+  const countWordOccurrences = useCallback((results, query) => {
+    if (!results || !query) return 0;
+    
+    const normalizeText = (str) => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const normalizedQuery = normalizeText(query);
+    
+    // Obtener todas las formas del verbo si es un verbo conjugado
+    const baseVerb = normalizeVerb(normalizedQuery);
+    const allVerbForms = new Set([normalizedQuery]);
+    
+    if (baseVerb !== normalizedQuery) {
+      Object.entries(verbConjugations).forEach(([conjugation, infinitive]) => {
+        if (infinitive === baseVerb) {
+          allVerbForms.add(conjugation);
+        }
+      });
+    }
+    allVerbForms.add(baseVerb);
+
+    let totalOccurrences = 0;
+
+    results.forEach((result) => {
+      const normalizedText = normalizeText(result.text);
+      
+      // Contar cada forma del verbo en el texto
+      allVerbForms.forEach((form) => {
+        const regex = new RegExp(`\\b${form}\\b`, 'gi');
+        const matches = normalizedText.match(regex);
+        if (matches) {
+          totalOccurrences += matches.length;
+        }
+      });
+    });
+
+    return totalOccurrences;
+  }, []);
+
   return (
     <div className="flex-grow">
       {/* Search Results */}
       {searchResults && searchResults.length > 0 && (
         <div className="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-2xl border border-blue-200 dark:border-blue-800">
           <h2 className="text-lg font-bold mb-4 text-slate-900 dark:text-slate-100">
-            🔍 {searchResults.length} versículos encontrados
+            🔍 {searchResults.length} versículos encontrados ({countWordOccurrences(searchResults, searchResults[0]?.query)} apariciones)
           </h2>
           <div className="space-y-1">
             {searchResults.slice(0, resultsVisible).map((result, idx) => (
@@ -104,8 +143,26 @@ function highlight(text, query) {
   const normalizedText = normalizeText(text);
   const normalizedQuery = normalizeText(query);
 
-  // Crear regex con word boundaries usando texto normalizado
-  const re = new RegExp(`\\b${escapeRegExp(normalizedQuery)}\\b`, 'gi');
+  // Obtener todas las formas del verbo si es un verbo conjugado
+  const baseVerb = normalizeVerb(normalizedQuery);
+  const allVerbForms = new Set([normalizedQuery]);
+  
+  // Si es un verbo, agregar todas sus conjugaciones
+  if (baseVerb !== normalizedQuery) {
+    // Buscar todas las conjugaciones que mapean a este infinitivo
+    Object.entries(verbConjugations).forEach(([conjugation, infinitive]) => {
+      if (infinitive === baseVerb) {
+        allVerbForms.add(conjugation);
+      }
+    });
+  }
+  allVerbForms.add(baseVerb);
+
+  // Crear regex para buscar cualquier forma del verbo
+  const regexPattern = Array.from(allVerbForms)
+    .map(term => escapeRegExp(term))
+    .join('|');
+  const re = new RegExp(`\\b(${regexPattern})\\b`, 'gi');
   
   // Encontrar todas las coincidencias
   const matches = [];
