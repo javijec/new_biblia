@@ -1,0 +1,151 @@
+/* Global Modern Styling */
+@import "tailwindcss";
+
+:root {
+  --blue-600: #2563eb;
+  --indigo-600: #4f46e5;
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --slate-700: #334155;
+  --slate-50: #f8fafc;
+}
+
+body {
+  font-family: 'Segoe UI', -apple-system, system-ui, 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #3b82f6, #6366f1);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #2563eb, #4f46e5);
+}
+
+/* Dark mode scrollbar */
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #1e40af, #4c1d95);
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #1e3a8a, #3f0f64);
+}
+
+/* Firefox scrollbar */
+.custom-scrollbar {
+  scrollbar-color: #3b82f6 transparent;
+  scrollbar-width: thin;
+}
+
+.dark .custom-scrollbar {
+  scrollbar-color: #1e40af transparent;
+}
+
+/* Highlight de búsqueda más moderno */
+mark {
+  background-color: #fef08a;
+  padding: 0 0.25rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+}
+
+.dark mark {
+  background-color: rgba(234, 179, 8, 0.5);
+}
+
+/* Animaciones personalizadas */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Gradientes modernos */
+.gradient-blue {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+}
+
+.gradient-warm {
+  background: linear-gradient(135deg, #f97316, #d97706);
+}
+
+.gradient-cool {
+  background: linear-gradient(135deg, #06b6d4, #0ea5e9);
+}
+
+/* Efectos de hover mejorados */
+.hover-lift {
+  transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Backdrop blur para efectos de cristal */
+.glass {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+  background: rgba(30, 41, 59, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(71, 85, 105, 0.2);
+}
+
+/* Responsividad mejorada */
+@media (max-width: 768px) {
+  .text-3xl {
+    font-size: 1.875rem;
+  }
+
+  .p-6 {
+    padding: 1rem;
+  }
+}
+
+
