@@ -1,5 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useBible } from "../context/BibleContext";
+import {
+  Box,
+  Button,
+  Collapse,
+  TextField,
+  Typography,
+  IconButton,
+  Chip,
+  CircularProgress,
+  Paper,
+  alpha,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import CloseIcon from "@mui/icons-material/Close";
 
 export default function BookSelector({
   data,
@@ -43,9 +57,13 @@ export default function BookSelector({
 
     if (books.length === 0) {
       return (
-        <div className="p-3 sm:p-4 text-center text-amber-700 text-sm">
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ p: 2, textAlign: "center" }}
+        >
           No se encontraron libros
-        </div>
+        </Typography>
       );
     }
 
@@ -56,8 +74,9 @@ export default function BookSelector({
       const isLoading = loadingBook === book.id;
 
       return (
-        <div key={book.id} className="mb-2 sm:mb-3">
-          <button
+        <Box key={book.id} sx={{ mb: 1.5 }}>
+          <Button
+            fullWidth
             onClick={() => {
               const next = new Set(expandedBooks);
               if (next.has(book.id)) {
@@ -68,36 +87,60 @@ export default function BookSelector({
               }
               setExpandedBooks(next);
             }}
-            aria-expanded={isExpanded}
-            className={`w-full text-left px-3 sm:px-4 lg:px-5 py-2 sm:py-3 lg:py-3.5 rounded-lg transition-all duration-200 flex items-center justify-between font-medium text-xs sm:text-sm lg:text-base hover-lift ${
-              isExpanded
-                ? "bg-linear-to-r from-amber-700 to-orange-700 text-white shadow-lg"
-                : "bg-amber-100 hover:bg-amber-200 text-amber-900 hover:shadow-md"
-            }`}
+            sx={{
+              justifyContent: "space-between",
+              textTransform: "none",
+              py: 1.5,
+              px: 2,
+              borderRadius: 2,
+              fontWeight: 600,
+              fontSize: "0.95rem",
+              background: isExpanded
+                ? "linear-gradient(135deg, #d97706 0%, #f59e0b 100%)"
+                : alpha("#d97706", 0.1),
+              color: isExpanded ? "white" : "text.primary",
+              "&:hover": {
+                background: isExpanded
+                  ? "linear-gradient(135deg, #b45309 0%, #d97706 100%)"
+                  : alpha("#d97706", 0.2),
+                transform: "translateY(-2px)",
+                boxShadow: 2,
+              },
+              transition: "all 0.3s ease",
+            }}
           >
-            <span className="truncate">{bookName}</span>
-            <span
-              className={`ml-2 text-xs transition-transform shrink-0 ${isExpanded ? "rotate-180" : ""}`}
-            >
-              {isLoading ? "⟳" : "▼"}
-            </span>
-          </button>
+            <Typography sx={{ fontWeight: 600, fontSize: "inherit" }}>
+              {bookName}
+            </Typography>
+            <ExpandMoreIcon
+              sx={{
+                transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
+                transition: "transform 0.3s",
+              }}
+            />
+          </Button>
 
-          {isExpanded && (
-            <div className="mt-2 sm:mt-3 ml-2 sm:ml-4 max-h-96 overflow-y-auto custom-scrollbar">
+          <Collapse in={isExpanded}>
+            <Box sx={{ mt: 1.5, ml: 2, maxHeight: 400, overflow: "auto" }}>
               {isLoading ? (
-                <div className="p-3 sm:p-4 text-center text-amber-700">
-                  <div className="animate-spin inline-block h-4 w-4 border-2 border-amber-700 border-t-transparent rounded-full"></div>
-                  <p className="text-xs mt-2">Cargando...</p>
-                </div>
+                <Box sx={{ display: "flex", justifyContent: "center", py: 3 }}>
+                  <CircularProgress size={30} />
+                </Box>
               ) : (
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: 1,
+                  }}
+                >
                   {chapters
                     .slice()
                     .sort((a, b) => a.number - b.number)
                     .map((chapter, idx) => (
-                      <button
+                      <Chip
                         key={idx}
+                        label={chapter.number}
                         onClick={() =>
                           onSelectChapter &&
                           onSelectChapter({
@@ -106,112 +149,205 @@ export default function BookSelector({
                             bookId: book.id,
                           })
                         }
-                        className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-white border-2 border-amber-300 rounded-lg text-xs sm:text-sm font-semibold hover:bg-amber-600 hover:text-white hover:border-amber-600 transition-all hover:shadow-md hover-lift"
-                        title={`Capítulo ${chapter.number}`}
-                      >
-                        {chapter.number}
-                      </button>
+                        sx={{
+                          minWidth: 40,
+                          fontWeight: 600,
+                          cursor: "pointer",
+                          background: "white",
+                          border: "2px solid",
+                          borderColor: "primary.light",
+                          "&:hover": {
+                            background: "primary.main",
+                            color: "white",
+                            borderColor: "primary.dark",
+                            transform: "scale(1.1)",
+                          },
+                          transition: "all 0.2s ease",
+                        }}
+                      />
                     ))}
-                </div>
+                </Box>
               )}
-            </div>
-          )}
-        </div>
+            </Box>
+          </Collapse>
+        </Box>
       );
     });
   };
 
   if (!data)
     return (
-      <div className="p-4 text-center text-slate-500">Cargando libros...</div>
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        sx={{ p: 2, textAlign: "center" }}
+      >
+        Cargando libros...
+      </Typography>
     );
 
   const oldBooks = filterBooks(data.testaments["old"] || []);
   const newBooks = filterBooks(data.testaments["new"] || []);
 
   return (
-    <div className="space-y-3 sm:space-y-4">
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
       {/* Search Bar */}
-      <div className="sticky top-0 z-10 bg-linear-to-b from-amber-50 to-transparent pb-2">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Buscar libro..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-3 sm:px-4 py-2 sm:py-2.5 border-2 border-amber-300 bg-white text-amber-900 rounded-lg focus:outline-none focus:border-amber-700 transition-colors font-medium text-xs sm:text-sm placeholder-amber-700/50"
-          />
-          {searchTerm && (
-            <button
-              onClick={() => setSearchTerm("")}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-amber-100 rounded text-amber-700"
-            >
-              ✕
-            </button>
-          )}
-        </div>
-      </div>
+      <Paper
+        elevation={0}
+        sx={{
+          position: "sticky",
+          top: 0,
+          zIndex: 10,
+          background: alpha("#fffbeb", 0.95),
+          backdropFilter: "blur(8px)",
+          pb: 1,
+        }}
+      >
+        <TextField
+          fullWidth
+          size="small"
+          placeholder="Buscar libro..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          InputProps={{
+            endAdornment: searchTerm && (
+              <IconButton size="small" onClick={() => setSearchTerm("")}>
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            ),
+          }}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: 2,
+              background: "white",
+              "& fieldset": {
+                borderColor: "primary.light",
+                borderWidth: 2,
+              },
+              "&:hover fieldset": {
+                borderColor: "primary.main",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "primary.main",
+              },
+            },
+          }}
+        />
+      </Paper>
 
       {/* Antiguo Testamento */}
-      <div>
-        <button
-          onClick={() =>
-            setExpandedTestament(expandedTestament === "old" ? null : "old")
-          }
-          className="w-full text-left px-3 sm:px-4 py-3 sm:py-4 bg-linear-to-r from-amber-600 to-orange-600 text-white font-bold rounded-lg hover:from-amber-700 hover:to-orange-700 transition-all duration-200 flex items-center justify-between shadow-lg text-sm sm:text-base hover-lift"
+      <Box>
+        <Button
+          fullWidth
+          onClick={() => {
+            setExpandedTestament(expandedTestament === "old" ? null : "old");
+            onTestamentChange?.();
+          }}
+          sx={{
+            justifyContent: "space-between",
+            textTransform: "none",
+            py: 2,
+            px: 2.5,
+            borderRadius: 2,
+            fontWeight: 700,
+            fontSize: "1rem",
+            background: "linear-gradient(135deg, #d97706 0%, #ea580c 100%)",
+            color: "white",
+            boxShadow: 3,
+            "&:hover": {
+              background: "linear-gradient(135deg, #b45309 0%, #c2410c 100%)",
+              boxShadow: 4,
+              transform: "translateY(-2px)",
+            },
+            transition: "all 0.3s ease",
+          }}
         >
-          <span className="flex items-center gap-2">
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
             <span>📜</span>
-            <span className="hidden sm:inline">Antiguo Testamento</span>
-            <span className="sm:hidden">A.T.</span>
-            <span className="text-xs bg-white/30 px-2 py-1 rounded-full">
-              {oldBooks.length}
-            </span>
-          </span>
-          <span
-            className={`transition-transform ${expandedTestament === "old" ? "rotate-180" : ""}`}
-          >
-            ▼
-          </span>
-        </button>
+            <Typography sx={{ fontWeight: 700, fontSize: "inherit" }}>
+              Antiguo Testamento
+            </Typography>
+            <Chip
+              label={oldBooks.length}
+              size="small"
+              sx={{
+                background: alpha("#fff", 0.3),
+                color: "white",
+                fontWeight: 700,
+                height: 24,
+              }}
+            />
+          </Box>
+          <ExpandMoreIcon
+            sx={{
+              transform:
+                expandedTestament === "old" ? "rotate(180deg)" : "rotate(0deg)",
+              transition: "transform 0.3s",
+            }}
+          />
+        </Button>
 
-        {expandedTestament === "old" && (
-          <div className="space-y-2 pl-1 sm:pl-2 mt-2 sm:mt-3 pb-3 sm:pb-4 max-h-[50vh] overflow-y-auto custom-scrollbar">
-            {renderBooks("old")}
-          </div>
-        )}
-      </div>
+        <Collapse in={expandedTestament === "old"}>
+          <Box sx={{ mt: 2, pl: 0.5 }}>{renderBooks("old")}</Box>
+        </Collapse>
+      </Box>
 
       {/* Nuevo Testamento */}
-      <div>
-        <button
+      <Box>
+        <Button
+          fullWidth
           onClick={() => {
             setExpandedTestament(expandedTestament === "new" ? null : "new");
             onTestamentChange?.();
           }}
-          className="w-full text-left px-3 sm:px-4 py-3 sm:py-4 bg-linear-to-r from-rose-600 to-pink-600 text-white font-bold rounded-lg hover:from-rose-700 hover:to-pink-700 transition-all duration-200 flex items-center justify-between shadow-lg text-sm sm:text-base hover-lift"
+          sx={{
+            justifyContent: "space-between",
+            textTransform: "none",
+            py: 2,
+            px: 2.5,
+            borderRadius: 2,
+            fontWeight: 700,
+            fontSize: "1rem",
+            background: "linear-gradient(135deg, #dc2626 0%, #e11d48 100%)",
+            color: "white",
+            boxShadow: 3,
+            "&:hover": {
+              background: "linear-gradient(135deg, #b91c1c 0%, #be123c 100%)",
+              boxShadow: 4,
+              transform: "translateY(-2px)",
+            },
+            transition: "all 0.3s ease",
+          }}
         >
-          <span className="flex items-center gap-2">
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
             <span>✝️</span>
-            <span className="hidden sm:inline">Nuevo Testamento</span>
-            <span className="sm:hidden">N.T.</span>
-            <span className="text-xs bg-white/30 px-2 py-1 rounded-full">
-              {newBooks.length}
-            </span>
-          </span>
-          <span
-            className={`transition-transform ${expandedTestament === "new" ? "rotate-180" : ""}`}
-          >
-            ▼
-          </span>
-        </button>
+            <Typography sx={{ fontWeight: 700, fontSize: "inherit" }}>
+              Nuevo Testamento
+            </Typography>
+            <Chip
+              label={newBooks.length}
+              size="small"
+              sx={{
+                background: alpha("#fff", 0.3),
+                color: "white",
+                fontWeight: 700,
+                height: 24,
+              }}
+            />
+          </Box>
+          <ExpandMoreIcon
+            sx={{
+              transform:
+                expandedTestament === "new" ? "rotate(180deg)" : "rotate(0deg)",
+              transition: "transform 0.3s",
+            }}
+          />
+        </Button>
 
-        {expandedTestament === "new" && (
-          <div className="space-y-2 pl-1 sm:pl-2 mt-2 sm:mt-3 max-h-[50vh] overflow-y-auto custom-scrollbar">
-            {renderBooks("new")}
-          </div>
-        )}
-      </div>
-    </div>
+        <Collapse in={expandedTestament === "new"}>
+          <Box sx={{ mt: 2, pl: 0.5 }}>{renderBooks("new")}</Box>
+        </Collapse>
+      </Box>
+    </Box>
   );
 }

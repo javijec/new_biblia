@@ -1,4 +1,17 @@
 import React, { useState } from "react";
+import {
+  Box,
+  Paper,
+  Typography,
+  Button,
+  Chip,
+  Divider,
+  alpha,
+} from "@mui/material";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import CheckIcon from "@mui/icons-material/Check";
+import ClearIcon from "@mui/icons-material/Clear";
+import InfoIcon from "@mui/icons-material/Info";
 import VerseItem from "./VerseItem";
 
 export default function ChapterView({ chapter, onWordSearch }) {
@@ -30,93 +43,209 @@ export default function ChapterView({ chapter, onWordSearch }) {
 
   if (!chapter || !chapter.verses) {
     return (
-      <div className="bg-white p-6 sm:p-8 lg:p-12 rounded-2xl shadow-lg border-2 border-amber-700">
-        <p className="text-amber-900 text-center text-lg">
+      <Paper
+        elevation={3}
+        sx={{
+          p: { xs: 6, md: 8 },
+          textAlign: "center",
+          borderRadius: 3,
+          border: "2px solid",
+          borderColor: "primary.main",
+        }}
+      >
+        <Typography variant="h6" color="text.primary">
           No hay capítulo seleccionado
-        </p>
-      </div>
+        </Typography>
+      </Paper>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg sm:rounded-2xl shadow-xl overflow-hidden border border-amber-700 sm:border-2 hover-lift">
+    <Paper
+      elevation={4}
+      sx={{
+        borderRadius: 3,
+        overflow: "hidden",
+        border: "2px solid",
+        borderColor: "primary.main",
+      }}
+    >
       {/* Header */}
-      <div className="bg-linear-to-r from-amber-700 to-orange-700 text-white p-4 sm:p-6 lg:p-8">
-        <h1
-          className="text-2xl sm:text-3xl lg:text-4xl font-bold"
-          style={{ fontFamily: "Georgia, serif" }}
+      <Box
+        sx={{
+          background: "linear-gradient(135deg, #d97706 0%, #f59e0b 100%)",
+          color: "white",
+          p: { xs: 3, md: 4 },
+        }}
+      >
+        <Typography
+          variant="h4"
+          sx={{
+            fontWeight: 700,
+            fontFamily: "Georgia, serif",
+            fontSize: { xs: "1.75rem", md: "2.5rem" },
+          }}
         >
           {chapter.bookTitle} {chapter.chapterNumber || chapter.number}
-        </h1>
-      </div>
+        </Typography>
+      </Box>
 
       {/* Toolbar */}
-      <div className="border-b-2 border-amber-200 p-3 sm:p-4 lg:p-6 flex flex-wrap gap-2 sm:gap-3 lg:gap-4 bg-linear-to-r from-amber-50 to-orange-50">
-        <button
+      <Box
+        sx={{
+          borderBottom: "2px solid",
+          borderColor: "primary.light",
+          p: { xs: 2, md: 3 },
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 2,
+          alignItems: "center",
+          background: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)",
+        }}
+      >
+        <Button
+          variant="contained"
           onClick={copySelected}
           disabled={selectedVerses.size === 0}
-          className={`px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-4 rounded-lg font-medium text-sm sm:text-base lg:text-lg transition-all flex items-center gap-2 hover-lift ${
-            selectedVerses.size === 0
-              ? "bg-amber-200 text-amber-700 cursor-not-allowed"
-              : copySuccess
-                ? "bg-green-600 hover:bg-green-700 text-white shadow-lg"
-                : "bg-linear-to-r from-amber-700 to-orange-700 hover:shadow-xl text-white"
-          }`}
+          startIcon={copySuccess ? <CheckIcon /> : <ContentCopyIcon />}
+          sx={{
+            px: { xs: 2, md: 3 },
+            py: { xs: 1, md: 1.5 },
+            borderRadius: 2,
+            fontWeight: 600,
+            background: copySuccess
+              ? "linear-gradient(135deg, #16a34a 0%, #22c55e 100%)"
+              : selectedVerses.size === 0
+                ? alpha("#d97706", 0.3)
+                : "linear-gradient(135deg, #d97706 0%, #f59e0b 100%)",
+            "&:hover": {
+              background: copySuccess
+                ? "linear-gradient(135deg, #15803d 0%, #16a34a 100%)"
+                : selectedVerses.size === 0
+                  ? alpha("#d97706", 0.3)
+                  : "linear-gradient(135deg, #b45309 0%, #d97706 100%)",
+              transform:
+                selectedVerses.size === 0 ? "none" : "translateY(-2px)",
+              boxShadow: selectedVerses.size === 0 ? 0 : 3,
+            },
+            "&:disabled": {
+              color: "rgba(0, 0, 0, 0.26)",
+            },
+            transition: "all 0.3s ease",
+          }}
         >
-          {copySuccess ? (
-            <>
-              <span className="text-lg">✓</span> Copiado
-            </>
-          ) : (
-            <>
-              <span className="text-lg">📋</span> Copiar ({selectedVerses.size})
-            </>
-          )}
-        </button>
+          {copySuccess ? `Copiado` : `Copiar (${selectedVerses.size})`}
+        </Button>
 
         {selectedVerses.size > 0 && (
-          <button
+          <Button
+            variant="outlined"
             onClick={() => setSelectedVerses(new Set())}
-            className="px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-4 bg-amber-200 hover:bg-amber-300 text-amber-900 rounded-lg font-medium text-sm sm:text-base lg:text-lg transition-all hover:shadow-md hover-lift"
+            startIcon={<ClearIcon />}
+            sx={{
+              px: { xs: 2, md: 3 },
+              py: { xs: 1, md: 1.5 },
+              borderRadius: 2,
+              fontWeight: 600,
+              borderWidth: 2,
+              borderColor: "primary.main",
+              color: "primary.dark",
+              "&:hover": {
+                borderWidth: 2,
+                background: alpha("#d97706", 0.1),
+                transform: "translateY(-2px)",
+                boxShadow: 2,
+              },
+              transition: "all 0.3s ease",
+            }}
           >
-            ✕ Limpiar
-          </button>
+            Limpiar
+          </Button>
         )}
 
-        <div className="ml-auto text-amber-700 text-sm sm:text-base lg:text-lg flex items-center">
+        <Box sx={{ ml: "auto" }}>
           {selectedVerses.size > 0 && (
-            <span className="bg-amber-100 text-amber-900 px-3 sm:px-4 lg:px-5 py-2 lg:py-3 rounded-full font-bold text-sm sm:text-base">
-              {selectedVerses.size}
-            </span>
+            <Chip
+              label={selectedVerses.size}
+              sx={{
+                background: "linear-gradient(135deg, #d97706 0%, #f59e0b 100%)",
+                color: "white",
+                fontWeight: 700,
+                fontSize: { xs: "0.9rem", md: "1rem" },
+                height: { xs: 32, md: 36 },
+                "& .MuiChip-label": {
+                  px: 2,
+                },
+              }}
+            />
           )}
-        </div>
-      </div>
+        </Box>
+      </Box>
 
       {/* Content */}
-      <div className="p-3 sm:p-4 lg:p-8 max-h-[60vh] sm:max-h-[65vh] lg:max-h-[70vh] overflow-y-auto custom-scrollbar space-y-2 lg:space-y-3">
-        {chapter.verses.map((verse) => (
-          <VerseItem
-            key={verse.number}
-            verse={verse}
-            isSelected={selectedVerses.has(verse.number)}
-            onToggle={toggleVerse}
-            onWordSearch={onWordSearch}
-          />
+      <Box
+        sx={{
+          p: { xs: 2, md: 4 },
+          maxHeight: { xs: "60vh", md: "65vh" },
+          overflow: "auto",
+          "&::-webkit-scrollbar": {
+            width: "10px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "#fef3c7",
+            borderRadius: "5px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "linear-gradient(180deg, #d97706, #b45309)",
+            borderRadius: "5px",
+            "&:hover": {
+              background: "#92400e",
+            },
+          },
+        }}
+      >
+        {chapter.verses.map((verse, index) => (
+          <React.Fragment key={verse.number}>
+            <VerseItem
+              verse={verse}
+              isSelected={selectedVerses.has(verse.number)}
+              onToggle={toggleVerse}
+              onWordSearch={onWordSearch}
+            />
+            {index < chapter.verses.length - 1 && (
+              <Divider sx={{ my: 1, opacity: 0.3 }} />
+            )}
+          </React.Fragment>
         ))}
-      </div>
+      </Box>
 
       {/* Footer */}
-      <div className="border-t-2 border-amber-200 p-3 sm:p-4 lg:p-6 bg-linear-to-r from-amber-50 to-orange-50 text-sm sm:text-base lg:text-lg text-amber-800">
-        <p className="flex items-center gap-2">
-          <span>💡</span>
-          <span className="hidden sm:inline">
+      <Box
+        sx={{
+          borderTop: "2px solid",
+          borderColor: "primary.light",
+          p: { xs: 2, md: 3 },
+          background: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)",
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <InfoIcon color="primary" fontSize="small" />
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ display: { xs: "none", sm: "block" } }}
+          >
             Haz clic en los versículos para seleccionarlos
-          </span>
-          <span className="sm:hidden">
+          </Typography>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ display: { xs: "block", sm: "none" } }}
+          >
             Toca los versículos para seleccionar
-          </span>
-        </p>
-      </div>
-    </div>
+          </Typography>
+        </Box>
+      </Box>
+    </Paper>
   );
 }

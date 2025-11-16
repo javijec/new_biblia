@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Box, Typography, Chip, alpha } from "@mui/material";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 export default function VerseItem({
   verse,
@@ -8,13 +10,11 @@ export default function VerseItem({
 }) {
   const [highlightedWord, setHighlightedWord] = useState(null);
 
-  // Renderizar el texto con palabras clickeables
   const renderClickableText = () => {
     if (!onWordSearch) return verse.text;
 
-    const words = verse.text.split(/(\s+)/); // Mantener espacios
+    const words = verse.text.split(/(\s+)/);
     const punctuationSet = new Set(".,;:!?\"'\"\"''—-«»");
-    // Palabras comunes no seleccionables (conectores, artículos, preposiciones)
     const commonWords = new Set([
       "a",
       "o",
@@ -78,21 +78,17 @@ export default function VerseItem({
     ]);
 
     return words.map((word, index) => {
-      // Mantener espacios como está
       if (/^\s+$/.test(word)) {
         return <span key={index}>{word}</span>;
       }
 
-      // Encontrar donde comienza y termina la palabra real (sin puntuación)
       let startIdx = 0;
       let endIdx = word.length;
 
-      // Remover puntuación del inicio
       while (startIdx < word.length && punctuationSet.has(word[startIdx])) {
         startIdx++;
       }
 
-      // Remover puntuación del final
       while (endIdx > startIdx && punctuationSet.has(word[endIdx - 1])) {
         endIdx--;
       }
@@ -101,12 +97,10 @@ export default function VerseItem({
       const cleanWord = word.slice(startIdx, endIdx);
       const trailingPunctuation = word.slice(endIdx);
 
-      // No hacer seleccionables palabras muy cortas o conectores comunes
       if (cleanWord.length <= 2 || commonWords.has(cleanWord.toLowerCase())) {
         return <span key={index}>{word}</span>;
       }
 
-      // Normalizar para búsqueda (remover acentos)
       const normalizedWord = cleanWord
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
@@ -115,21 +109,38 @@ export default function VerseItem({
       return (
         <span key={index}>
           <span>{leadingPunctuation}</span>
-          <button
+          <Chip
+            label={cleanWord}
+            size="small"
             onClick={(e) => {
               e.stopPropagation();
               setHighlightedWord(cleanWord);
               onWordSearch?.(normalizedWord);
             }}
-            className={`px-1 rounded font-medium transition-all duration-150 cursor-pointer text-sm sm:text-base ${
-              highlightedWord === cleanWord
-                ? "bg-amber-400 text-amber-900 shadow-md scale-105"
-                : "bg-transparent hover:bg-amber-200 text-amber-900 hover:shadow-sm hover:scale-102"
-            }`}
-            title="Haz clic para buscar esta palabra"
-          >
-            {cleanWord}
-          </button>
+            sx={{
+              height: "auto",
+              py: 0.2,
+              px: 0.5,
+              fontSize: "inherit",
+              fontFamily: "inherit",
+              cursor: "pointer",
+              background:
+                highlightedWord === cleanWord
+                  ? alpha("#fbbf24", 0.9)
+                  : "transparent",
+              color: "inherit",
+              fontWeight: highlightedWord === cleanWord ? 700 : 500,
+              border: "none",
+              "&:hover": {
+                background: alpha("#fbbf24", 0.3),
+                transform: "scale(1.02)",
+              },
+              "& .MuiChip-label": {
+                p: 0,
+              },
+              transition: "all 0.2s ease",
+            }}
+          />
           <span>{trailingPunctuation}</span>
         </span>
       );
@@ -137,35 +148,86 @@ export default function VerseItem({
   };
 
   return (
-    <div
-      className={`flex gap-2 sm:gap-3 p-2 sm:p-3 lg:p-4 rounded-lg cursor-pointer transition-all duration-200 hover-lift ${
-        isSelected
-          ? "bg-linear-to-r from-amber-100 to-orange-100 border-l-2 sm:border-l-4 border-amber-700 shadow-md"
-          : "hover:bg-amber-50 border-l-2 sm:border-l-4 border-transparent"
-      }`}
+    <Box
       onClick={() => onToggle(verse.number)}
+      sx={{
+        display: "flex",
+        gap: { xs: 1.5, md: 2 },
+        p: { xs: 1.5, md: 2.5 },
+        borderRadius: 2,
+        cursor: "pointer",
+        borderLeft: "4px solid",
+        borderColor: isSelected ? "primary.main" : "transparent",
+        background: isSelected
+          ? "linear-gradient(90deg, " +
+            alpha("#fbbf24", 0.2) +
+            " 0%, " +
+            alpha("#f59e0b", 0.1) +
+            " 100%)"
+          : "transparent",
+        "&:hover": {
+          background: isSelected
+            ? "linear-gradient(90deg, " +
+              alpha("#fbbf24", 0.3) +
+              " 0%, " +
+              alpha("#f59e0b", 0.2) +
+              " 100%)"
+            : alpha("#fef3c7", 0.5),
+          transform: "translateX(4px)",
+        },
+        transition: "all 0.3s ease",
+      }}
     >
       {/* Verse Number */}
-      <div
-        className="shrink-0 font-bold text-amber-700 w-8 sm:w-10 lg:w-12 text-sm sm:text-base lg:text-lg flex items-start justify-center pt-0.5 sm:pt-1"
-        style={{ fontFamily: "Georgia, serif" }}
+      <Box
+        sx={{
+          flexShrink: 0,
+          fontWeight: 700,
+          color: "primary.dark",
+          width: { xs: 32, md: 40 },
+          display: "flex",
+          alignItems: "start",
+          justifyContent: "center",
+          pt: 0.5,
+          fontFamily: "Georgia, serif",
+          fontSize: { xs: "0.9rem", md: "1.05rem" },
+        }}
       >
         {verse.number}
-      </div>
+      </Box>
 
       {/* Verse Text */}
-      <div className="grow text-amber-900 leading-relaxed text-sm sm:text-base lg:text-lg">
+      <Typography
+        sx={{
+          flex: 1,
+          color: "text.primary",
+          lineHeight: 1.8,
+          fontSize: { xs: "0.95rem", md: "1.05rem" },
+          fontFamily: "Georgia, serif",
+        }}
+      >
         {renderClickableText()}
-      </div>
+      </Typography>
 
-      {/* Selection indicator */}
+      {/* Selection Indicator */}
       {isSelected && (
-        <div className="shrink-0 flex items-start justify-center pt-0.5 sm:pt-1">
-          <div className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-amber-700 rounded-full flex items-center justify-center shadow-md">
-            <span className="text-white font-bold text-xs sm:text-sm">✓</span>
-          </div>
-        </div>
+        <Box
+          sx={{
+            flexShrink: 0,
+            display: "flex",
+            alignItems: "start",
+            justifyContent: "center",
+            pt: 0.5,
+          }}
+        >
+          <CheckCircleIcon
+            sx={{
+              fontSize: { xs: 24, md: 28 },
+              color: "primary.main",
+            }}
+          />
+        </Box>
       )}
-    </div>
+    </Box>
   );
 }
