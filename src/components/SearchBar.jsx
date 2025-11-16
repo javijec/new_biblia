@@ -85,12 +85,12 @@ export default function SearchBar({
   return (
     <div className="mb-0">
       <div className="relative">
-        <div className="flex gap-2">
-          <div className="flex-grow relative">
-            <div className="absolute left-2 sm:left-3 top-2 sm:top-2.5 text-white/70 pointer-events-none">
+        <div className="flex gap-2 sm:gap-3">
+          <div className="grow relative">
+            <div className="absolute left-3 sm:left-4 top-2 sm:top-3 text-white/70 pointer-events-none">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
+                className="h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -109,17 +109,17 @@ export default function SearchBar({
               placeholder="Busca..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-8 sm:pl-9 pr-8 py-2 border-2 border-white/30 bg-white/20 backdrop-blur-sm text-white placeholder-white/60 rounded-lg focus:outline-none focus:border-white focus:bg-white/30 transition-colors font-medium text-sm"
+              className="w-full pl-10 sm:pl-12 pr-10 py-2.5 sm:py-3 lg:py-4 border-2 border-white/30 bg-white/20 backdrop-blur-sm text-white placeholder-white/60 rounded-lg focus:outline-none focus:border-white focus:bg-white/30 transition-colors font-medium text-sm sm:text-base"
             />
             {searching && (
-              <div className="absolute right-2 sm:right-2.5 top-2">
-                <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
+              <div className="absolute right-10 sm:right-12 top-2.5 sm:top-3">
+                <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div>
               </div>
             )}
           </div>
           <button
             onClick={handleClear}
-            className="px-2.5 sm:px-3 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white rounded-lg font-medium transition-all text-sm"
+            className="shrink-0 px-3 sm:px-4 py-2.5 sm:py-3 lg:py-4 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white rounded-lg font-medium transition-all text-sm sm:text-base hover-lift"
             title="Limpiar búsqueda"
           >
             ✕

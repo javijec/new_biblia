@@ -121,10 +121,10 @@ export default function VerseItem({
               setHighlightedWord(cleanWord);
               onWordSearch?.(normalizedWord);
             }}
-            className={`px-0 rounded font-medium transition-all duration-150 cursor-pointer ${
+            className={`px-1 rounded font-medium transition-all duration-150 cursor-pointer text-sm sm:text-base ${
               highlightedWord === cleanWord
-                ? "bg-amber-400 text-amber-900 shadow-md"
-                : "bg-transparent hover:bg-amber-200 text-amber-900 hover:shadow-sm"
+                ? "bg-amber-400 text-amber-900 shadow-md scale-105"
+                : "bg-transparent hover:bg-amber-200 text-amber-900 hover:shadow-sm hover:scale-102"
             }`}
             title="Haz clic para buscar esta palabra"
           >
@@ -138,30 +138,30 @@ export default function VerseItem({
 
   return (
     <div
-      className={`flex gap-1.5 sm:gap-2 p-1 sm:p-1.5 rounded-lg cursor-pointer transition-all duration-200 ${
+      className={`flex gap-2 sm:gap-3 p-2 sm:p-3 lg:p-4 rounded-lg cursor-pointer transition-all duration-200 hover-lift ${
         isSelected
-          ? "bg-gradient-to-r from-amber-100 to-orange-100 border-l-2 sm:border-l-4 border-amber-700 shadow-md"
+          ? "bg-linear-to-r from-amber-100 to-orange-100 border-l-2 sm:border-l-4 border-amber-700 shadow-md"
           : "hover:bg-amber-50 border-l-2 sm:border-l-4 border-transparent"
       }`}
       onClick={() => onToggle(verse.number)}
     >
       {/* Verse Number */}
       <div
-        className="flex-shrink-0 font-bold text-amber-700 w-7 sm:w-10 text-sm sm:text-lg flex items-start justify-center pt-0.5 sm:pt-1"
+        className="shrink-0 font-bold text-amber-700 w-8 sm:w-10 lg:w-12 text-sm sm:text-base lg:text-lg flex items-start justify-center pt-0.5 sm:pt-1"
         style={{ fontFamily: "Georgia, serif" }}
       >
         {verse.number}
       </div>
 
       {/* Verse Text */}
-      <div className="flex-grow text-amber-900 leading-relaxed text-sm sm:text-base">
+      <div className="grow text-amber-900 leading-relaxed text-sm sm:text-base lg:text-lg">
         {renderClickableText()}
       </div>
 
       {/* Selection indicator */}
       {isSelected && (
-        <div className="flex-shrink-0 flex items-start justify-center pt-0.5 sm:pt-1">
-          <div className="w-5 h-5 sm:w-6 sm:h-6 bg-amber-700 rounded-full flex items-center justify-center">
+        <div className="shrink-0 flex items-start justify-center pt-0.5 sm:pt-1">
+          <div className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-amber-700 rounded-full flex items-center justify-center shadow-md">
             <span className="text-white font-bold text-xs sm:text-sm">✓</span>
           </div>
         </div>

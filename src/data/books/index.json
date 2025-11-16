@@ -46,6 +46,12 @@
       "chapters": 21
     },
     {
+      "id": "rut",
+      "name": "RUT",
+      "testament": "El Antiguo Testamento",
+      "chapters": 4
+    },
+    {
       "id": "primer-libro-de-samuel",
       "name": "PRIMER LIBRO DE SAMUEL",
       "testament": "El Antiguo Testamento",
@@ -70,64 +76,76 @@
       "chapters": 25
     },
     {
+      "id": "primer-libro-de-las-cronicas",
+      "name": "PRIMER LIBRO DE LAS CRONICAS",
+      "testament": "El Antiguo Testamento",
+      "chapters": 29
+    },
+    {
+      "id": "segundo-libro-de-las-cronicas",
+      "name": "SEGUNDO LIBRO DE LAS CRONICAS",
+      "testament": "El Antiguo Testamento",
+      "chapters": 36
+    },
+    {
+      "id": "esdras",
+      "name": "ESDRAS",
+      "testament": "El Antiguo Testamento",
+      "chapters": 10
+    },
+    {
+      "id": "nehemias",
+      "name": "NEHEMIAS",
+      "testament": "El Antiguo Testamento",
+      "chapters": 13
+    },
+    {
+      "id": "ester",
+      "name": "ESTER",
+      "testament": "El Antiguo Testamento",
+      "chapters": 10
+    },
+    {
+      "id": "ester-suplementos-griegos",
+      "name": "ESTER SUPLEMENTOS GRIEGOS",
+      "testament": "El Antiguo Testamento",
+      "chapters": 6
+    },
+    {
+      "id": "job",
+      "name": "JOB",
+      "testament": "El Antiguo Testamento",
+      "chapters": 42
+    },
+    {
+      "id": "salmos",
+      "name": "SALMOS",
+      "testament": "El Antiguo Testamento",
+      "chapters": 150
+    },
+    {
+      "id": "proverbios",
+      "name": "PROVERBIOS",
+      "testament": "El Antiguo Testamento",
+      "chapters": 31
+    },
+    {
+      "id": "eclesiastes",
+      "name": "ECLESIASTES",
+      "testament": "El Antiguo Testamento",
+      "chapters": 12
+    },
+    {
+      "id": "cantar-de-los-cantares",
+      "name": "CANTAR DE LOS CANTARES",
+      "testament": "El Antiguo Testamento",
+      "chapters": 8
+    },
+    {
       "id": "isaias",
       "name": "ISAIAS",
       "testament": "El Antiguo Testamento",
       "chapters": 66
-    },
-    {
-      "id": "carta-a-los-hebreos",
-      "name": "CARTA A LOS HEBREOS",
-      "testament": "El Nuevo Testamento",
-      "chapters": 13
-    },
-    {
-      "id": "carta-de-santiago",
-      "name": "CARTA DE SANTIAGO",
-      "testament": "El Nuevo Testamento",
-      "chapters": 5
-    },
-    {
-      "id": "primera-carta-de-san-pedro",
-      "name": "PRIMERA CARTA DE SAN PEDRO",
-      "testament": "El Nuevo Testamento",
-      "chapters": 5
-    },
-    {
-      "id": "segunda-carta-de-san-pedro",
-      "name": "SEGUNDA CARTA DE SAN PEDRO",
-      "testament": "El Nuevo Testamento",
-      "chapters": 3
-    },
-    {
-      "id": "primera-carta-de-san-juan",
-      "name": "PRIMERA CARTA DE SAN JUAN",
-      "testament": "El Nuevo Testamento",
-      "chapters": 5
-    },
-    {
-      "id": "segunda-carta-de-san-juan",
-      "name": "SEGUNDA CARTA DE SAN JUAN",
-      "testament": "El Nuevo Testamento",
-      "chapters": 1
-    },
-    {
-      "id": "tercera-carta-de-san-juan",
-      "name": "TERCERA CARTA DE SAN JUAN",
-      "testament": "El Nuevo Testamento",
-      "chapters": 1
-    },
-    {
-      "id": "carta-de-san-judas",
-      "name": "CARTA DE SAN JUDAS",
-      "testament": "El Nuevo Testamento",
-      "chapters": 1
-    },
-    {
-      "id": "apocalipsis",
-      "name": "APOCALIPSIS",
-      "testament": "El Nuevo Testamento",
-      "chapters": 22
     },
     {
       "id": "jeremias",
@@ -136,10 +154,28 @@
       "chapters": 52
     },
     {
+      "id": "lamentaciones",
+      "name": "LAMENTACIONES",
+      "testament": "El Antiguo Testamento",
+      "chapters": 5
+    },
+    {
       "id": "ezequiel",
       "name": "EZEQUIEL",
       "testament": "El Antiguo Testamento",
       "chapters": 48
+    },
+    {
+      "id": "daniel",
+      "name": "DANIEL",
+      "testament": "El Antiguo Testamento",
+      "chapters": 12
+    },
+    {
+      "id": "daniel-suplementos-griegos",
+      "name": "DANIEL SUPLEMENTOS GRIEGOS",
+      "testament": "El Antiguo Testamento",
+      "chapters": 3
     },
     {
       "id": "oseas",
@@ -214,100 +250,16 @@
       "chapters": 3
     },
     {
-      "id": "salmos",
-      "name": "SALMOS",
+      "id": "tobias",
+      "name": "TOBIAS",
       "testament": "El Antiguo Testamento",
-      "chapters": 150
-    },
-    {
-      "id": "job",
-      "name": "JOB",
-      "testament": "El Antiguo Testamento",
-      "chapters": 42
-    },
-    {
-      "id": "proverbios",
-      "name": "PROVERBIOS",
-      "testament": "El Antiguo Testamento",
-      "chapters": 31
-    },
-    {
-      "id": "rut",
-      "name": "RUT",
-      "testament": "El Antiguo Testamento",
-      "chapters": 4
-    },
-    {
-      "id": "cantar-de-los-cantares",
-      "name": "CANTAR DE LOS CANTARES",
-      "testament": "El Antiguo Testamento",
-      "chapters": 8
-    },
-    {
-      "id": "eclesiastes",
-      "name": "ECLESIASTES",
-      "testament": "El Antiguo Testamento",
-      "chapters": 12
-    },
-    {
-      "id": "lamentaciones",
-      "name": "LAMENTACIONES",
-      "testament": "El Antiguo Testamento",
-      "chapters": 5
-    },
-    {
-      "id": "ester",
-      "name": "ESTER",
-      "testament": "El Antiguo Testamento",
-      "chapters": 10
-    },
-    {
-      "id": "daniel",
-      "name": "DANIEL",
-      "testament": "El Antiguo Testamento",
-      "chapters": 12
-    },
-    {
-      "id": "primer-libro-de-las-cronicas",
-      "name": "PRIMER LIBRO DE LAS CRONICAS",
-      "testament": "El Antiguo Testamento",
-      "chapters": 29
-    },
-    {
-      "id": "segundo-libro-de-las-cronicas",
-      "name": "SEGUNDO LIBRO DE LAS CRONICAS",
-      "testament": "El Antiguo Testamento",
-      "chapters": 36
-    },
-    {
-      "id": "esdras",
-      "name": "ESDRAS",
-      "testament": "El Antiguo Testamento",
-      "chapters": 10
-    },
-    {
-      "id": "nehemias",
-      "name": "NEHEMIAS",
-      "testament": "El Antiguo Testamento",
-      "chapters": 13
-    },
-    {
-      "id": "ester-suplementos-griegos",
-      "name": "ESTER SUPLEMENTOS GRIEGOS",
-      "testament": "El Antiguo Testamento",
-      "chapters": 6
+      "chapters": 14
     },
     {
       "id": "judit",
       "name": "JUDIT",
       "testament": "El Antiguo Testamento",
       "chapters": 16
-    },
-    {
-      "id": "tobias",
-      "name": "TOBIAS",
-      "testament": "El Antiguo Testamento",
-      "chapters": 14
     },
     {
       "id": "primer-libro-de-los-macabeos",
@@ -344,12 +296,6 @@
       "name": "CARTA DE JEREMIAS",
       "testament": "El Antiguo Testamento",
       "chapters": 1
-    },
-    {
-      "id": "daniel-suplementos-griegos",
-      "name": "DANIEL SUPLEMENTOS GRIEGOS",
-      "testament": "El Antiguo Testamento",
-      "chapters": 3
     },
     {
       "id": "evangelio-segun-san-mateo",
@@ -458,6 +404,60 @@
       "name": "CARTA A FILEMON",
       "testament": "El Nuevo Testamento",
       "chapters": 1
+    },
+    {
+      "id": "carta-a-los-hebreos",
+      "name": "CARTA A LOS HEBREOS",
+      "testament": "El Nuevo Testamento",
+      "chapters": 13
+    },
+    {
+      "id": "carta-de-santiago",
+      "name": "CARTA DE SANTIAGO",
+      "testament": "El Nuevo Testamento",
+      "chapters": 5
+    },
+    {
+      "id": "primera-carta-de-san-pedro",
+      "name": "PRIMERA CARTA DE SAN PEDRO",
+      "testament": "El Nuevo Testamento",
+      "chapters": 5
+    },
+    {
+      "id": "segunda-carta-de-san-pedro",
+      "name": "SEGUNDA CARTA DE SAN PEDRO",
+      "testament": "El Nuevo Testamento",
+      "chapters": 3
+    },
+    {
+      "id": "primera-carta-de-san-juan",
+      "name": "PRIMERA CARTA DE SAN JUAN",
+      "testament": "El Nuevo Testamento",
+      "chapters": 5
+    },
+    {
+      "id": "segunda-carta-de-san-juan",
+      "name": "SEGUNDA CARTA DE SAN JUAN",
+      "testament": "El Nuevo Testamento",
+      "chapters": 1
+    },
+    {
+      "id": "tercera-carta-de-san-juan",
+      "name": "TERCERA CARTA DE SAN JUAN",
+      "testament": "El Nuevo Testamento",
+      "chapters": 1
+    },
+    {
+      "id": "carta-de-san-judas",
+      "name": "CARTA DE SAN JUDAS",
+      "testament": "El Nuevo Testamento",
+      "chapters": 1
+    },
+    {
+      "id": "apocalipsis",
+      "name": "APOCALIPSIS",
+      "testament": "El Nuevo Testamento",
+      "chapters": 22
     }
   ]
 }

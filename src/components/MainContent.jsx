@@ -65,97 +65,102 @@ export default function MainContent({
   }, []);
 
   return (
-    <div className="flex-grow min-w-0">
-      {/* Search Results */}
-      {searchResults && searchResults.length > 0 && (
-        <div className="mb-4 sm:mb-8 bg-gradient-to-r from-amber-50 to-orange-50 p-3 sm:p-6 lg:p-8 rounded-lg sm:rounded-2xl border border-amber-700 sm:border-2 shadow-xl">
-          <h2
-            className="text-sm sm:text-lg lg:text-2xl font-bold mb-3 sm:mb-4 lg:mb-6 text-amber-900"
-            style={{ fontFamily: "Georgia, serif" }}
-          >
-            🔍 {searchResults.length} versículos (
-            {countWordOccurrences(searchResults, searchResults[0]?.query)}{" "}
-            apariciones)
-          </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4">
-            {searchResults.slice(0, resultsVisible).map((result, idx) => (
-              <div
-                key={idx}
-                className="bg-white p-2 sm:p-3 lg:p-4 rounded-lg border-l-2 sm:border-l-4 border-amber-700 cursor-pointer hover:shadow-lg hover:scale-[1.02] transition-all duration-200 flex items-start gap-2 sm:gap-3"
-                onClick={() => {
-                  onSelectChapter(result.bookTitle, result.chapter || result);
-                  onSearch(null);
-                }}
-              >
-                <span
-                  className="font-bold text-amber-800 text-xs sm:text-sm lg:text-base flex-shrink-0 min-w-max"
-                  style={{ fontFamily: "Georgia, serif" }}
+    <div className="grow min-w-0 flex flex-col overflow-hidden">
+      {/* Content Area with Scroll */}
+      <div className="flex-1 overflow-y-auto custom-scrollbar">
+        {/* Search Results */}
+        {searchResults && searchResults.length > 0 && (
+          <div className="mb-4 sm:mb-8 bg-linear-to-r from-amber-50 to-orange-50 p-4 sm:p-6 lg:p-8 rounded-lg sm:rounded-2xl border-2 border-amber-700 shadow-xl hover-lift">
+            <h2
+              className="text-base sm:text-xl lg:text-2xl font-bold mb-4 sm:mb-6 lg:mb-8 text-amber-900"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
+              🔍 {searchResults.length} versículos (
+              {countWordOccurrences(searchResults, searchResults[0]?.query)}{" "}
+              apariciones)
+            </h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4">
+              {searchResults.slice(0, resultsVisible).map((result, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white p-3 sm:p-4 lg:p-5 rounded-lg border-l-4 border-amber-700 cursor-pointer hover:shadow-lg hover:scale-[1.02] transition-all duration-200 flex items-start gap-2 sm:gap-3 hover-lift"
+                  onClick={() => {
+                    onSelectChapter(result.bookTitle, result.chapter || result);
+                    onSearch(null);
+                  }}
                 >
-                  {result.bookTitle} {result.chapterNumber}:{result.verseNumber}
-                </span>
-                <p className="text-amber-900 text-xs sm:text-sm lg:text-base line-clamp-2 lg:line-clamp-3">
-                  {highlight(result.text, result.query)}
+                  <span
+                    className="font-bold text-amber-800 text-xs sm:text-sm lg:text-base shrink-0 min-w-max"
+                    style={{ fontFamily: "Georgia, serif" }}
+                  >
+                    {result.bookTitle} {result.chapterNumber}:
+                    {result.verseNumber}
+                  </span>
+                  <p className="text-amber-900 text-xs sm:text-sm lg:text-base line-clamp-2 lg:line-clamp-3">
+                    {highlight(result.text, result.query)}
+                  </p>
+                </div>
+              ))}
+            </div>
+            {searchResults.length > resultsVisible && (
+              <div className="mt-4 sm:mt-6 lg:mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+                <button
+                  className="w-full sm:w-auto px-6 py-3 sm:py-4 bg-linear-to-r from-amber-700 to-orange-700 text-white rounded-lg font-medium hover:shadow-xl transition-all duration-200 text-sm lg:text-base hover-lift"
+                  onClick={() => setResultsVisible((s) => s + 20)}
+                >
+                  Mostrar más
+                </button>
+                <p className="text-amber-800 text-xs sm:text-sm lg:text-base font-medium">
+                  {Math.min(resultsVisible, searchResults.length)} de{" "}
+                  {searchResults.length}
                 </p>
               </div>
-            ))}
+            )}
           </div>
-          {searchResults.length > resultsVisible && (
-            <div className="mt-3 sm:mt-4 lg:mt-6 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
-              <button
-                className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-amber-700 to-orange-700 text-white rounded-lg font-medium hover:shadow-xl hover:scale-105 transition-all duration-200 text-sm lg:text-base"
-                onClick={() => setResultsVisible((s) => s + 20)}
-              >
-                Mostrar más
-              </button>
-              <p className="text-amber-800 text-xs sm:text-sm lg:text-base font-medium">
-                {Math.min(resultsVisible, searchResults.length)} de{" "}
-                {searchResults.length}
-              </p>
-            </div>
-          )}
-        </div>
-      )}
+        )}
 
-      {/* Main Layout */}
-      {!searchResults || searchResults.length === 0 ? (
-        <div>
-          {selectedBook && selectedChapter ? (
-            <ChapterView
-              chapter={selectedChapter}
-              onWordSearch={handleWordSearch}
-            />
-          ) : selectedBook ? (
-            <div className="bg-amber-50 p-6 sm:p-12 lg:p-16 rounded-lg sm:rounded-2xl shadow-xl text-center border border-amber-700 sm:border-2">
-              <p className="text-amber-900 text-sm sm:text-lg lg:text-xl">
-                👆 Selecciona un capítulo para comenzar
-              </p>
-            </div>
-          ) : (
-            <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-6 sm:p-12 lg:p-20 rounded-lg sm:rounded-2xl shadow-xl text-center border border-amber-700 sm:border-2">
-              <div className="mb-3 sm:mb-4 lg:mb-6 text-3xl sm:text-5xl lg:text-7xl">
-                📚
-              </div>
-              <p
-                className="text-lg sm:text-2xl lg:text-4xl font-bold text-amber-900 mb-2 lg:mb-4"
-                style={{ fontFamily: "Georgia, serif" }}
-              >
-                Bienvenido a Biblia Digital
-              </p>
-              <p className="text-amber-800 dark:text-slate-400 mb-4 sm:mb-6 lg:mb-8 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto">
-                Selecciona un libro en el menú lateral para comenzar
-              </p>
-              <div className="text-amber-900 space-y-2 lg:space-y-3 bg-white/70 p-4 sm:p-6 lg:p-8 rounded-lg sm:rounded-xl border border-amber-700 max-w-xl mx-auto">
-                <p
-                  className="text-sm sm:text-base lg:text-lg"
-                  style={{ fontFamily: "Georgia, serif" }}
-                >
-                  ✨ Versión: Biblia del Pueblo de Dios
+        {/* Main Layout */}
+        {!searchResults || searchResults.length === 0 ? (
+          <div>
+            {selectedBook && selectedChapter ? (
+              <ChapterView
+                chapter={selectedChapter}
+                onWordSearch={handleWordSearch}
+              />
+            ) : selectedBook ? (
+              <div className="bg-amber-50 p-6 sm:p-12 lg:p-16 rounded-lg sm:rounded-2xl shadow-xl text-center border-2 border-amber-700 hover-lift">
+                <p className="text-amber-900 text-base sm:text-lg lg:text-xl font-medium">
+                  👆 Selecciona un capítulo para comenzar
                 </p>
               </div>
-            </div>
-          )}
-        </div>
-      ) : null}
+            ) : (
+              <div className="bg-linear-to-br from-amber-50 to-orange-50 p-6 sm:p-12 lg:p-20 rounded-lg sm:rounded-2xl shadow-xl text-center border-2 border-amber-700 hover-lift">
+                <div className="mb-4 sm:mb-6 lg:mb-8 text-4xl sm:text-6xl lg:text-8xl">
+                  📚
+                </div>
+                <p
+                  className="text-xl sm:text-3xl lg:text-4xl font-bold text-amber-900 mb-3 lg:mb-6"
+                  style={{ fontFamily: "Georgia, serif" }}
+                >
+                  Bienvenido a Biblia Digital
+                </p>
+                <p className="text-amber-800 mb-6 sm:mb-8 lg:mb-10 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
+                  Selecciona un libro en el menú lateral para comenzar a
+                  explorar
+                </p>
+                <div className="text-amber-900 space-y-3 lg:space-y-4 bg-white/70 p-4 sm:p-6 lg:p-8 rounded-lg sm:rounded-xl border-2 border-amber-700 max-w-xl mx-auto shadow-md">
+                  <p
+                    className="text-sm sm:text-base lg:text-lg font-semibold"
+                    style={{ fontFamily: "Georgia, serif" }}
+                  >
+                    ✨ Versión: Biblia del Pueblo de Dios
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }
