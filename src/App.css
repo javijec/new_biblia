@@ -13,7 +13,7 @@
 }
 
 body {
-  font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
+  font-family: "Georgia", "Garamond", "Times New Roman", serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: linear-gradient(135deg, #faf6f1 0%, #f5f0e8 100%);
@@ -29,18 +29,27 @@ html {
 
 /* Custom scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
+}
+
+@media (min-width: 768px) {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
   background: var(--parchment);
+  border-radius: 6px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #c9a876, #a0826d);
-  border-radius: 5px;
+  border-radius: 6px;
   transition: background 0.3s ease;
+  border: 2px solid var(--parchment);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
@@ -53,13 +62,33 @@ html {
   scrollbar-width: thin;
 }
 
+@media (min-width: 1024px) {
+  .custom-scrollbar {
+    scrollbar-width: auto;
+  }
+}
+
 /* Highlight de búsqueda tipo libro */
 mark {
   background-color: #fef3c7;
-  padding: 0 0.25rem;
-  border-radius: 0.25rem;
+  padding: 0 0.15rem;
+  border-radius: 0.2rem;
   font-weight: 600;
   color: #78350f;
+}
+
+@media (min-width: 640px) {
+  mark {
+    padding: 0 0.25rem;
+    border-radius: 0.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  mark {
+    padding: 0 0.35rem;
+    border-radius: 0.3rem;
+  }
 }
 
 /* Animaciones personalizadas */
@@ -101,6 +130,13 @@ mark {
   box-shadow: 0 10px 15px -3px var(--shadow-color);
 }
 
+@media (min-width: 1024px) {
+  .hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 25px -5px var(--shadow-color);
+  }
+}
+
 /* Backdrop blur para efectos de cristal */
 .glass {
   background: rgba(250, 246, 241, 0.95);
@@ -124,13 +160,85 @@ mark {
   box-shadow: 0 4px 6px -1px var(--shadow-color);
 }
 
+@media (min-width: 1024px) {
+  .book-light-shadow {
+    box-shadow: 0 10px 15px -3px var(--shadow-color);
+  }
+}
+
 /* Responsividad mejorada */
 @media (max-width: 768px) {
   .text-3xl {
-    font-size: 1.875rem;
+    font-size: 1.5rem;
   }
 
   .p-6 {
-    padding: 1rem;
+    padding: 0.75rem;
+  }
+
+  /* Mejoras de touch para mobile */
+  button,
+  a {
+    -webkit-tap-highlight-color: rgba(217, 119, 6, 0.2);
+  }
+
+  /* Mejor espaciado en mobile */
+  body {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .text-3xl {
+    font-size: 1.25rem;
+  }
+
+  .text-2xl {
+    font-size: 1.125rem;
+  }
+
+  body {
+    font-size: 13px;
+  }
+}
+
+/* Desktop enhancements */
+@media (min-width: 1024px) {
+  body {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* Better text rendering for large screens */
+  * {
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Smooth transitions for interactive elements */
+  button,
+  a,
+  input,
+  select {
+    transition: all 0.2s ease;
+  }
+
+  /* Enhanced shadow for depth */
+  .shadow-lg {
+    box-shadow:
+      0 10px 15px -3px rgba(61, 40, 23, 0.1),
+      0 4px 6px -2px rgba(61, 40, 23, 0.05);
+  }
+
+  .shadow-xl {
+    box-shadow:
+      0 20px 25px -5px rgba(61, 40, 23, 0.1),
+      0 10px 10px -5px rgba(61, 40, 23, 0.04);
+  }
+}
+
+@media (min-width: 1536px) {
+  body {
+    font-size: 18px;
+    line-height: 1.8;
   }
 }

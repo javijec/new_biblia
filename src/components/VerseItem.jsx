@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-export default function VerseItem({ verse, isSelected, onToggle, onWordSearch }) {
+export default function VerseItem({
+  verse,
+  isSelected,
+  onToggle,
+  onWordSearch,
+}) {
   const [highlightedWord, setHighlightedWord] = useState(null);
 
   // Renderizar el texto con palabras clickeables
@@ -8,16 +13,70 @@ export default function VerseItem({ verse, isSelected, onToggle, onWordSearch })
     if (!onWordSearch) return verse.text;
 
     const words = verse.text.split(/(\s+)/); // Mantener espacios
-    const punctuationSet = new Set('.,;:!?"\'""\'\'—-«»');
+    const punctuationSet = new Set(".,;:!?\"'\"\"''—-«»");
     // Palabras comunes no seleccionables (conectores, artículos, preposiciones)
     const commonWords = new Set([
-      'a', 'o', 'y', 'e', 'u', 'de', 'del', 'el', 'la', 'lo', 'las', 'los', 'un', 'una', 'unos', 'unas',
-      'al', 'en', 'con', 'por', 'para', 'sin', 'sobre', 'entre', 'hasta', 'ante', 'bajo', 'cabe', 'desde',
-      'es', 'era', 'eres', 'soy', 'somos', 'son', 'sea', 'sean', 'fue', 'fueron', 'ser', 'seré',
-      'hay', 'haya', 'había', 'habría', 'habla', 'hablan', 'hablaban', 'hablará',
-      'que', 'cual', 'cuales', 'quien', 'quienes', 'donde', 'cuando', 'como', 'cuanto', 'cuantos'
+      "a",
+      "o",
+      "y",
+      "e",
+      "u",
+      "de",
+      "del",
+      "el",
+      "la",
+      "lo",
+      "las",
+      "los",
+      "un",
+      "una",
+      "unos",
+      "unas",
+      "al",
+      "en",
+      "con",
+      "por",
+      "para",
+      "sin",
+      "sobre",
+      "entre",
+      "hasta",
+      "ante",
+      "bajo",
+      "cabe",
+      "desde",
+      "es",
+      "era",
+      "eres",
+      "soy",
+      "somos",
+      "son",
+      "sea",
+      "sean",
+      "fue",
+      "fueron",
+      "ser",
+      "seré",
+      "hay",
+      "haya",
+      "había",
+      "habría",
+      "habla",
+      "hablan",
+      "hablaban",
+      "hablará",
+      "que",
+      "cual",
+      "cuales",
+      "quien",
+      "quienes",
+      "donde",
+      "cuando",
+      "como",
+      "cuanto",
+      "cuantos",
     ]);
-    
+
     return words.map((word, index) => {
       // Mantener espacios como está
       if (/^\s+$/.test(word)) {
@@ -27,12 +86,12 @@ export default function VerseItem({ verse, isSelected, onToggle, onWordSearch })
       // Encontrar donde comienza y termina la palabra real (sin puntuación)
       let startIdx = 0;
       let endIdx = word.length;
-      
+
       // Remover puntuación del inicio
       while (startIdx < word.length && punctuationSet.has(word[startIdx])) {
         startIdx++;
       }
-      
+
       // Remover puntuación del final
       while (endIdx > startIdx && punctuationSet.has(word[endIdx - 1])) {
         endIdx--;
@@ -41,14 +100,17 @@ export default function VerseItem({ verse, isSelected, onToggle, onWordSearch })
       const leadingPunctuation = word.slice(0, startIdx);
       const cleanWord = word.slice(startIdx, endIdx);
       const trailingPunctuation = word.slice(endIdx);
-      
+
       // No hacer seleccionables palabras muy cortas o conectores comunes
       if (cleanWord.length <= 2 || commonWords.has(cleanWord.toLowerCase())) {
         return <span key={index}>{word}</span>;
       }
 
       // Normalizar para búsqueda (remover acentos)
-      const normalizedWord = cleanWord.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+      const normalizedWord = cleanWord
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
 
       return (
         <span key={index}>
@@ -61,8 +123,8 @@ export default function VerseItem({ verse, isSelected, onToggle, onWordSearch })
             }}
             className={`px-0 rounded font-medium transition-all duration-150 cursor-pointer ${
               highlightedWord === cleanWord
-                ? 'bg-amber-400 dark:bg-amber-500 text-slate-900 dark:text-white shadow-md'
-                : 'bg-transparent hover:bg-amber-200 dark:hover:bg-amber-600/60 text-slate-800 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white hover:shadow-sm'
+                ? "bg-amber-400 text-amber-900 shadow-md"
+                : "bg-transparent hover:bg-amber-200 text-amber-900 hover:shadow-sm"
             }`}
             title="Haz clic para buscar esta palabra"
           >
@@ -76,28 +138,31 @@ export default function VerseItem({ verse, isSelected, onToggle, onWordSearch })
 
   return (
     <div
-      className={`flex gap-2 p-1 rounded-lg cursor-pointer transition-all duration-200 ${
+      className={`flex gap-1.5 sm:gap-2 p-1 sm:p-1.5 rounded-lg cursor-pointer transition-all duration-200 ${
         isSelected
-          ? 'bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 border-l-4 border-blue-600 shadow-md'
-          : 'hover:bg-slate-50 dark:hover:bg-slate-700/50 border-l-4 border-transparent'
+          ? "bg-gradient-to-r from-amber-100 to-orange-100 border-l-2 sm:border-l-4 border-amber-700 shadow-md"
+          : "hover:bg-amber-50 border-l-2 sm:border-l-4 border-transparent"
       }`}
       onClick={() => onToggle(verse.number)}
     >
       {/* Verse Number */}
-      <div className="flex-shrink-0 font-bold text-blue-600 dark:text-blue-400 w-10 text-lg flex items-start justify-center pt-1">
+      <div
+        className="flex-shrink-0 font-bold text-amber-700 w-7 sm:w-10 text-sm sm:text-lg flex items-start justify-center pt-0.5 sm:pt-1"
+        style={{ fontFamily: "Georgia, serif" }}
+      >
         {verse.number}
       </div>
 
       {/* Verse Text */}
-      <div className="flex-grow text-slate-800 dark:text-slate-200 leading-relaxed text-base">
+      <div className="flex-grow text-amber-900 leading-relaxed text-sm sm:text-base">
         {renderClickableText()}
       </div>
 
       {/* Selection indicator */}
       {isSelected && (
-        <div className="flex-shrink-0 flex items-start justify-center pt-1">
-          <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
-            <span className="text-white font-bold text-sm">✓</span>
+        <div className="flex-shrink-0 flex items-start justify-center pt-0.5 sm:pt-1">
+          <div className="w-5 h-5 sm:w-6 sm:h-6 bg-amber-700 rounded-full flex items-center justify-center">
+            <span className="text-white font-bold text-xs sm:text-sm">✓</span>
           </div>
         </div>
       )}
