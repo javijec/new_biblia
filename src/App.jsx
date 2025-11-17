@@ -80,9 +80,6 @@ function App() {
             lineHeight: 1.7,
           },
         },
-        shape: {
-          borderRadius: 12,
-        },
         components: {
           MuiAppBar: {
             styleOverrides: {
@@ -122,7 +119,6 @@ function App() {
             sx={{
               p: 6,
               textAlign: "center",
-              borderRadius: 4,
               background: "rgba(255, 255, 255, 0.95)",
             }}
           >
@@ -154,7 +150,6 @@ function App() {
             sx={{
               p: 6,
               textAlign: "center",
-              borderRadius: 4,
               border: "2px solid",
               borderColor: "primary.main",
             }}

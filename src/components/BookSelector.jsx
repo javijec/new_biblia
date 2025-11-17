@@ -88,11 +88,10 @@ export default function BookSelector({
               setExpandedBooks(next);
             }}
             sx={{
-              justifyContent: "space-between",
+              //justifyContent: "space-between",
               textTransform: "none",
               py: 1.5,
               px: 2,
-              borderRadius: 2,
               fontWeight: 600,
               fontSize: "0.95rem",
               background: isExpanded
@@ -150,7 +149,7 @@ export default function BookSelector({
                           })
                         }
                         sx={{
-                          minWidth: 40,
+                          width: 45,
                           fontWeight: 600,
                           cursor: "pointer",
                           background: "white",
@@ -160,7 +159,6 @@ export default function BookSelector({
                             background: "primary.main",
                             color: "white",
                             borderColor: "primary.dark",
-                            transform: "scale(1.1)",
                           },
                           transition: "all 0.2s ease",
                         }}
@@ -197,10 +195,9 @@ export default function BookSelector({
         sx={{
           position: "sticky",
           top: 0,
-          zIndex: 10,
+          zIndex: 1,
           background: alpha("#fffbeb", 0.95),
           backdropFilter: "blur(8px)",
-          pb: 1,
         }}
       >
         <TextField
@@ -218,7 +215,6 @@ export default function BookSelector({
           }}
           sx={{
             "& .MuiOutlinedInput-root": {
-              borderRadius: 2,
               background: "white",
               "& fieldset": {
                 borderColor: "primary.light",
@@ -248,7 +244,6 @@ export default function BookSelector({
             textTransform: "none",
             py: 2,
             px: 2.5,
-            borderRadius: 2,
             fontWeight: 700,
             fontSize: "1rem",
             background: "linear-gradient(135deg, #d97706 0%, #ea580c 100%)",
@@ -305,7 +300,6 @@ export default function BookSelector({
             textTransform: "none",
             py: 2,
             px: 2.5,
-            borderRadius: 2,
             fontWeight: 700,
             fontSize: "1rem",
             background: "linear-gradient(135deg, #dc2626 0%, #e11d48 100%)",
