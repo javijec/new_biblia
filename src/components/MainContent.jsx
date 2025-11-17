@@ -84,7 +84,6 @@ export default function MainContent({
           sx={{
             mb: 4,
             p: { xs: 3, md: 4 },
-            borderRadius: 3,
             background: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)",
             border: "2px solid",
             borderColor: "primary.main",
@@ -176,7 +175,6 @@ export default function MainContent({
                 sx={{
                   px: 4,
                   py: 1.5,
-                  borderRadius: 2,
                   fontWeight: 600,
                   background:
                     "linear-gradient(135deg, #d97706 0%, #f59e0b 100%)",
@@ -216,9 +214,8 @@ export default function MainContent({
             <Paper
               elevation={3}
               sx={{
-                p: { xs: 6, md: 12 },
+                p: { xs: 2, md: 2 },
                 textAlign: "center",
-                borderRadius: 3,
                 border: "2px solid",
                 borderColor: "primary.main",
                 background: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)",
@@ -232,9 +229,8 @@ export default function MainContent({
             <Paper
               elevation={4}
               sx={{
-                p: { xs: 6, md: 16 },
+                p: { xs: 6, md: 6 },
                 textAlign: "center",
-                borderRadius: 4,
                 border: "2px solid",
                 borderColor: "primary.main",
                 background: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)",
@@ -270,7 +266,6 @@ export default function MainContent({
                 elevation={2}
                 sx={{
                   p: { xs: 3, md: 4 },
-                  borderRadius: 3,
                   border: "2px solid",
                   borderColor: "primary.light",
                   maxWidth: 500,
@@ -351,7 +346,6 @@ function highlight(text, query) {
         style={{
           backgroundColor: "#fef08a",
           padding: "2px 4px",
-          borderRadius: "4px",
           fontWeight: 600,
         }}
       >

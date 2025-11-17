@@ -48,7 +48,6 @@ export default function ChapterView({ chapter, onWordSearch }) {
         sx={{
           p: { xs: 6, md: 8 },
           textAlign: "center",
-          borderRadius: 3,
           border: "2px solid",
           borderColor: "primary.main",
         }}
@@ -64,7 +63,6 @@ export default function ChapterView({ chapter, onWordSearch }) {
     <Paper
       elevation={4}
       sx={{
-        borderRadius: 3,
         overflow: "hidden",
         border: "2px solid",
         borderColor: "primary.main",
@@ -111,7 +109,6 @@ export default function ChapterView({ chapter, onWordSearch }) {
           sx={{
             px: { xs: 2, md: 3 },
             py: { xs: 1, md: 1.5 },
-            borderRadius: 2,
             fontWeight: 600,
             background: copySuccess
               ? "linear-gradient(135deg, #16a34a 0%, #22c55e 100%)"
@@ -145,7 +142,6 @@ export default function ChapterView({ chapter, onWordSearch }) {
             sx={{
               px: { xs: 2, md: 3 },
               py: { xs: 1, md: 1.5 },
-              borderRadius: 2,
               fontWeight: 600,
               borderWidth: 2,
               borderColor: "primary.main",
@@ -193,11 +189,9 @@ export default function ChapterView({ chapter, onWordSearch }) {
           },
           "&::-webkit-scrollbar-track": {
             background: "#fef3c7",
-            borderRadius: "5px",
           },
           "&::-webkit-scrollbar-thumb": {
             background: "linear-gradient(180deg, #d97706, #b45309)",
-            borderRadius: "5px",
             "&:hover": {
               background: "#92400e",
             },

@@ -51,11 +51,9 @@ export default function Sidebar({
           },
           "&::-webkit-scrollbar-track": {
             background: "#fef3c7",
-            borderRadius: "4px",
           },
           "&::-webkit-scrollbar-thumb": {
             background: "linear-gradient(180deg, #d97706, #b45309)",
-            borderRadius: "4px",
             "&:hover": {
               background: "#92400e",
             },

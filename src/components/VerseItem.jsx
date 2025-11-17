@@ -152,9 +152,8 @@ export default function VerseItem({
       onClick={() => onToggle(verse.number)}
       sx={{
         display: "flex",
-        gap: { xs: 1.5, md: 2 },
-        p: { xs: 1.5, md: 2.5 },
-        borderRadius: 2,
+        gap: { xs: 1, md: 1 },
+        p: { xs: 1, md: 1 },
         cursor: "pointer",
         borderLeft: "4px solid",
         borderColor: isSelected ? "primary.main" : "transparent",
