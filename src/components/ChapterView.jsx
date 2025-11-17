@@ -69,119 +69,120 @@ export default function ChapterView({ chapter, onWordSearch }) {
       }}
     >
       {/* Header */}
-      <Box
+<Box
+  sx={{
+    background: "linear-gradient(135deg, #d97706 0%, #f59e0b 100%)",
+    color: "white",
+    p: { xs: 3, md: 4 },
+    display: "flex",           // 🔥 Nuevo
+    justifyContent: "space-between", // 🔥 Nuevo
+    alignItems: "center",      // 🔥 Nuevo
+    gap: 2                     // (opcional)
+  }}
+>
+  {/* Título a la izquierda */}
+  <Typography
+    variant="h4"
+    sx={{
+      fontWeight: 700,
+      fontFamily: "Georgia, serif",
+      fontSize: { xs: "1.75rem", md: "2.5rem" },
+      color: "white",
+    }}
+  >
+    {chapter.bookTitle} {chapter.chapterNumber || chapter.number}
+  </Typography>
+
+  {/* Contenedor derecho: botones + chip */}
+  <Box
+    sx={{
+      display: "flex",
+      alignItems: "center",
+      gap: 2, // espacio entre botones y chip
+    }}
+  >
+<Button
+  variant="contained"
+  onClick={copySelected}
+  disabled={selectedVerses.size === 0}
+  startIcon={copySuccess ? <CheckIcon /> : <ContentCopyIcon />}
+  sx={{
+    px: { xs: 2, md: 3 },
+    py: { xs: 1, md: 1.5 },
+    fontWeight: 700,
+    background: copySuccess
+      ? "#22c55e"
+      : selectedVerses.size === 0
+        ? "rgba(255,255,255,0.35)"
+        : "#ffffff",
+    color:
+      copySuccess || selectedVerses.size === 0
+        ? "white"
+        : "#b45309",
+    border: selectedVerses.size > 0 ? "2px solid #b45309" : "none",
+    "&:hover": {
+      background: copySuccess ? "#16a34a" : "#fef3c7",
+      transform:
+        selectedVerses.size === 0 ? "none" : "translateY(-2px)",
+      boxShadow: selectedVerses.size === 0 ? 0 : 4,
+    },
+    "&:disabled": {
+      color: "rgba(0,0,0,0.3)",
+    },
+    transition: "all 0.3s ease",
+  }}
+>
+  {copySuccess ? `Copiado` : `Copiar (${selectedVerses.size})`}
+</Button>
+
+
+    {selectedVerses.size > 0 && (
+<Button
+  variant="outlined"
+  onClick={() => setSelectedVerses(new Set())}
+  startIcon={<ClearIcon />}
+  sx={{
+    px: { xs: 2, md: 3 },
+    py: { xs: 1, md: 1.5 },
+    fontWeight: 700,
+    borderWidth: 2,
+    borderColor: "#fafafa",
+    color: "white",
+    "&:hover": {
+      borderColor: "white",
+      background: "rgba(255,255,255,0.15)",
+      transform: "translateY(-2px)",
+      boxShadow: 3,
+    },
+    transition: "all 0.3s ease",
+  }}
+>
+  Limpiar
+</Button>
+
+    )}
+
+    {selectedVerses.size > 0 && (
+      <Chip
+        label={selectedVerses.size}
         sx={{
-          background: "linear-gradient(135deg, #d97706 0%, #f59e0b 100%)",
-          color: "white",
-          p: { xs: 3, md: 4 },
+          background: "white",
+          color: "#d97706",
+          fontWeight: 700,
+          fontSize: { xs: "0.9rem", md: "1rem" },
+          height: { xs: 32, md: 36 },
+          "& .MuiChip-label": {
+            px: 2,
+          },
         }}
-      >
-        <Typography
-          variant="h4"
-          sx={{
-            fontWeight: 700,
-            fontFamily: "Georgia, serif",
-            fontSize: { xs: "1.75rem", md: "2.5rem" },
-          }}
-        >
-          {chapter.bookTitle} {chapter.chapterNumber || chapter.number}
-        </Typography>
-      </Box>
-
-      {/* Toolbar */}
-      <Box
-        sx={{
-          borderBottom: "2px solid",
-          borderColor: "primary.light",
-          p: { xs: 2, md: 3 },
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 2,
-          alignItems: "center",
-          background: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)",
-        }}
-      >
-        <Button
-          variant="contained"
-          onClick={copySelected}
-          disabled={selectedVerses.size === 0}
-          startIcon={copySuccess ? <CheckIcon /> : <ContentCopyIcon />}
-          sx={{
-            px: { xs: 2, md: 3 },
-            py: { xs: 1, md: 1.5 },
-            fontWeight: 600,
-            background: copySuccess
-              ? "linear-gradient(135deg, #16a34a 0%, #22c55e 100%)"
-              : selectedVerses.size === 0
-                ? alpha("#d97706", 0.3)
-                : "linear-gradient(135deg, #d97706 0%, #f59e0b 100%)",
-            "&:hover": {
-              background: copySuccess
-                ? "linear-gradient(135deg, #15803d 0%, #16a34a 100%)"
-                : selectedVerses.size === 0
-                  ? alpha("#d97706", 0.3)
-                  : "linear-gradient(135deg, #b45309 0%, #d97706 100%)",
-              transform:
-                selectedVerses.size === 0 ? "none" : "translateY(-2px)",
-              boxShadow: selectedVerses.size === 0 ? 0 : 3,
-            },
-            "&:disabled": {
-              color: "rgba(0, 0, 0, 0.26)",
-            },
-            transition: "all 0.3s ease",
-          }}
-        >
-          {copySuccess ? `Copiado` : `Copiar (${selectedVerses.size})`}
-        </Button>
-
-        {selectedVerses.size > 0 && (
-          <Button
-            variant="outlined"
-            onClick={() => setSelectedVerses(new Set())}
-            startIcon={<ClearIcon />}
-            sx={{
-              px: { xs: 2, md: 3 },
-              py: { xs: 1, md: 1.5 },
-              fontWeight: 600,
-              borderWidth: 2,
-              borderColor: "primary.main",
-              color: "primary.dark",
-              "&:hover": {
-                borderWidth: 2,
-                background: alpha("#d97706", 0.1),
-                transform: "translateY(-2px)",
-                boxShadow: 2,
-              },
-              transition: "all 0.3s ease",
-            }}
-          >
-            Limpiar
-          </Button>
-        )}
-
-        <Box sx={{ ml: "auto" }}>
-          {selectedVerses.size > 0 && (
-            <Chip
-              label={selectedVerses.size}
-              sx={{
-                background: "linear-gradient(135deg, #d97706 0%, #f59e0b 100%)",
-                color: "white",
-                fontWeight: 700,
-                fontSize: { xs: "0.9rem", md: "1rem" },
-                height: { xs: 32, md: 36 },
-                "& .MuiChip-label": {
-                  px: 2,
-                },
-              }}
-            />
-          )}
-        </Box>
-      </Box>
+      />
+    )}
+  </Box>
+</Box>
 
       {/* Content */}
       <Box
         sx={{
-          p: { xs: 2, md: 4 },
           maxHeight: { xs: "60vh", md: "65vh" },
           overflow: "auto",
           "&::-webkit-scrollbar": {
@@ -207,7 +208,7 @@ export default function ChapterView({ chapter, onWordSearch }) {
               onWordSearch={onWordSearch}
             />
             {index < chapter.verses.length - 1 && (
-              <Divider sx={{ my: 1, opacity: 0.3 }} />
+              <Divider sx={{ my: 0, opacity: 0.3 }} />
             )}
           </React.Fragment>
         ))}
