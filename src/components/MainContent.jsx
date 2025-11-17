@@ -229,7 +229,7 @@ export default function MainContent({
             <Paper
               elevation={4}
               sx={{
-                p: { xs: 6, md: 6 },
+                p: { xs: 2, md: 6 },
                 textAlign: "center",
                 border: "2px solid",
                 borderColor: "primary.main",

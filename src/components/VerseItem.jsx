@@ -172,7 +172,6 @@ export default function VerseItem({
               alpha("#f59e0b", 0.2) +
               " 100%)"
             : alpha("#fef3c7", 0.5),
-          transform: "translateX(4px)",
         },
         transition: "all 0.3s ease",
       }}
