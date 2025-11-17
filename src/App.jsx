@@ -243,9 +243,10 @@ function App() {
                   fontWeight: 700,
                   display: { xs: "none", sm: "block" },
                   fontFamily: "Georgia, serif",
+                  color: "white",
                 }}
               >
-                Biblia Digital
+                La Biblia del pueblo de Dios
               </Typography>
               <Typography
                 variant="h6"
