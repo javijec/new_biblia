@@ -1,284 +1,271 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useBible } from "../context/BibleContext";
 import {
   Box,
-  Collapse,
   TextField,
   Typography,
   IconButton,
-  Chip,
-  CircularProgress,
   InputAdornment,
   List,
   ListItemButton,
   ListItemText,
   Divider,
   alpha,
+  Button,
+  Fade,
+  Tabs,
+  Tab
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 export default function BookSelector({
   data,
   onNavigate,
-  onTestamentChange,
 }) {
-  const [expandedTestament, setExpandedTestament] = useState("old");
-  const [expandedBooks, setExpandedBooks] = useState(new Set());
-  const [bookChapters, setBookChapters] = useState({});
-  const [loadingBook, setLoadingBook] = useState(null);
+  const [selectedBook, setSelectedBook] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [tabValue, setTabValue] = useState(0); // 0: Old, 1: New
   const { loadBook } = useBible();
+  const [chapters, setChapters] = useState([]);
+  const [loadingChapters, setLoadingChapters] = useState(false);
 
-  const loadBookChapters = async (bookId) => {
-    if (bookChapters[bookId]) {
-      return bookChapters[bookId];
-    }
-
-    setLoadingBook(bookId);
-    try {
-      const book = await loadBook(bookId);
-      if (book && book.chapters) {
-        setBookChapters((prev) => ({ ...prev, [bookId]: book.chapters }));
-      }
-    } catch (error) {
-      console.error(`Error cargando capítulos del libro ${bookId}:`, error);
-    }
-    setLoadingBook(null);
-  };
-
-  const filterBooks = (books) => {
-    if (!searchTerm.trim()) return books;
+  // Filter books based on search
+  const filteredBooks = useMemo(() => {
+    if (!data) return { old: [], new: [] };
     const term = searchTerm.toLowerCase();
-    return books.filter((book) => book.name.toLowerCase().includes(term));
+    const filter = (books) => books.filter(b => b.name.toLowerCase().includes(term));
+    return {
+      old: filter(data.testaments.old),
+      new: filter(data.testaments.new)
+    };
+  }, [data, searchTerm]);
+
+  const handleBookClick = async (book) => {
+    setSelectedBook(book);
+    setLoadingChapters(true);
+    try {
+      const fullBook = await loadBook(book.id);
+      setChapters(fullBook.chapters || []);
+    } catch (error) {
+      console.error("Error loading chapters", error);
+    } finally {
+      setLoadingChapters(false);
+    }
   };
 
-  const renderBooks = (testament) => {
-    const books = filterBooks(data.testaments[testament] || []);
+  const handleBackToBooks = () => {
+    setSelectedBook(null);
+    setChapters([]);
+  };
 
-    if (books.length === 0) {
-      return (
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          sx={{ p: 2, textAlign: "center", fontStyle: "italic" }}
-        >
-          No se encontraron libros
-        </Typography>
-      );
-    }
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
+
+  const renderBookList = () => {
+    const isSearching = searchTerm.length > 0;
 
     return (
-      <List disablePadding>
-        {books.map((book) => {
-          const chapters = bookChapters[book.id] || [];
-          const bookName = book.name;
-          const isExpanded = expandedBooks.has(book.id);
-          const isLoading = loadingBook === book.id;
+      <Box>
+        <Box
+          sx={{
+            position: "sticky",
+            top: 0,
+            bgcolor: "background.paper",
+            zIndex: 10,
+            pb: 1,
+            pt: 2, // Add top padding
+            mx: -2, // Counteract parent padding
+            px: 2, // Restore internal padding
+            borderBottom: "1px solid",
+            borderColor: "divider"
+          }}
+        >
+          <TextField
+            fullWidth
+            size="small"
+            placeholder="Buscar libro..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon fontSize="small" color="action" />
+                </InputAdornment>
+              ),
+              endAdornment: searchTerm && (
+                <IconButton size="small" onClick={() => setSearchTerm("")}>
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              ),
+            }}
+            sx={{
+              mb: 1,
+              "& .MuiOutlinedInput-root": {
+                bgcolor: "background.paper",
+              },
+            }}
+          />
 
-          return (
-            <Box key={book.id} sx={{ mb: 0.5 }}>
-              <ListItemButton
-                onClick={() => {
-                  const next = new Set(expandedBooks);
-                  if (next.has(book.id)) {
-                    next.delete(book.id);
-                  } else {
-                    next.add(book.id);
-                    loadBookChapters(book.id);
-                  }
-                  setExpandedBooks(next);
-                }}
-                selected={isExpanded}
-                sx={{
-                  borderRadius: 1,
-                  py: 1,
-                  "&.Mui-selected": {
-                    bgcolor: (theme) => alpha(theme.palette.primary.main, 0.1),
-                    color: "primary.main",
-                    "&:hover": {
-                      bgcolor: (theme) => alpha(theme.palette.primary.main, 0.2),
-                    },
-                  },
-                }}
-              >
-                <ListItemText
-                  primary={bookName}
-                  primaryTypographyProps={{
-                    fontWeight: isExpanded ? 700 : 500,
-                    fontSize: "0.95rem",
-                  }}
-                />
-                {isExpanded ? (
-                  <ExpandLessIcon fontSize="small" color="primary" />
-                ) : (
-                  <ExpandMoreIcon fontSize="small" color="action" />
-                )}
-              </ListItemButton>
+          {!isSearching && (
+            <Tabs
+              value={tabValue}
+              onChange={handleTabChange}
+              variant="fullWidth"
+              indicatorColor="primary"
+              textColor="primary"
+              sx={{ minHeight: 40, "& .MuiTab-root": { minHeight: 40, py: 1 } }}
+            >
+              <Tab label="Antiguo" />
+              <Tab label="Nuevo" />
+            </Tabs>
+          )}
+        </Box>
 
-              <Collapse in={isExpanded} timeout="auto" unmountOnExit>
-                <Box sx={{ p: 2, bgcolor: "action.hover", borderRadius: 1, mt: 0.5 }}>
-                  {isLoading ? (
-                    <Box sx={{ display: "flex", justifyContent: "center", py: 2 }}>
-                      <CircularProgress size={24} />
-                    </Box>
-                  ) : (
-                    <Box
-                      sx={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(auto-fill, minmax(40px, 1fr))",
-                        gap: 1,
-                      }}
-                    >
-                      {chapters
-                        .slice()
-                        .sort((a, b) => a.number - b.number)
-                        .map((chapter, idx) => (
-                          <Box
-                            key={idx}
-                            onClick={() => onNavigate && onNavigate(`/read/${book.id}/${chapter.number}`)}
-                            sx={{
-                              height: 36,
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              borderRadius: 1,
-                              cursor: "pointer",
-                              bgcolor: "background.paper",
-                              border: "1px solid",
-                              borderColor: "divider",
-                              fontSize: "0.9rem",
-                              fontWeight: 500,
-                              color: "text.secondary",
-                              "&:hover": {
-                                bgcolor: "primary.main",
-                                color: "primary.contrastText",
-                                borderColor: "primary.main",
-                              },
-                              transition: "all 0.2s",
-                            }}
-                          >
-                            {chapter.number}
-                          </Box>
-                        ))}
-                    </Box>
-                  )}
-                </Box>
-              </Collapse>
-            </Box>
-          );
-        })}
-      </List>
+        <List disablePadding sx={{ mt: 1 }}>
+          {/* Search Results (Show All) */}
+          {isSearching ? (
+            <>
+              {filteredBooks.old.length > 0 && (
+                <>
+                  <Typography variant="overline" sx={{ fontWeight: 700, color: "text.secondary", px: 1 }}>
+                    Antiguo Testamento
+                  </Typography>
+                  {filteredBooks.old.map((book) => (
+                    <ListItemButton key={book.id} onClick={() => handleBookClick(book)} sx={{ borderRadius: 1 }}>
+                      <ListItemText primary={book.name} />
+                      <ChevronRightIcon fontSize="small" color="action" />
+                    </ListItemButton>
+                  ))}
+                </>
+              )}
+              {filteredBooks.new.length > 0 && (
+                <>
+                  <Typography variant="overline" sx={{ fontWeight: 700, color: "text.secondary", px: 1, mt: 2, display: "block" }}>
+                    Nuevo Testamento
+                  </Typography>
+                  {filteredBooks.new.map((book) => (
+                    <ListItemButton key={book.id} onClick={() => handleBookClick(book)} sx={{ borderRadius: 1 }}>
+                      <ListItemText primary={book.name} />
+                      <ChevronRightIcon fontSize="small" color="action" />
+                    </ListItemButton>
+                  ))}
+                </>
+              )}
+            </>
+          ) : (
+            // Tabbed View
+            <>
+              {tabValue === 0 && filteredBooks.old.map((book) => (
+                <ListItemButton key={book.id} onClick={() => handleBookClick(book)} sx={{ borderRadius: 1 }}>
+                  <ListItemText primary={book.name} />
+                  <ChevronRightIcon fontSize="small" color="action" />
+                </ListItemButton>
+              ))}
+
+              {tabValue === 1 && filteredBooks.new.map((book) => (
+                <ListItemButton key={book.id} onClick={() => handleBookClick(book)} sx={{ borderRadius: 1 }}>
+                  <ListItemText primary={book.name} />
+                  <ChevronRightIcon fontSize="small" color="action" />
+                </ListItemButton>
+              ))}
+            </>
+          )}
+        </List>
+      </Box>
     );
   };
 
+  const renderChapterGrid = () => (
+    <Box>
+      <Box
+        sx={{
+          position: "sticky",
+          top: 0,
+          bgcolor: "background.paper",
+          zIndex: 10,
+          pb: 2,
+          pt: 2,
+          mx: -2,
+          px: 2,
+          borderBottom: "1px solid",
+          borderColor: "divider",
+          mb: 2
+        }}
+      >
+        <Button
+          startIcon={<ArrowBackIcon />}
+          onClick={handleBackToBooks}
+          sx={{
+            color: "text.primary",
+            fontWeight: 700,
+            justifyContent: "flex-start",
+            px: 0,
+            width: "100%"
+          }}
+        >
+          {selectedBook?.name}
+        </Button>
+        <Typography variant="body2" color="text.secondary">
+          Selecciona un capítulo:
+        </Typography>
+      </Box>
+
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(48px, 1fr))",
+          gap: 1,
+        }}
+      >
+        {chapters.map((chapter) => (
+          <Box
+            key={chapter.number}
+            onClick={() => onNavigate && onNavigate(`/read/${selectedBook.id}/${chapter.number}`)}
+            sx={{
+              height: 48,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: 1,
+              cursor: "pointer",
+              bgcolor: "background.paper",
+              border: "1px solid",
+              borderColor: "divider",
+              fontSize: "1rem",
+              fontWeight: 500,
+              color: "text.primary",
+              "&:hover": {
+                bgcolor: "primary.main",
+                color: "primary.contrastText",
+                borderColor: "primary.main",
+              },
+              transition: "all 0.2s",
+            }}
+          >
+            {chapter.number}
+          </Box>
+        ))}
+      </Box>
+    </Box>
+  );
+
   if (!data) return null;
 
-  const oldBooks = filterBooks(data.testaments["old"] || []);
-  const newBooks = filterBooks(data.testaments["new"] || []);
-
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-      <TextField
-        fullWidth
-        size="small"
-        placeholder="Buscar libro..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon fontSize="small" color="action" />
-            </InputAdornment>
-          ),
-          endAdornment: searchTerm && (
-            <IconButton size="small" onClick={() => setSearchTerm("")}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          ),
-        }}
-        sx={{
-          "& .MuiOutlinedInput-root": {
-            bgcolor: "background.paper",
-          },
-        }}
-      />
-
-      <Box>
-        <Box
-          onClick={() => {
-            setExpandedTestament(expandedTestament === "old" ? null : "old");
-            onTestamentChange?.();
-          }}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            cursor: "pointer",
-            py: 1,
-            px: 0.5,
-            "&:hover": { opacity: 0.8 },
-          }}
-        >
-          <Typography
-            variant="subtitle1"
-            sx={{ fontWeight: 700, color: "text.primary", fontFamily: "Georgia, serif" }}
-          >
-            Antiguo Testamento
-          </Typography>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <Chip
-              label={oldBooks.length}
-              size="small"
-              sx={{ height: 20, fontSize: "0.75rem", bgcolor: "action.selected" }}
-            />
-            {expandedTestament === "old" ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </Box>
-        </Box>
-        <Collapse in={expandedTestament === "old"}>
-          {renderBooks("old")}
-        </Collapse>
-      </Box>
-
-      <Divider />
-
-      <Box>
-        <Box
-          onClick={() => {
-            setExpandedTestament(expandedTestament === "new" ? null : "new");
-            onTestamentChange?.();
-          }}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            cursor: "pointer",
-            py: 1,
-            px: 0.5,
-            "&:hover": { opacity: 0.8 },
-          }}
-        >
-          <Typography
-            variant="subtitle1"
-            sx={{ fontWeight: 700, color: "text.primary", fontFamily: "Georgia, serif" }}
-          >
-            Nuevo Testamento
-          </Typography>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <Chip
-              label={newBooks.length}
-              size="small"
-              sx={{ height: 20, fontSize: "0.75rem", bgcolor: "action.selected" }}
-            />
-            {expandedTestament === "new" ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </Box>
-        </Box>
-        <Collapse in={expandedTestament === "new"}>
-          {renderBooks("new")}
-        </Collapse>
-      </Box>
+    <Box sx={{ position: "relative", minHeight: 200 }}>
+      {selectedBook ? (
+        <Fade in={true}>
+          <Box>{renderChapterGrid()}</Box>
+        </Fade>
+      ) : (
+        <Fade in={true}>
+          <Box>{renderBookList()}</Box>
+        </Fade>
+      )}
     </Box>
   );
 }

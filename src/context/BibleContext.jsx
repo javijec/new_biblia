@@ -54,6 +54,15 @@ export function BibleProvider({ children }) {
       if (!response.ok) throw new Error('Network response was not ok');
       const book = await response.json();
 
+      // Normalize chapters for single-chapter books
+      if (book.chapters) {
+        book.chapters.forEach((chapter) => {
+          if (chapter.number === null) {
+            chapter.number = 1;
+          }
+        });
+      }
+
       bookCache[bookId] = book;
       setLoadedBooks(prev => new Set(prev).add(bookId));
       return book;
