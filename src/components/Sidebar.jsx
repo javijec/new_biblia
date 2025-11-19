@@ -22,40 +22,42 @@ export default function Sidebar({
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        p: { xs: 2, md: 3 },
         overflow: "hidden",
       }}
     >
-      <Typography
-        variant="h5"
-        sx={{
-          fontWeight: 700,
-          mb: 3,
-          display: "flex",
-          alignItems: "center",
-          gap: 1,
-          color: "text.primary",
-          fontFamily: "Georgia, serif",
-        }}
-      >
-        📚 Libros
-      </Typography>
+      <Box sx={{ p: 3, pb: 2, borderBottom: "1px solid", borderColor: "divider" }}>
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 700,
+            color: "text.primary",
+            fontFamily: "Georgia, serif",
+          }}
+        >
+          Navegación
+        </Typography>
+        <Typography variant="caption" color="text.secondary">
+          Selecciona un libro para leer
+        </Typography>
+      </Box>
+
       <Box
         ref={scrollContainerRef}
         sx={{
           flex: 1,
-          overflow: "auto",
-          pr: 1,
+          overflowY: "auto",
+          p: 2,
           "&::-webkit-scrollbar": {
-            width: "8px",
+            width: "6px",
           },
           "&::-webkit-scrollbar-track": {
-            background: "#fef3c7",
+            background: "transparent",
           },
           "&::-webkit-scrollbar-thumb": {
-            background: "linear-gradient(180deg, #d97706, #b45309)",
+            background: "rgba(0,0,0,0.1)",
+            borderRadius: "3px",
             "&:hover": {
-              background: "#92400e",
+              background: "rgba(0,0,0,0.2)",
             },
           },
         }}

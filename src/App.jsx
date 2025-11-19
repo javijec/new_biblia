@@ -43,49 +43,59 @@ function App() {
       createTheme({
         palette: {
           primary: {
-            main: "#d97706",
-            light: "#fbbf24",
-            dark: "#92400e",
+            main: "#b45309", // Amber 700 - More sophisticated than bright orange
+            light: "#d97706",
+            dark: "#78350f",
             contrastText: "#ffffff",
           },
           secondary: {
-            main: "#f59e0b",
-            light: "#fcd34d",
-            dark: "#b45309",
+            main: "#78350f", // Amber 900
+            light: "#92400e",
+            dark: "#451a03",
           },
           background: {
-            default: "#fef3c7",
-            paper: "#fffbeb",
+            default: "#fdfbf7", // Warm off-white/paper
+            paper: "#ffffff",
           },
           text: {
-            primary: "#78350f",
-            secondary: "#92400e",
+            primary: "#292524", // Stone 800 - Softer than pure black
+            secondary: "#57534e", // Stone 600
           },
         },
         typography: {
-          fontFamily: '"Georgia", "Garamond", "Times New Roman", serif',
-          h4: {
-            fontWeight: 700,
-            color: "#78350f",
-          },
-          h5: {
-            fontWeight: 600,
-            color: "#92400e",
-          },
-          h6: {
-            fontWeight: 600,
-          },
+          fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+          h1: { fontFamily: '"Georgia", serif', fontWeight: 700 },
+          h2: { fontFamily: '"Georgia", serif', fontWeight: 700 },
+          h3: { fontFamily: '"Georgia", serif', fontWeight: 700 },
+          h4: { fontFamily: '"Georgia", serif', fontWeight: 700 },
+          h5: { fontFamily: '"Georgia", serif', fontWeight: 600 },
+          h6: { fontFamily: '"Georgia", serif', fontWeight: 600 },
           body1: {
             fontSize: "1.05rem",
-            lineHeight: 1.7,
+            lineHeight: 1.8,
+            color: "#292524",
           },
+        },
+        shape: {
+          borderRadius: 12,
         },
         components: {
           MuiAppBar: {
             styleOverrides: {
               root: {
-                backgroundImage:
-                  "linear-gradient(135deg, #d97706 0%, #f59e0b 100%)",
+                backgroundColor: "#ffffff",
+                color: "#451a03",
+                boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+                backgroundImage: "none",
+              },
+            },
+          },
+          MuiButton: {
+            styleOverrides: {
+              root: {
+                textTransform: "none",
+                fontWeight: 600,
+                borderRadius: 8,
               },
             },
           },
@@ -93,6 +103,9 @@ function App() {
             styleOverrides: {
               root: {
                 backgroundImage: "none",
+              },
+              elevation1: {
+                boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
               },
             },
           },
@@ -111,22 +124,10 @@ function App() {
             alignItems: "center",
             justifyContent: "center",
             minHeight: "100vh",
-            background: "linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)",
+            bgcolor: "background.default",
           }}
         >
-          <Paper
-            elevation={3}
-            sx={{
-              p: 6,
-              textAlign: "center",
-              background: "rgba(255, 255, 255, 0.95)",
-            }}
-          >
-            <CircularProgress size={60} thickness={4} sx={{ mb: 3 }} />
-            <Typography variant="h5" color="primary.main" fontWeight={600}>
-              Cargando Biblia Digital...
-            </Typography>
-          </Paper>
+          <CircularProgress size={40} thickness={4} sx={{ color: "primary.main" }} />
         </Box>
       </ThemeProvider>
     );
@@ -142,27 +143,24 @@ function App() {
             alignItems: "center",
             justifyContent: "center",
             minHeight: "100vh",
-            background: "linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)",
+            bgcolor: "background.default",
           }}
         >
           <Paper
-            elevation={6}
+            elevation={0}
             sx={{
-              p: 6,
+              p: 4,
               textAlign: "center",
-              border: "2px solid",
-              borderColor: "primary.main",
+              border: "1px solid",
+              borderColor: "error.light",
+              bgcolor: "#fff5f5",
+              borderRadius: 2,
             }}
           >
-            <Typography
-              variant="h5"
-              color="error"
-              fontWeight={700}
-              gutterBottom
-            >
+            <Typography variant="h6" color="error.main" gutterBottom>
               Error al cargar
             </Typography>
-            <Typography variant="body1" color="text.secondary">
+            <Typography variant="body2" color="text.secondary">
               Por favor, recarga la página
             </Typography>
           </Paper>
@@ -203,12 +201,12 @@ function App() {
           display: "flex",
           flexDirection: "column",
           height: "100vh",
-          background: "linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)",
+          bgcolor: "background.default",
         }}
       >
         {/* AppBar */}
-        <AppBar position="static" elevation={4}>
-          <Toolbar sx={{ gap: 2 }}>
+        <AppBar position="static" elevation={0} sx={{ borderBottom: "1px solid", borderColor: "divider" }}>
+          <Toolbar sx={{ gap: 2, minHeight: { xs: 56, sm: 64 } }}>
             <IconButton
               color="inherit"
               edge="start"
@@ -222,37 +220,47 @@ function App() {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                gap: 1,
+                gap: 1.5,
                 cursor: "pointer",
                 flexShrink: 0,
               }}
               onClick={handleClearAll}
             >
-              <MenuBookIcon
-                sx={{ fontSize: 32, display: { xs: "none", sm: "block" } }}
-              />
-              <Typography
-                variant="h5"
-                component="h1"
+              <Box
                 sx={{
-                  fontWeight: 700,
-                  display: { xs: "none", sm: "block" },
-                  fontFamily: "Georgia, serif",
+                  bgcolor: "primary.main",
                   color: "white",
+                  p: 0.5,
+                  borderRadius: 1,
+                  display: "flex",
                 }}
               >
-                La Biblia del pueblo de Dios
-              </Typography>
-              <Typography
-                variant="h6"
-                component="h1"
-                sx={{
-                  fontWeight: 700,
-                  display: { xs: "block", sm: "none" },
-                }}
-              >
-                Biblia
-              </Typography>
+                <MenuBookIcon sx={{ fontSize: 24 }} />
+              </Box>
+              <Box>
+                <Typography
+                  variant="h6"
+                  component="h1"
+                  sx={{
+                    fontWeight: 700,
+                    lineHeight: 1.2,
+                    color: "text.primary",
+                    fontSize: { xs: "1rem", sm: "1.1rem" },
+                  }}
+                >
+                  Biblia Digital
+                </Typography>
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: "text.secondary",
+                    display: { xs: "none", sm: "block" },
+                    lineHeight: 1,
+                  }}
+                >
+                  Pueblo de Dios
+                </Typography>
+              </Box>
             </Box>
 
             <Box sx={{ flexGrow: 1 }} />
@@ -261,26 +269,28 @@ function App() {
               <Paper
                 component="form"
                 onSubmit={(e) => e.preventDefault()}
+                elevation={0}
                 sx={{
                   p: "2px 8px",
                   display: searchOpen ? "flex" : "none",
                   alignItems: "center",
-                  width: { xs: "100%", sm: 400 },
-                  backgroundColor: alpha("#fff", 0.9),
+                  width: { xs: "100%", sm: 300, md: 400 },
+                  backgroundColor: "grey.100",
                   position: { xs: "absolute", sm: "relative" },
                   left: { xs: 0, sm: "auto" },
                   right: { xs: 0, sm: "auto" },
                   top: { xs: "100%", sm: "auto" },
-                  mx: { xs: 2, sm: 0 },
-                  mt: { xs: 1, sm: 0 },
-                  zIndex: 1,
+                  mx: { xs: 0, sm: 0 },
+                  zIndex: 10,
+                  borderBottom: { xs: "1px solid #e5e7eb", sm: "none" },
+                  borderRadius: { xs: 0, sm: 8 },
                 }}
               >
-                <SearchIcon sx={{ color: "primary.main", mr: 1 }} />
+                <SearchIcon sx={{ color: "text.secondary", mr: 1 }} />
                 <InputBase
                   id="search-input"
                   sx={{ ml: 1, flex: 1 }}
-                  placeholder="Buscar en la Biblia..."
+                  placeholder="Buscar..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -298,7 +308,13 @@ function App() {
               </Paper>
             </Fade>
 
-            <IconButton color="inherit" onClick={handleSearchToggle}>
+            <IconButton
+              onClick={handleSearchToggle}
+              sx={{
+                bgcolor: searchOpen ? "grey.100" : "transparent",
+                color: searchOpen ? "primary.main" : "text.secondary"
+              }}
+            >
               {searchOpen ? <CloseIcon /> : <SearchIcon />}
             </IconButton>
           </Toolbar>
@@ -310,9 +326,12 @@ function App() {
           <Box
             component="nav"
             sx={{
-              width: { md: 320, lg: 380 },
+              width: { md: 300, lg: 340 },
               flexShrink: 0,
               display: { xs: "none", md: "block" },
+              borderRight: "1px solid",
+              borderColor: "divider",
+              bgcolor: "white",
             }}
           >
             <Sidebar
@@ -340,7 +359,7 @@ function App() {
               "& .MuiDrawer-paper": {
                 width: 280,
                 boxSizing: "border-box",
-                background: "linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%)",
+                bgcolor: "white",
               },
             }}
           >
@@ -364,10 +383,18 @@ function App() {
             sx={{
               flexGrow: 1,
               overflow: "auto",
-              p: { xs: 2, sm: 3, md: 4 },
+              bgcolor: "background.default",
+              position: "relative",
             }}
           >
-            <Container maxWidth="xl" sx={{ height: "100%" }}>
+            <Container
+              maxWidth="lg"
+              sx={{
+                height: "100%",
+                py: { xs: 2, md: 4 },
+                px: { xs: 2, md: 4 }
+              }}
+            >
               <MainContent
                 data={data}
                 selectedBook={selectedBook}
