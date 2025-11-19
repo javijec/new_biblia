@@ -17,7 +17,7 @@ self.onmessage = async (e) => {
 
 async function performSearch(term) {
     if (!term || !term.trim() || !bookIndex) {
-        self.postMessage({ type: 'COMPLETE', results: [] });
+        self.postMessage({ type: 'COMPLETE', results: [], terms: [] });
         return;
     }
 
@@ -33,7 +33,10 @@ async function performSearch(term) {
         });
     }
 
-    const searchRegexes = Array.from(searchTerms).map(t => new RegExp(`\\b${t}\\b`, 'g'));
+    const termsArray = Array.from(searchTerms);
+    // Create regexes for matching whole words
+    const searchRegexes = termsArray.map(t => new RegExp(`\\b${t}\\b`, 'gi')); // Case insensitive flag 'i' added just in case, though we normalize text
+
     const results = [];
     const books = bookIndex.books;
 
@@ -56,6 +59,8 @@ async function performSearch(term) {
             book.chapters.forEach(chapter => {
                 chapter.verses.forEach(verse => {
                     const normalizedText = verse.text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+                    // Check if any of our terms match
                     const matches = searchRegexes.some(regex => {
                         regex.lastIndex = 0;
                         return regex.test(normalizedText);
@@ -68,6 +73,7 @@ async function performSearch(term) {
                             verseNumber: verse.number,
                             text: verse.text,
                             chapter: { bookId: book.id, bookTitle: book.name, number: chapter.number },
+                            testament: books[i].testament, // Pass testament for filtering
                             query: term
                         });
                     }
@@ -80,5 +86,5 @@ async function performSearch(term) {
         }
     }
 
-    self.postMessage({ type: 'COMPLETE', results });
+    self.postMessage({ type: 'COMPLETE', results, terms: termsArray });
 }

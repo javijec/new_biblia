@@ -1,7 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { Box, Typography, CircularProgress, Paper, Grid, Chip, Button } from "@mui/material";
+import { Box, Typography, CircularProgress, Paper, Grid, Chip, Button, Tabs, Tab, alpha } from "@mui/material";
 import { useBibleSearch } from "../hooks/useBibleSearch";
+
+// Helper component for highlighting text
+const HighlightedText = ({ text, terms }) => {
+    if (!terms || terms.length === 0) return <>{text}</>;
+
+    // Create a single regex for all terms
+    // Sort by length descending to match longer phrases first if any
+    const sortedTerms = [...terms].sort((a, b) => b.length - a.length);
+    const pattern = new RegExp(`\\b(${sortedTerms.join('|')})\\b`, 'gi');
+
+    // Split text by matches
+    const parts = text.split(pattern);
+
+    return (
+        <>
+            {parts.map((part, i) => {
+                // Check if this part matches any term (case insensitive)
+                const isMatch = sortedTerms.some(term =>
+                    part.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '') === term
+                );
+
+                return isMatch ? (
+                    <Box
+                        component="span"
+                        key={i}
+                        sx={{
+                            bgcolor: (theme) => alpha(theme.palette.primary.main, 0.2),
+                            color: "primary.dark",
+                            fontWeight: 600,
+                            borderRadius: "2px",
+                            px: 0.5
+                        }}
+                    >
+                        {part}
+                    </Box>
+                ) : (
+                    <span key={i}>{part}</span>
+                );
+            })}
+        </>
+    );
+};
 
 export default function SearchPage() {
     const [searchParams] = useSearchParams();
@@ -10,20 +52,22 @@ export default function SearchPage() {
     const { searchAllBooks, isReady } = useBibleSearch();
 
     const [results, setResults] = useState([]);
+    const [searchTerms, setSearchTerms] = useState([]);
     const [loading, setLoading] = useState(false);
     const [visibleCount, setVisibleCount] = useState(20);
+    const [filter, setFilter] = useState('all'); // 'all', 'old', 'new'
 
     useEffect(() => {
         const performSearch = async () => {
             if (!query) return;
-
             if (!isReady) return;
 
             setLoading(true);
             setResults([]);
             try {
-                const searchResults = await searchAllBooks(query);
+                const { results: searchResults, terms } = await searchAllBooks(query);
                 setResults(searchResults);
+                setSearchTerms(terms);
             } catch (error) {
                 console.error("Search error:", error);
             } finally {
@@ -33,6 +77,21 @@ export default function SearchPage() {
 
         performSearch();
     }, [query, searchAllBooks, isReady]);
+
+    // Filter results based on selected tab
+    const filteredResults = useMemo(() => {
+        if (filter === 'all') return results;
+        const isOld = filter === 'old';
+        return results.filter(r => {
+            const testament = r.testament?.toLowerCase() || '';
+            return isOld ? testament.includes('antiguo') : testament.includes('nuevo');
+        });
+    }, [results, filter]);
+
+    const handleFilterChange = (event, newValue) => {
+        setFilter(newValue);
+        setVisibleCount(20); // Reset visible count on filter change
+    };
 
     if (!isReady) {
         return (
@@ -52,7 +111,7 @@ export default function SearchPage() {
         );
     }
 
-    if (!results.length) {
+    if (!results.length && !loading) {
         return (
             <Box sx={{ textAlign: "center", pt: 8 }}>
                 <Typography variant="h6" color="text.secondary">
@@ -64,20 +123,34 @@ export default function SearchPage() {
 
     return (
         <Box sx={{ pb: 4 }}>
-            <Box sx={{ mb: 3, display: "flex", alignItems: "center", gap: 2, flexWrap: "wrap" }}>
-                <Typography variant="h5" color="text.primary">
-                    Resultados para "{query}"
-                </Typography>
-                <Chip
-                    label={`${results.length} versículos`}
-                    color="primary"
-                    variant="outlined"
-                    size="small"
-                />
+            <Box sx={{ mb: 3 }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 2, flexWrap: "wrap", mb: 2 }}>
+                    <Typography variant="h5" color="text.primary">
+                        Resultados para "{query}"
+                    </Typography>
+                    <Chip
+                        label={`${results.length} versículos`}
+                        color="primary"
+                        variant="outlined"
+                        size="small"
+                    />
+                </Box>
+
+                <Tabs
+                    value={filter}
+                    onChange={handleFilterChange}
+                    textColor="primary"
+                    indicatorColor="primary"
+                    sx={{ borderBottom: 1, borderColor: 'divider' }}
+                >
+                    <Tab label="Todos" value="all" />
+                    <Tab label="Antiguo Testamento" value="old" />
+                    <Tab label="Nuevo Testamento" value="new" />
+                </Tabs>
             </Box>
 
             <Grid container spacing={2}>
-                {results.slice(0, visibleCount).map((result, idx) => (
+                {filteredResults.slice(0, visibleCount).map((result, idx) => (
                     <Grid item xs={12} md={6} key={idx}>
                         <Paper
                             elevation={0}
@@ -121,14 +194,14 @@ export default function SearchPage() {
                                     overflow: "hidden",
                                 }}
                             >
-                                {result.text}
+                                <HighlightedText text={result.text} terms={searchTerms} />
                             </Typography>
                         </Paper>
                     </Grid>
                 ))}
             </Grid>
 
-            {results.length > visibleCount && (
+            {filteredResults.length > visibleCount && (
                 <Box sx={{ mt: 4, textAlign: "center" }}>
                     <Button
                         variant="outlined"
