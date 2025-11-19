@@ -1,89 +1,96 @@
-export const bookAbbreviations = {
-    "Génesis": "Gn",
-    "Éxodo": "Ex",
-    "Levítico": "Lv",
-    "Números": "Nm",
-    "Deuteronomio": "Dt",
-    "Josué": "Jos",
-    "Jueces": "Jue",
-    "Rut": "Rt",
-    "1 Samuel": "1 Sm",
-    "2 Samuel": "2 Sm",
-    "1 Reyes": "1 Re",
-    "2 Reyes": "2 Re",
-    "1 Crónicas": "1 Cr",
-    "2 Crónicas": "2 Cr",
-    "Esdras": "Esd",
-    "Nehemías": "Neh",
-    "Tobías": "Tob",
-    "Judit": "Jdt",
-    "Ester": "Est",
-    "1 Macabeos": "1 Mac",
-    "2 Macabeos": "2 Mac",
-    "Job": "Job",
-    "Salmos": "Sal",
-    "Proverbios": "Prov",
-    "Eclesiastés": "Ecl",
-    "Cantar de los Cantares": "Cant",
-    "Sabiduría": "Sab",
-    "Eclesiástico": "Eclo",
-    "Isaías": "Is",
-    "Jeremías": "Jer",
-    "Lamentaciones": "Lam",
-    "Baruc": "Bar",
-    "Ezequiel": "Ez",
-    "Daniel": "Dan",
-    "Oseas": "Os",
-    "Joel": "Jl",
-    "Amós": "Am",
-    "Abdías": "Abd",
-    "Jonás": "Jon",
-    "Miqueas": "Miq",
-    "Nahúm": "Nah",
-    "Habacuc": "Hab",
-    "Sofonías": "Sof",
-    "Hageo": "Ag",
-    "Zacarías": "Zac",
-    "Malaquías": "Mal",
-    "Mateo": "Mt",
-    "Marcos": "Mc",
-    "Lucas": "Lc",
-    "Juan": "Jn",
-    "Hechos de los Apóstoles": "Hch",
-    "Hechos": "Hch",
-    "Romanos": "Rom",
-    "1 Corintios": "1 Cor",
-    "2 Corintios": "2 Cor",
-    "Gálatas": "Gal",
-    "Efesios": "Ef",
-    "Filipenses": "Flp",
-    "Colosenses": "Col",
-    "1 Tesalonicenses": "1 Tes",
-    "2 Tesalonicenses": "2 Tes",
-    "1 Timoteo": "1 Tim",
-    "2 Timoteo": "2 Tim",
-    "Tito": "Tit",
-    "Filemón": "Flm",
-    "Hebreos": "Heb",
-    "Santiago": "Sant",
-    "1 Pedro": "1 Pe",
-    "2 Pedro": "2 Pe",
-    "1 Juan": "1 Jn",
-    "2 Juan": "2 Jn",
-    "3 Juan": "3 Jn",
-    "Judas": "Jds",
-    "Apocalipsis": "Ap"
+const bookAbbreviations = {
+    // Antiguo Testamento
+    "GENESIS": "Gn",
+    "EXODO": "Ex",
+    "LEVITICO": "Lv",
+    "NUMEROS": "Nm",
+    "DEUTERONOMIO": "Dt",
+    "JOSUE": "Jos",
+    "JUECES": "Jue",
+    "RUT": "Rt",
+    "PRIMER LIBRO DE SAMUEL": "1 S",
+    "SEGUNDO LIBRO DE SAMUEL": "2 S",
+    "PRIMER LIBRO DE LOS REYES": "1 R",
+    "SEGUNDO LIBRO DE LOS REYES": "2 R",
+    "PRIMER LIBRO DE LAS CRONICAS": "1 Cr",
+    "SEGUNDO LIBRO DE LAS CRONICAS": "2 Cr",
+    "ESDRAS": "Esd",
+    "NEHEMIAS": "Neh",
+    "TOBIAS": "Tob", // Missing from user list
+    "JUDIT": "Jdt", // Missing from user list
+    "ESTER": "Est",
+    "ESTER SUPLEMENTOS GRIEGOS": "Est G", // Missing from user list
+    "PRIMER LIBRO DE LOS MACABEOS": "1 Mac", // Missing from user list
+    "SEGUNDO LIBRO DE LOS MACABEOS": "2 Mac", // Missing from user list
+    "JOB": "Job",
+    "SALMOS": "Sal",
+    "PROVERBIOS": "Pr",
+    "ECLESIASTES": "Ec",
+    "CANTAR DE LOS CANTARES": "Cnt",
+    "SABIDURIA": "Sab", // Missing from user list
+    "ECLESIASTICO": "Eclo", // Missing from user list
+    "ISAIAS": "Is",
+    "JEREMIAS": "Jer",
+    "LAMENTACIONES": "Lm",
+    "BARUC": "Bar", // Missing from user list
+    "CARTA DE JEREMIAS": "CJer", // Missing from user list
+    "EZEQUIEL": "Ez",
+    "DANIEL": "Dn",
+    "DANIEL SUPLEMENTOS GRIEGOS": "Dn G", // Missing from user list
+    "OSEAS": "Os",
+    "JOEL": "Jl",
+    "AMOS": "Am",
+    "ABDIAS": "Abd",
+    "JONAS": "Jon",
+    "MIQUEAS": "Miq",
+    "NAHUM": "Nah",
+    "HABACUC": "Hab",
+    "SOFONIAS": "Sof",
+    "AGEO": "Hag",
+    "ZACARIAS": "Zac",
+    "MALAQUIAS": "Mal",
+
+    // Nuevo Testamento
+    "EVANGELIO SEGUN SAN MATEO": "Mt",
+    "EVANGELIO SEGUN SAN MARCOS": "Mc",
+    "EVANGELIO SEGUN SAN LUCAS": "Lc",
+    "EVANGELIO SEGUN SAN JUAN": "Jn",
+    "HECHOS DE LOS APOSTOLES": "Hch",
+    "CARTA A LOS ROMANOS": "Ro",
+    "PRIMERA CARTA A LOS CORINTIOS": "1 Co",
+    "SEGUNDA CARTA A LOS CORINTIOS": "2 Co",
+    "CARTA A LOS GALATAS": "Gl",
+    "CARTA A LOS EFESIOS": "Ef",
+    "CARTA A LOS FILIPENSES": "Flp",
+    "CARTA A LOS COLOSENSES": "Col",
+    "PRIMERA CARTA A LOS TESALONICENSES": "1 Ts",
+    "SEGUNDA CARTA A LOS TESALONICENSES": "2 Ts",
+    "PRIMERA CARTA A TIMOTEO": "1 Ti",
+    "SEGUNDA CARTA A TIMOTEO": "2 Ti",
+    "CARTA A TITO": "Tit",
+    "CARTA A FILEMON": "Flm",
+    "CARTA A LOS HEBREOS": "Heb",
+    "CARTA DE SANTIAGO": "Stg",
+    "PRIMERA CARTA DE SAN PEDRO": "1 P",
+    "SEGUNDA CARTA DE SAN PEDRO": "2 P",
+    "PRIMERA CARTA DE SAN JUAN": "1 Jn",
+    "SEGUNDA CARTA DE SAN JUAN": "2 Jn",
+    "TERCERA CARTA DE SAN JUAN": "3 Jn",
+    "CARTA DE SAN JUDAS": "Jud",
+    "APOCALIPSIS": "Ap"
 };
 
 export const getAbbreviation = (bookName) => {
-    // Normalize input: remove accents for flexible matching if needed, but map keys have accents
-    // Try direct match first
+    if (!bookName) return "";
+    // Try exact match first
     if (bookAbbreviations[bookName]) return bookAbbreviations[bookName];
 
-    // Try case insensitive
-    const key = Object.keys(bookAbbreviations).find(k => k.toLowerCase() === bookName.toLowerCase());
-    if (key) return bookAbbreviations[key];
+    // Try uppercase match
+    const upperName = bookName.toUpperCase();
+    if (bookAbbreviations[upperName]) return bookAbbreviations[upperName];
 
-    // Fallback: return first 3 chars
+    // Fallback: Return first 3 chars or the name itself if not found
     return bookName.substring(0, 3);
 };
+
+export default bookAbbreviations;
