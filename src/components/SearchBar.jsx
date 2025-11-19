@@ -83,7 +83,7 @@ export default function SearchBar({
   };
 
   return (
-    <div className="mb-0">
+    <div className="mb-0 ">
       <div className="relative">
         <div className="flex gap-2 sm:gap-3">
           <div className="grow relative">

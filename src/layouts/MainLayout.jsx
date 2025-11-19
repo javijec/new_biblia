@@ -133,7 +133,7 @@ export default function MainLayout() {
                                 display: searchOpen ? "flex" : "none",
                                 alignItems: "center",
                                 width: { xs: "100%", sm: 300, md: 400 },
-                                backgroundColor: "action.hover",
+                                backgroundColor: { xs: "background.paper", sm: "action.hover" },
                                 position: { xs: "absolute", sm: "relative" },
                                 left: { xs: 0, sm: "auto" },
                                 right: { xs: 0, sm: "auto" },
