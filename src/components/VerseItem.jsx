@@ -88,9 +88,9 @@ export default function VerseItem({
       onClick={() => onToggle(verse.number)}
       sx={{
         display: "flex",
-        gap: 2,
-        py: 0.5, // Reduced padding
-        px: 2,
+        gap: { xs: 1, md: 2 },
+        py: 0.5,
+        px: { xs: 1, md: 2 },
         cursor: "pointer",
         borderRadius: 1,
         position: "relative",
@@ -130,7 +130,7 @@ export default function VerseItem({
           sx={{
             fontWeight: 700,
             color: isSelected ? "primary.main" : "primary.light",
-            fontFamily: "Georgia, serif",
+            fontFamily: "inherit", // Inherit from parent
             fontSize: "0.85rem",
           }}
         >
@@ -145,7 +145,7 @@ export default function VerseItem({
         sx={{
           flex: 1,
           color: isSelected ? "text.primary" : "text.primary",
-          fontFamily: "Georgia, serif",
+          fontFamily: "inherit", // Inherit from parent
           fontSize: "inherit", // Inherit from parent
           lineHeight: "inherit", // Inherit from parent
         }}

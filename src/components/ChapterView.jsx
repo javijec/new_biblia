@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Paper, IconButton, Tooltip, Fade } from "@mui/material";
+import { Box, Typography, Paper, IconButton, Tooltip, Fade, Divider, alpha } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ShareIcon from "@mui/icons-material/Share";
+import ArrowBackIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForwardIos";
 import VerseItem from "./VerseItem";
 import { useSettings } from "../context/SettingsContext";
 import { useBookmarks } from "../context/BookmarksContext";
 
-export default function ChapterView({ chapter, onWordSearch }) {
+export default function ChapterView({
+  chapter,
+  onWordSearch,
+  onPrevChapter,
+  onNextChapter,
+  hasPrev,
+  hasNext
+}) {
   const [selectedVerses, setSelectedVerses] = useState(new Set());
-  const { fontSize } = useSettings();
+  const { fontSize, fontFamily } = useSettings();
   const { toggleBookmark, isBookmarked, addToHistory } = useBookmarks();
 
   // Reset selection when chapter changes and track history
@@ -84,6 +93,19 @@ export default function ChapterView({ chapter, onWordSearch }) {
 
   if (!chapter) return null;
 
+  const isSelectionMode = selectedVerses.size > 0;
+
+  // Map font family setting to actual CSS font-family
+  const getFontFamily = (font) => {
+    switch (font) {
+      case 'sans': return '"Inter", "Roboto", "Helvetica", "Arial", sans-serif';
+      case 'serif': return '"Georgia", "Times New Roman", serif';
+      default: return '"Georgia", "Times New Roman", serif';
+    }
+  };
+
+  const currentFontFamily = getFontFamily(fontFamily);
+
   return (
     <Paper
       elevation={0}
@@ -94,19 +116,21 @@ export default function ChapterView({ chapter, onWordSearch }) {
         minHeight: "80vh",
         bgcolor: "background.paper",
         borderRadius: 2,
-        position: "relative"
+        position: "relative",
+        pb: 12 // Extra padding for floating bar
       }}
     >
       {/* Header */}
       <Box sx={{ mb: 4, textAlign: "center", borderBottom: "1px solid", borderColor: "divider", pb: 2 }}>
         <Typography
-          variant="h4"
+          variant="h5"
           component="h1"
           gutterBottom
           sx={{
-            fontFamily: "Georgia, serif",
+            fontFamily: currentFontFamily,
             color: "primary.main",
-            fontWeight: 700
+            fontWeight: 700,
+            fontSize: { xs: "1.5rem", md: "2rem" }
           }}
         >
           {chapter.bookTitle} {chapter.number}
@@ -122,6 +146,7 @@ export default function ChapterView({ chapter, onWordSearch }) {
               key={verse.number}
               sx={{
                 fontSize: `${fontSize}px`,
+                fontFamily: currentFontFamily,
                 lineHeight: 1.6,
                 position: "relative",
                 pr: marked ? 3 : 0
@@ -142,7 +167,7 @@ export default function ChapterView({ chapter, onWordSearch }) {
               <VerseItem
                 verse={verse}
                 isSelected={selectedVerses.has(verse.number)}
-                onClick={() => handleVerseClick(verse.number)}
+                onToggle={() => handleVerseClick(verse.number)}
                 onWordSearch={onWordSearch}
               />
             </Box>
@@ -150,70 +175,119 @@ export default function ChapterView({ chapter, onWordSearch }) {
         })}
       </Box>
 
-      {/* Floating Action Bar for Selection */}
-      <Fade in={selectedVerses.size > 0}>
+      {/* Unified Floating Action Bar */}
+      <Fade in={true}>
         <Paper
           elevation={4}
           sx={{
             position: "fixed",
-            bottom: 32,
+            bottom: 24,
             left: "50%",
             transform: "translateX(-50%)",
-            bgcolor: "text.primary",
-            color: "background.paper",
-            px: 3,
-            py: 1.5,
+            bgcolor: "background.paper", // Theme aware
+            color: "text.primary", // Theme aware
+            border: "1px solid",
+            borderColor: "divider",
+            px: 2,
+            py: 1,
             borderRadius: 8,
             display: "flex",
             alignItems: "center",
-            gap: 2,
+            gap: 1,
             zIndex: 1000,
+            minWidth: 200,
+            justifyContent: "space-between",
+            transition: "all 0.3s ease",
+            boxShadow: (theme) => `0 4px 20px ${alpha(theme.palette.common.black, 0.15)}`
           }}
         >
-          <Typography variant="subtitle2" fontWeight="bold">
-            {selectedVerses.size}
-          </Typography>
-
-          <Box sx={{ height: 24, width: 1, bgcolor: "rgba(255,255,255,0.2)" }} />
-
-          <Tooltip title="Copiar">
-            <IconButton
-              size="small"
-              onClick={handleCopy}
-              sx={{ color: "inherit", "&:hover": { bgcolor: "rgba(255,255,255,0.1)" } }}
-            >
-              <ContentCopyIcon fontSize="small" />
-            </IconButton>
+          {/* Previous Chapter Button */}
+          <Tooltip title="Capítulo Anterior">
+            <span>
+              <IconButton
+                onClick={onPrevChapter}
+                disabled={!hasPrev}
+                sx={{
+                  color: "primary.main",
+                  opacity: hasPrev ? 1 : 0.3,
+                  "&:hover": { bgcolor: "action.hover" }
+                }}
+              >
+                <ArrowBackIcon />
+              </IconButton>
+            </span>
           </Tooltip>
 
-          <Tooltip title="Marcar/Desmarcar">
-            <IconButton
-              size="small"
-              onClick={handleBookmarkSelection}
-              sx={{ color: "inherit", "&:hover": { bgcolor: "rgba(255,255,255,0.1)" } }}
-            >
-              <BookmarkBorderIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
+          {/* Center Content: Actions or Spacer */}
+          {isSelectionMode ? (
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mx: 1 }}>
+              <Divider orientation="vertical" flexItem sx={{ mx: 0.5 }} />
 
-          <Tooltip title="Compartir">
-            <IconButton
-              size="small"
-              onClick={handleShare}
-              sx={{ color: "inherit", "&:hover": { bgcolor: "rgba(255,255,255,0.1)" } }}
-            >
-              <ShareIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
+              <Typography variant="subtitle2" fontWeight="bold" sx={{ minWidth: 20, textAlign: "center" }}>
+                {selectedVerses.size}
+              </Typography>
 
-          <Tooltip title="Limpiar selección">
-            <IconButton
-              size="small"
-              onClick={() => setSelectedVerses(new Set())}
-              sx={{ color: "inherit", "&:hover": { bgcolor: "rgba(255,255,255,0.1)" } }}
-            >
-              <ClearAllIcon fontSize="small" />
-            </IconButton>
+              <Tooltip title="Copiar">
+                <IconButton
+                  size="small"
+                  onClick={handleCopy}
+                  sx={{ color: "text.secondary", "&:hover": { color: "primary.main", bgcolor: "action.hover" } }}
+                >
+                  <ContentCopyIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+
+              <Tooltip title="Marcar/Desmarcar">
+                <IconButton
+                  size="small"
+                  onClick={handleBookmarkSelection}
+                  sx={{ color: "text.secondary", "&:hover": { color: "primary.main", bgcolor: "action.hover" } }}
+                >
+                  <BookmarkBorderIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+
+              <Tooltip title="Compartir">
+                <IconButton
+                  size="small"
+                  onClick={handleShare}
+                  sx={{ color: "text.secondary", "&:hover": { color: "primary.main", bgcolor: "action.hover" } }}
+                >
+                  <ShareIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+
+              <Tooltip title="Limpiar selección">
+                <IconButton
+                  size="small"
+                  onClick={() => setSelectedVerses(new Set())}
+                  sx={{ color: "text.secondary", "&:hover": { color: "error.main", bgcolor: "action.hover" } }}
+                >
+                  <ClearAllIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+
+              <Divider orientation="vertical" flexItem sx={{ mx: 0.5 }} />
+            </Box>
+          ) : (
+            <Box sx={{ width: 24 }} /> // Spacer to keep buttons separated
+          )}
+
+          {/* Next Chapter Button */}
+          <Tooltip title="Siguiente Capítulo">
+            <span>
+              <IconButton
+                onClick={onNextChapter}
+                disabled={!hasNext}
+                sx={{
+                  color: "primary.main",
+                  opacity: hasNext ? 1 : 0.3,
+                  "&:hover": { bgcolor: "action.hover" }
+                }}
+              >
+                <ArrowForwardIcon />
+              </IconButton>
+            </span>
           </Tooltip>
         </Paper>
       </Fade>

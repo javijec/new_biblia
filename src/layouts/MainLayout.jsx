@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import {
     Box,
@@ -32,6 +32,15 @@ export default function MainLayout() {
     const location = useLocation();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+    const mainContentRef = useRef(null);
+
+    // Scroll to top on route change
+    useEffect(() => {
+        if (mainContentRef.current) {
+            mainContentRef.current.scrollTop = 0;
+        }
+    }, [location.pathname]);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -215,6 +224,7 @@ export default function MainLayout() {
                 {/* Page Content */}
                 <Box
                     component="main"
+                    ref={mainContentRef}
                     sx={{
                         flexGrow: 1,
                         overflow: "auto",
