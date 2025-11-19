@@ -1,0 +1,968 @@
+{
+  "id": "eclesiastes",
+  "name": "ECLESIASTES",
+  "testament": "El Antiguo Testamento",
+  "chapters": [
+    {
+      "number": 1,
+      "file": "__PMQ.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "Palabras de Cohélet, hijo de David, rey en Jerusalén."
+        },
+        {
+          "number": 2,
+          "text": "¡Vanidad, pura vanidad!, dice Cohélet. ¡Vanidad, pura vanidad! ¡Nada más que vanidad!"
+        },
+        {
+          "number": 3,
+          "text": "¿Qué provecho saca el hombre de todo el esfuerzo que realiza bajo el sol?"
+        },
+        {
+          "number": 4,
+          "text": "Una generación se va y la otra viene, y la tierra siempre permanece."
+        },
+        {
+          "number": 5,
+          "text": "El sol sale y se pone, y se dirige afanosamente hacia el lugar de donde saldrá otra vez."
+        },
+        {
+          "number": 6,
+          "text": "El viento va hacia el sur y gira hacia el norte; va dando vueltas y vueltas, y retorna sobre su curso."
+        },
+        {
+          "number": 7,
+          "text": "Todos los ríos van al mar y el mar nunca se llena; al mismo lugar donde van los ríos, allí vuelven a ir."
+        },
+        {
+          "number": 8,
+          "text": "Todas las personas están gastadas, más de lo que se puede expresar. ¿No se sacia el ojo de ver y el oído no se cansa de escuchar?"
+        },
+        {
+          "number": 9,
+          "text": "Lo que fue, eso mismo será; lo que se hizo, eso mismo se hará: ¡no hay nada nuevo bajo el sol!"
+        },
+        {
+          "number": 10,
+          "text": "Si hay algo de lo que dicen: «Mira, esto sí que es algo nuevo». en realidad, eso mismo ya existió muchísimo antes que nosotros."
+        },
+        {
+          "number": 11,
+          "text": "No queda el recuerdo de las cosas pasadas, ni quedará el recuerdo de las futuras en aquellos que vendrán después."
+        },
+        {
+          "number": 12,
+          "text": "Yo, Cohélet, he sido rey de Israel, en Jerusalén,"
+        },
+        {
+          "number": 13,
+          "text": "y me dediqué a investigar y a explorar con sabiduría todo lo que se hace bajo el cielo: es esta una ingrata tarea que Dios impuso a los hombres para que se ocupen de ella."
+        },
+        {
+          "number": 14,
+          "text": "Así observé todas las obras que se hacen bajo el sol, y vi que todo es vanidad y correr tras el viento."
+        },
+        {
+          "number": 15,
+          "text": "Lo torcido no se puede enderezar, ni se puede contar lo que falta."
+        },
+        {
+          "number": 16,
+          "text": "Entonces me dije a mí mismo: Yo acumulé una gran sabiduría, más que todos mis predecesores en Jerusalén, y mi corazón ha visto mucha sabiduría y ciencia."
+        },
+        {
+          "number": 17,
+          "text": "Me dediqué a conocer la sabiduría, la ciencia, la locura y la necedad, y advertí que también eso es correr tras el viento."
+        },
+        {
+          "number": 18,
+          "text": "Porque mucha sabiduría trae mucha aflicción, y el que acumula ciencia, acumula dolor."
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "file": "__PMR.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "Yo me dije a mí mismo: «Ven, te haré experimentar el placer; goza del bienestar». Pero también esto es vanidad."
+        },
+        {
+          "number": 2,
+          "text": "De la risa, dije: «No es más que locura». y de la alegría: «¿Para qué sirve?»."
+        },
+        {
+          "number": 3,
+          "text": "Decidí estimular mi carne con el vino, manteniendo la mente lúcida, y dejarme llevar de la insensatez, hasta ver qué les conviene hacer a los hombres bajo el cielo, en los contados días de su vida."
+        },
+        {
+          "number": 4,
+          "text": "Emprendí grandes obras: me construí mansiones y planté viñedos;"
+        },
+        {
+          "number": 5,
+          "text": "me hice jardines y parques, y planté allí toda clase de árboles frutales;"
+        },
+        {
+          "number": 6,
+          "text": "me fabriqué cisternas, para regar el bosque donde crecían los árboles;"
+        },
+        {
+          "number": 7,
+          "text": "compré esclavos y esclavas, y algunos me nacieron en casa; poseí también ganado en abundancia, más que todos mis predecesores en Jerusalén."
+        },
+        {
+          "number": 8,
+          "text": "Amontoné además plata y oro, y tesoros dignos de reyes y de provincias; me conseguí cantores y cantoras, y muchas mujeres hermosas, que son la delicia de los hombres."
+        },
+        {
+          "number": 9,
+          "text": "Llegué a ser tan grande, que superé a todos mis predecesores en Jerusalén. Sin embargo, la sabiduría permanecía siempre conmigo."
+        },
+        {
+          "number": 10,
+          "text": "No negué a mis ojos nada de lo que pedían, ni privé a mi corazón de ningún placer; mi corazón se alegraba de todo mi trabajo, y este era el premio de todo mi esfuerzo."
+        },
+        {
+          "number": 11,
+          "text": "Pero luego dirigí mi atención a todas las obras que habían hecho mis manos y a todo el esfuerzo que me había empeñado en realizar, y vi que todo es vanidad y correr tras el viento: ¡no se obtiene ningún provecho bajo el sol!"
+        },
+        {
+          "number": 12,
+          "text": "Entonces volví mis ojos hacia la sabiduría, hacia la locura y la insensatez. Porque ¿qué hará el sucesor del rey? Lo mismo que ya se había hecho antes."
+        },
+        {
+          "number": 13,
+          "text": "Y vi que la sabiduría aventaja a la insensatez, como la luz a las tinieblas:"
+        },
+        {
+          "number": 14,
+          "text": "el sabio tiene los ojos bien puestos, mientras que el necio camina en tinieblas. Pero yo sé también que a los dos les espera la misma suerte."
+        },
+        {
+          "number": 15,
+          "text": "Y me dije a mí mismo: si la suerte del necio será también la mía, ¿para qué, entonces, me hice más sabio? Y pensé que también esto es vanidad."
+        },
+        {
+          "number": 16,
+          "text": "Porque no perdurará el recuerdo ni del sabio ni del necio: con el paso de los días, todo cae en el olvido. Así es: ¡el sabio muere igual que el necio!"
+        },
+        {
+          "number": 17,
+          "text": "Y llegué a detestar la vida, porque me da fastidio todo lo que se hace bajo el sol. Sí, todo es vanidad y correr tras el viento."
+        },
+        {
+          "number": 18,
+          "text": "Y también detesté todo el esfuerzo que había realizado bajo el sol, y que tendré que dejar al que venga después de mí."
+        },
+        {
+          "number": 19,
+          "text": "¿Y quién sabe si él será sabio o necio? Pero será el dueño de lo que yo he conseguido con esfuerzo y sabiduría bajo el sol. También esto es vanidad."
+        },
+        {
+          "number": 20,
+          "text": "Y llegué a desesperar de todo el esfuerzo que había realizado bajo el sol."
+        },
+        {
+          "number": 21,
+          "text": "Porque un hombre que ha trabajado con sabiduría, con ciencia y eficacia, tiene que dejar su parte a otro que no hizo ningún esfuerzo. También esto es vanidad y una grave desgracia."
+        },
+        {
+          "number": 22,
+          "text": "¿Qué le reporta al hombre todo su esfuerzo y todo lo que busca afanosamente bajo el sol?"
+        },
+        {
+          "number": 23,
+          "text": "Porque todos sus días son penosos, y su ocupación, un sufrimiento; ni siquiera de noche descansa su corazón. También esto es vanidad."
+        },
+        {
+          "number": 24,
+          "text": "Lo único bueno para el hombre es comer y beber, y pasarla bien en medio de su trabajo. Yo vi que también esto viene de la mano de Dios."
+        },
+        {
+          "number": 25,
+          "text": "Porque ¿quién podría comer o gozar si no es gracias a él?"
+        },
+        {
+          "number": 26,
+          "text": "Porque al que es de su agrado él le da sabiduría, ciencia y alegría; al pecador, en cambio, lo ocupa en amontonar y atesorar para dárselo al que agrada a Dios. También esto es vanidad y correr tras el viento."
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "file": "__PMS.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "Hay un momento para todo y un tiempo para cada cosa bajo el sol:"
+        },
+        {
+          "number": 2,
+          "text": "un tiempo para nacer y un tiempo para morir, un tiempo para plantar y un tiempo para arrancar lo plantado;"
+        },
+        {
+          "number": 3,
+          "text": "un tiempo para matar y un tiempo para curar, un tiempo para demoler y un tiempo para edificar;"
+        },
+        {
+          "number": 4,
+          "text": "un tiempo para llorar y un tiempo para reír, un tiempo para lamentarse y un tiempo para bailar;"
+        },
+        {
+          "number": 5,
+          "text": "un tiempo para arrojar piedras y un tiempo para recogerlas, un tiempo para abrazarse y un tiempo para separarse;"
+        },
+        {
+          "number": 6,
+          "text": "un tiempo para buscar y un tiempo para perder, un tiempo para guardar y un tiempo para tirar;"
+        },
+        {
+          "number": 7,
+          "text": "un tiempo para rasgar y un tiempo para coser, un tiempo para callar y un tiempo para hablar;"
+        },
+        {
+          "number": 8,
+          "text": "un tiempo para amar y un tiempo para odiar, un tiempo de guerra y un tiempo de paz."
+        },
+        {
+          "number": 9,
+          "text": "¿Qué provecho obtiene el trabajador con su esfuerzo?"
+        },
+        {
+          "number": 10,
+          "text": "Yo vi la tarea que Dios impuso a los hombres para que se ocupen de ella."
+        },
+        {
+          "number": 11,
+          "text": "El hizo todas las cosas apropiadas a su tiempo, pero también puso en el corazón del hombre el sentido del tiempo pasado y futuro, sin que el hombre pueda descubrir la obra que hace Dios desde el principio hasta el fin."
+        },
+        {
+          "number": 12,
+          "text": "Yo comprendí que lo único bueno para el hombre es alegrarse y buscar el bienestar en la vida."
+        },
+        {
+          "number": 13,
+          "text": "Después de todo, que un hombre coma y beba y goce del bienestar con su esfuerzo, eso es un don de Dios."
+        },
+        {
+          "number": 14,
+          "text": "Yo reconocí que todo lo que hace Dios dura para siempre: no hay que añadirle ni quitarle nada, y Dios obra así para que se tenga temor en su presencia."
+        },
+        {
+          "number": 15,
+          "text": "Lo que es, ya fue antes, lo que ha de ser, ya existió, y Dios va en busca de lo que es fugaz."
+        },
+        {
+          "number": 16,
+          "text": "Yo he visto algo más bajo el sol: en lugar del derecho, la maldad y en lugar de la justicia, la iniquidad."
+        },
+        {
+          "number": 17,
+          "text": "Entonces me dije a mí mismo: Dios juzgará al justo y al malvado, porque allá hay un tiempo para cada cosa y para cada acción."
+        },
+        {
+          "number": 18,
+          "text": "Yo pensé acerca de los hombres: si Dios los prueba, es para que vean que no se distinguen de los animales."
+        },
+        {
+          "number": 19,
+          "text": "Porque los hombres y los animales tienen todos la misma suerte: como mueren unos, mueren también los otros. Todos tienen el mismo aliento vital y el hombre no es superior a las bestias, porque todo es vanidad."
+        },
+        {
+          "number": 20,
+          "text": "Todos van hacia el mismo lugar; todo viene del polvo y todo retorna al polvo."
+        },
+        {
+          "number": 21,
+          "text": "¿Quién sabe si el aliento del hombre sube hacia lo alto, y si el aliento del animal baja a lo profundo de la tierra?"
+        },
+        {
+          "number": 22,
+          "text": "Por eso, yo vi que lo único bueno para el hombre es alegrarse de sus obras, ya que esta es su parte: ¿Quién, en efecto, lo llevará a ver lo que habrá después de él?"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "file": "__PMT.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "Yo volví mis ojos a todas las opresiones que se cometen bajo el sol: ahí están las lágrimas de los oprimidos, y no hay quien los consuele. La fuerza está del lado de los opresores, y no hay nadie que les dé su merecido."
+        },
+        {
+          "number": 2,
+          "text": "Entonces tuve por más felices a los muertos, porque ya están muertos, que a los vivos, porque viven todavía;"
+        },
+        {
+          "number": 3,
+          "text": "y consideré más feliz aún al que todavía no ha existido, porque no ha visto las infamias que se cometen bajo el sol."
+        },
+        {
+          "number": 4,
+          "text": "Yo vi que todo el esfuerzo y toda la eficacia de una obra no son más que rivalidad de unos contra otros. También esto es vanidad y correr tras el viento."
+        },
+        {
+          "number": 5,
+          "text": "El necio se cruza de brazos y se devora a sí mismo."
+        },
+        {
+          "number": 6,
+          "text": "Más vale un puñado con tranquilidad, que las dos manos bien llenas a costa de fatigas y de correr tras el viento."
+        },
+        {
+          "number": 7,
+          "text": "Luego volví mis ojos a otra cosa vana bajo el sol:"
+        },
+        {
+          "number": 8,
+          "text": "un hombre está completamente solo, no tiene hijo ni hermano, pero nunca pone fin a su esfuerzo ni se sacia de ambicionar riquezas. Entonces, ¿para quién me esfuerzo y me privo del bienestar? También esto es vanidad y una tarea ingrata."
+        },
+        {
+          "number": 9,
+          "text": "Valen más dos juntos que uno solo, porque es mayor la recompensa del esfuerzo."
+        },
+        {
+          "number": 10,
+          "text": "Si caen, uno levanta a su compañero; pero ¡pobre del que está solo y se cae, sin tener a nadie que lo levante!"
+        },
+        {
+          "number": 11,
+          "text": "Además, si se acuestan juntos, sienten calor, pero uno solo ¿cómo se calentará?"
+        },
+        {
+          "number": 12,
+          "text": "Y a uno solo se lo domina, pero los dos podrán resistir, porque la cuerda trenzada no se rompe fácilmente."
+        },
+        {
+          "number": 13,
+          "text": "Más vale un joven pobre y sabio que un rey viejo y necio, que ya no es capaz de hacerse aconsejar."
+        },
+        {
+          "number": 14,
+          "text": "Aunque aquel salió de la cárcel para reinar y había sido pobre en su propio reino,"
+        },
+        {
+          "number": 15,
+          "text": "yo vi a todos los vivientes que caminan bajo el sol ponerse de parte del joven sucesor, que se erigió en lugar del otro."
+        },
+        {
+          "number": 16,
+          "text": "Era una multitud interminable la que él encabezaba. Pero los que vendrán después tampoco estarán contentos con él, porque también esto es vanidad y correr tras el viento."
+        },
+        {
+          "number": 17,
+          "text": "Vigila tus pasos cuando vayas a la Casa de Dios. Acércate dispuesto a escuchar, más bien que a ofrecer el sacrificio de los insensatos, porque ellos no se dan cuenta que obran mal."
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "file": "__PMU.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "No te apures a abrir la boca y que tu corazón no se apresure a proferir una palabra delante de Dios. Porque Dios está en el cielo, y tú, sobre la tierra: sé parco en tus palabras,"
+        },
+        {
+          "number": 2,
+          "text": "ya que los sueños vienen de las muchas ocupaciones y las palabras necias, de hablar demasiado."
+        },
+        {
+          "number": 3,
+          "text": "Si haces un voto a Dios, no tardes en cumplirlo, porque a él no le agradan los necios: el voto que hayas hecho, cúmplelo."
+        },
+        {
+          "number": 4,
+          "text": "Más te vale no hacer un voto que hacerlo y no cumplirlo."
+        },
+        {
+          "number": 5,
+          "text": "No dejes que tu boca te haga pecar, y no digas delante del mensajero de Dios: «Ha sido por inadvertencia». ¿Por qué Dios tendrá que irritarse contra tu palabra y arruinar la obra de tus manos?"
+        },
+        {
+          "number": 6,
+          "text": "Porque en los muchos sueños abundan las ilusiones y el palabrerío. Tú, simplemente, teme a Dios."
+        },
+        {
+          "number": 7,
+          "text": "Si ves que en la provincia se oprime al pobre y se violan el derecho y la justicia, no te sorprendas por eso. Porque un grande tiene un superior que lo vigila, y hay otros grandes por encima de ellos."
+        },
+        {
+          "number": 8,
+          "text": "De todas maneras, lo que más aprovecha a un país es un rey con campos bien cultivados."
+        },
+        {
+          "number": 9,
+          "text": "El que ama el dinero no se sacia jamás, y al que ama la opulencia no le bastan sus ganancias. También esto es vanidad."
+        },
+        {
+          "number": 10,
+          "text": "Donde abundan las provisiones son muchos los que las devoran. ¿Y qué beneficio reportan a su dueño, fuera de poder mirarlas con sus propios ojos?"
+        },
+        {
+          "number": 11,
+          "text": "Dulce es el sueño del trabajador, sea que coma poco o mucho; al rico, en cambio, el estómago lleno no lo deja dormir."
+        },
+        {
+          "number": 12,
+          "text": "Hay un mal muy penoso que yo he visto bajo el sol: es la riqueza guardada por su dueño para su propia desgracia."
+        },
+        {
+          "number": 13,
+          "text": "Esta riqueza se pierde en un mal negocio, y el hijo que él engendró se queda sin nada."
+        },
+        {
+          "number": 14,
+          "text": "El salió desnudo del vientre de su madre, y así volverá, como había venido; de su esfuerzo no saca nada que pueda llevárselo consigo,"
+        },
+        {
+          "number": 15,
+          "text": "Este es ciertamente un mal muy penoso: se fue exactamente como había venido, ¿y de qué le aprovechó esforzarse por nada?"
+        },
+        {
+          "number": 16,
+          "text": "Además, todos sus días comió oscuramente, con mucho dolor, malestar e irritación."
+        },
+        {
+          "number": 17,
+          "text": "Yo he comprobado esto: lo más conveniente es comer y beber y encontrar la felicidad en el esfuerzo que uno realiza bajo el sol, durante los contados días de vida que Dios le concede a cada uno: porque esta es la parte reservada a los hombres."
+        },
+        {
+          "number": 18,
+          "text": "Además, si Dios ha dado a un hombre riquezas y posesiones, y le permite disfrutar de ellas, tomar la parte que le toca y alegrarse de su trabajo, ¡eso es un don de Dios!"
+        },
+        {
+          "number": 19,
+          "text": "No, él no piensa demasiado en la brevedad de la vida, cuando Dios lo tiene ocupado con pensamientos alegres."
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "file": "__PMV.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "Hay un mal que yo he visto bajo el sol y que resulta muy pesado para el hombre"
+        },
+        {
+          "number": 2,
+          "text": "A uno Dios le ha dado riquezas, posesiones y honores, y no le falta nada de todo lo que desea. Pero Dios no le permite disfrutar de eso, sino que lo disfruta un extraño. Esto es vanidad y un mal penoso."
+        },
+        {
+          "number": 3,
+          "text": "Si un hombre tiene cien hijos y vive muchos años, por más numerosos que sean los días de sus años. si su alma no se sacia de felicidad y ni siquiera le dan sepultura, yo digo que un aborto es más feliz que él."
+        },
+        {
+          "number": 4,
+          "text": "Porque este ha venido en vano y se va hacia las tinieblas, y su nombre será cubierto por las tinieblas;"
+        },
+        {
+          "number": 5,
+          "text": "no ha visto ni conocido el sol, pero descansa más tranquilo que aquel."
+        },
+        {
+          "number": 6,
+          "text": "Y aunque ese hombre hubiera vivido dos mil años sin ser en ellos la felicidad, ¿acaso no van todos al mismo sitio?"
+        },
+        {
+          "number": 7,
+          "text": "Todo el esfuerzo del hombre va a parar a su boca, pero el deseo no se satisface jamás."
+        },
+        {
+          "number": 8,
+          "text": "¿En qué aventaja el sabio al necio? ¿Qué ventaja tiene el pobre que sabe enfrentarse con la vida?"
+        },
+        {
+          "number": 9,
+          "text": "Vale más lo que se ve con los ojos que lo que se imagina con el deseo. También esto es vanidad y correr tras el viento."
+        },
+        {
+          "number": 10,
+          "text": "Lo que existe, ya ha sido llamado por su nombre. Ya se sabe lo que es el hombre, y que él no puede entrar en pleito con aquel que es más fuerte que él."
+        },
+        {
+          "number": 11,
+          "text": "Donde abundan las palabras, aumenta la vanidad, ¿y qué aprovecha eso al hombre?"
+        },
+        {
+          "number": 12,
+          "text": "Porque ¿quién sabe lo que es bueno para el hombre en la vida, durante los contados días de su vida fugaz que él pasa como una sombra? ¿Quién puede, en efecto indicar al hombre lo que habrá después de él bajo el sol?"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "file": "__PMW.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "Más vale el buen nombre que un buen perfume y el día de la muerte, más que el del nacimiento."
+        },
+        {
+          "number": 2,
+          "text": "Más vale ir a una casa donde hay duelo que asistir a un banquete, porque ese es el fin de todo hombre y allí reflexionan los vivientes."
+        },
+        {
+          "number": 3,
+          "text": "Más vale la tristeza que la risa, porque el rostro serio ayuda a pensar."
+        },
+        {
+          "number": 4,
+          "text": "El corazón del sabio está en la casa de duelo y el del necio, en el lugar de diversión."
+        },
+        {
+          "number": 5,
+          "text": "Más vale escuchar el reproche de un sabio que oír el canto de los necios."
+        },
+        {
+          "number": 6,
+          "text": "porque como el crepitar de las espinas bajo la olla, así es la risa de los necios. Y también esto es vanidad."
+        },
+        {
+          "number": 7,
+          "text": "La opresión puede enloquecer a un sabio, y los regalos pierden el corazón."
+        },
+        {
+          "number": 8,
+          "text": "Más vale el fin de una cosa que su comienzo y más vale ser paciente que pretender demasiado."
+        },
+        {
+          "number": 9,
+          "text": "No te dejes llevar por el enojo, porque el enojo se alberga en el pecho de los necios."
+        },
+        {
+          "number": 10,
+          "text": "No digas: «¿A qué se debe que el tiempo pasado fue mejor que el presente?». Porque no es la sabiduría la que te lleva a hacer esa pregunta."
+        },
+        {
+          "number": 11,
+          "text": "La sabiduría vale tanto como una herencia y es provechosa para los que ven la luz del sol."
+        },
+        {
+          "number": 12,
+          "text": "Porque estar a la sombra de la sabiduría es como estar a la sombra del dinero, y la ventaja de la ciencia es que la sabiduría hace vivir al que la posee."
+        },
+        {
+          "number": 13,
+          "text": "Observa la obra de Dios: ¿quién puede enderezar lo que él torció?"
+        },
+        {
+          "number": 14,
+          "text": "Disfruta de los días felices y en los días adversos, reflexiona: Dios hizo que se sucedan unos a otros, de manera que el hombre no descubra nada de lo que vendrá después de él."
+        },
+        {
+          "number": 15,
+          "text": "Yo he visto de todo en mis días vanos: hay justos que parecen a pesar de su justicia y malvados que sobreviven a pesar de su maldad."
+        },
+        {
+          "number": 16,
+          "text": "No seas excesivamente justo ni quieras ser demasiado sabio: ¿para qué te vas a arruinar?"
+        },
+        {
+          "number": 17,
+          "text": "No seas demasiado malo ni te comportes como un necio: ¿para qué vas a morir antes de tiempo?"
+        },
+        {
+          "number": 18,
+          "text": "Lo mejor es procurar esto sin dejar de lado aquello: el que teme a Dios sabe unir las dos cosas."
+        },
+        {
+          "number": 19,
+          "text": "La sabiduría hace más fuerte al sabio que diez magistrados de una ciudad."
+        },
+        {
+          "number": 20,
+          "text": "No hay un hombre justo sobre la tierra que haga el bien sin pecar jamás."
+        },
+        {
+          "number": 21,
+          "text": "Tampoco prestes atención a todo lo que se dice. no sea que escuches a tu servidor que te maldice."
+        },
+        {
+          "number": 22,
+          "text": "Porque, además, tú sabes muy bien cuántas veces has maldecido a otros."
+        },
+        {
+          "number": 23,
+          "text": "Yo experimenté todo esto con sabiduría, pensando: «Voy a ser sabio». Pero ella está fuera de mi alcance:"
+        },
+        {
+          "number": 24,
+          "text": "lo que existe es lejano y profundo, más profundo de lo que se puede vislumbrar."
+        },
+        {
+          "number": 25,
+          "text": "Yo me dediqué con el mayor empeño a conocer, a explorar, y a buscar la sabiduría y la razón de las cosas y reconocí que la maldad es una insensatez, y la necedad, una locura."
+        },
+        {
+          "number": 26,
+          "text": "Y yo encuentro más amarga que la muerte a la mujer, cuando ella misma es una trampa, su corazón, una red, y sus brazos, ataduras. Con el favor de Dios, uno puede librarse, pero el pecador se deja atrapar."
+        },
+        {
+          "number": 27,
+          "text": "Mira: esto es lo que descubrí, dice Cohélet. tratando de razonar caso por caso."
+        },
+        {
+          "number": 28,
+          "text": "Pero esto es lo que todavía busco, sin haberlo encontrado: He logrado encontrar a un hombre entre mil, pero entre todas las mujeres no hallé ni una sola."
+        },
+        {
+          "number": 29,
+          "text": "En resumen, he descubierto lo siguiente: Dios hizo recto al hombre, pero ellos se buscan muchas complicaciones."
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "file": "__PMX.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "¿Quién es como el sabio y quién sabe interpretar los hechos? La sabiduría de un hombre ilumina su rostro, y así se transforma la aspereza de su semblante."
+        },
+        {
+          "number": 2,
+          "text": "Observa la orden del rey y esto, a causa del juramento hecho a Dios."
+        },
+        {
+          "number": 3,
+          "text": "No te apresures a retirarte de su presencia ni te obstines en nada malo, porque él hace lo que quiere:"
+        },
+        {
+          "number": 4,
+          "text": "la palabra del rey es soberana y nadie puede decirle: «¿Qué haces?»."
+        },
+        {
+          "number": 5,
+          "text": "El que observa el mandamiento no experimenta ningún mal, y el corazón del sabio sabe que hay un tiempo y un juicio."
+        },
+        {
+          "number": 6,
+          "text": "Para cada cosa, en efecto, hay un tiempo y un juicio; pero un gran mal pesa sobre el hombre,"
+        },
+        {
+          "number": 7,
+          "text": "y es que él ignora lo que va a suceder, porque ¿quién le indicará cómo será eso?"
+        },
+        {
+          "number": 8,
+          "text": "Ningún hombre es dueño del aliento vital, para poder retenerlo, y nadie tiene dominio sobre el día de la muerte; no hay tregua en este combate y la maldad no librará al que la comete."
+        },
+        {
+          "number": 9,
+          "text": "Esto es lo que vi cuando presté atención a todo lo que se hace bajo el sol, mientras un hombre domina a otro para hacerle el mal."
+        },
+        {
+          "number": 10,
+          "text": "Así, yo vi a hombres malvados que eran sepultados honrosamente: ellos partieron del Lugar santo, y en la ciudad se olvidaba cómo habían obrado. También esto es vanidad."
+        },
+        {
+          "number": 11,
+          "text": "Como la sentencia contra las malas acciones no se ejecuta inmediatamente, el corazón de los seres humanos se llena de deseos de hacer el mal."
+        },
+        {
+          "number": 12,
+          "text": "El pecador que hace cien veces el mal puede, a pesar de todo, vivir largo tiempo. Sin embargo, yo sé muy bien que la felicidad es para los que temen a Dios, porque ellos sienten temor en su presencia."
+        },
+        {
+          "number": 13,
+          "text": "Pero no habrá felicidad para el malvado: él, como una sombra no vivirá largamente, porque no tiene temor de Dios."
+        },
+        {
+          "number": 14,
+          "text": "Hay una cosa vana que acontece sobre la tierra; a algunos justos le sucede lo que corresponde a la manera de obrar de los malvados, y a algunos malvados les sucede lo que corresponde a la manera de obrar de los justos. Yo digo que también esto es vanidad."
+        },
+        {
+          "number": 15,
+          "text": "Por eso, elogié la alegría, ya que lo único bueno para el hombre bajo el sol es comer, beber, y sentirse contento: esto es lo que le sirve de compañía en sus esfuerzos mientras duran los días de su vida, que Dios le concede bajo el sol."
+        },
+        {
+          "number": 16,
+          "text": "Cuando me dediqué a conocer la sabiduría y a ver la tarea que se realiza bajo el sol, sin que los ojos se entreguen al sueño ni de día ni de noche,"
+        },
+        {
+          "number": 17,
+          "text": "entonces yo vi toda la obra de Dios. El hombre no puede descubrir la obra que se hace bajo el sol. Por más que se esfuerce en buscar, no encuentra; y aunque el sabio diga que conoce, en realidad, nada puede descubrir."
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "file": "__PMY.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "Sí, yo me puse a pensar en todo esto y vi que los justos, los sabios y sus acciones están en la mano de Dios. Pero el hombre ni siquiera sabe si es objeto de amor o de aversión. Todo lo que está ante él es vanidad,"
+        },
+        {
+          "number": 2,
+          "text": "porque a todos les espera la misma suerte: al justo y al impío, al bueno y al malo, al puro y al impuro, al que ofrece sacrificios y al que no los ofrece; lo mismo le pasa al bueno y al pecador, al que jura y al que teme hacer un juramento."
+        },
+        {
+          "number": 3,
+          "text": "Esto es lo malo en todo lo que sucede bajo el sol: como es igual la suerte de todos, el corazón de los hombres se llena de maldad, la locura está dentro de ellos mientras viven, y después, acaban entre los muertos."
+        },
+        {
+          "number": 4,
+          "text": "Mientras uno está unido a todos los vivientes, siempre hay esperanza, porque «más vale perro vivo que león muerto»."
+        },
+        {
+          "number": 5,
+          "text": "Los vivos, en efecto, saben que morirán, pero los muertos no saben nada: para ellos ya no hay retribución, porque su recuerdo cayó en el olvido."
+        },
+        {
+          "number": 6,
+          "text": "Se han esfumado sus amores, sus odios y sus rivalidades, y nunca más podrán compartir todo lo que se hace bajo el sol."
+        },
+        {
+          "number": 7,
+          "text": "Ve, entonces, come tu pan con alegría y bebe tranquilamente tu vino, porque a Dios ya le agradaron tus obras."
+        },
+        {
+          "number": 8,
+          "text": "Que tu ropa sea siempre blanca y nunca falte el perfume en tu cabeza."
+        },
+        {
+          "number": 9,
+          "text": "Goza de la vida con la mujer que amas, mientras dure esa vana existencia que Dios te concede bajo el sol, porque esa es tu parte en la vida y en el esfuerzo que realizas bajo el sol."
+        },
+        {
+          "number": 10,
+          "text": "Todo lo que esté al alcance de tu mano realízalo con tus propias fuerzas, porque no hay obra, ni proyecto, ni ciencia, ni sabiduría, en el Abismo adonde tú irás."
+        },
+        {
+          "number": 11,
+          "text": "Además, yo vi otra cosa bajo el sol: la carrera no la gana el más veloz, ni el más fuerte triunfa en el combate; el pan no pertenece al más sabio, ni la riqueza al más inteligente, ni es favorecido el más capaz, porque en todo interviene el tiempo y el azar."
+        },
+        {
+          "number": 12,
+          "text": "El hombre no sabe cuándo llega su hora: como los peces atrapados en la red fatal, como los pájaros aprisionados por el lazo, así los hombres se ven sorprendidos por la adversidad cuando cae de improviso sobre ellos."
+        },
+        {
+          "number": 13,
+          "text": "También he visto bajo el sol un caso de sabiduría que considero realmente notable"
+        },
+        {
+          "number": 14,
+          "text": "Había una pequeña ciudad, con pocos habitantes; un gran rey la atacó, la cercó, y construyó contra ella grandes empalizadas."
+        },
+        {
+          "number": 15,
+          "text": "Allí se encontraba un hombre pobre pero sabio, que salvó la ciudad con su sabiduría. A pesar de eso, nadie se acordó más de ese pobre hombre."
+        },
+        {
+          "number": 16,
+          "text": "Entonces pensé: «Más vale maña que fuerza». pero la sabiduría del pobre es despreciada y nadie escucha sus palabras."
+        },
+        {
+          "number": 17,
+          "text": "Las palabras de los sabios oídas con calma valen más que los gritos del que gobierna a los necios."
+        },
+        {
+          "number": 18,
+          "text": "Vale más la sabiduría que las máquinas de guerra, pero una sola falla malogra mucho bien."
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "file": "__PMZ.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "Una mosca muerta corrompe y hace fermentar el óleo del perfumista. Pesa más un poco de insensatez que la sabiduría y la gloria."
+        },
+        {
+          "number": 2,
+          "text": "El sabio piensa rectamente, y el necio lo hace torcidamente."
+        },
+        {
+          "number": 3,
+          "text": "Por cualquier camino que vaya, al necio le falta el buen sentido, y hace que se diga de él: «Es un necio»."
+        },
+        {
+          "number": 4,
+          "text": "Si el que gobierna se irrita contra ti, no te salgas de quicio, porque la sangre fría evita grandes fallas."
+        },
+        {
+          "number": 5,
+          "text": "Hay un mal que yo he visto bajo el sol, como error que procede de la autoridad:"
+        },
+        {
+          "number": 6,
+          "text": "el necio es promovido a los puestos más altos y los nobles rebajados a los puestos inferiores."
+        },
+        {
+          "number": 7,
+          "text": "Yo vi esclavos montados a caballo y príncipes de a pie, como los esclavos."
+        },
+        {
+          "number": 8,
+          "text": "El que cava una fosa cae en ella y al que derriba un cerco, lo muerde una serpiente."
+        },
+        {
+          "number": 9,
+          "text": "El que saca piedras se lastima con ellas y el que corta leña está expuesto al peligro."
+        },
+        {
+          "number": 10,
+          "text": "Si el hierro está mellado, y no lo afilan, es preciso redoblar las fuerzas: por eso es provechoso emplear bien la sabiduría."
+        },
+        {
+          "number": 11,
+          "text": "Si la serpiente muerde porque falla el encantamiento, ¿qué provecho saca el encantador?"
+        },
+        {
+          "number": 12,
+          "text": "Las palabras del sabio son recibidas con agrado, pero al necio lo pierde su propia lengua:"
+        },
+        {
+          "number": 13,
+          "text": "cuando empieza a hablar, dice insensateces, y cuando termina, las peores locuras;"
+        },
+        {
+          "number": 14,
+          "text": "el insensato multiplica las palabras. El hombre no sabe lo que va a suceder: ¿quién puede anunciarle lo que vendrá después de él?"
+        },
+        {
+          "number": 15,
+          "text": "El esfuerzo fatiga al necio, porque no se da maña ni para ir a la ciudad."
+        },
+        {
+          "number": 16,
+          "text": "¡Ay de ti, nación, si tu rey es un joven y tus príncipes comen desde la mañana!"
+        },
+        {
+          "number": 17,
+          "text": "¡Feliz de ti, nación, si tienes por rey a un noble de nacimiento, y tus príncipes comen cuando es debido, para reparar sus fuerzas y no para embriagarse!"
+        },
+        {
+          "number": 18,
+          "text": "Por la pereza se desploman las vigas y por la dejadez se viene abajo la casa."
+        },
+        {
+          "number": 19,
+          "text": "¡Para divertirse se celebra un banquete, el vino alegra la vida y el dinero responde por todo!"
+        },
+        {
+          "number": 20,
+          "text": "Ni siquiera en privado maldigas al rey, y ni en tu habitación maldigas a un rico, porque un pájaro puede hacer correr la voz y la indiscreción tiene alas."
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "file": "__PN0.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "Arroja tu pan sobre la superficie del agua y, a la larga, lo volverás a encontrar."
+        },
+        {
+          "number": 2,
+          "text": "Da una parte a siete, y aun a ocho personas, porque ignoras qué calamidades pueden venir sobre la tierra."
+        },
+        {
+          "number": 3,
+          "text": "Cuando las nubes se llenan, derraman lluvia sobre la tierra; y si un árbol cae hacia el sur o hacia el norte, queda en el mismo lugar donde cayó.]"
+        },
+        {
+          "number": 4,
+          "text": "El que mira el viento no siembra y el que mira las nubes no cosecha."
+        },
+        {
+          "number": 5,
+          "text": "Así como ignoras cómo llega el aliento vital a los huesos en el seno de la mujer embarazada, así también ignoras la obra de Dios, que hace todas las cosas."
+        },
+        {
+          "number": 6,
+          "text": "Siembra tu semilla por la mañana y no dejes que tu brazo descanse hasta la tarde, porque no sabes si es esto o aquello lo que va a prosperar, o si ambas cosas son igualmente buenas."
+        },
+        {
+          "number": 7,
+          "text": "Dulce es la luz y es bueno para los ojos la luz del sol."
+        },
+        {
+          "number": 8,
+          "text": "Si un hombre vive muchos años, que disfrute de todos ellos, pero recuerde que serán muchos los días sombríos y que todo lo que sucede es vanidad."
+        },
+        {
+          "number": 9,
+          "text": "Alégrate, muchacho, mientras eres joven, y que tu corazón sea feliz en tus años juveniles. Sigue los impulsos de tu corazón y lo que es un incentivo para tus ojos; pero ten presente que por todo eso Dios te llamará a juicio."
+        },
+        {
+          "number": 10,
+          "text": "Aparta de tu corazón la tristeza y aleja de tu carne el dolor, porque la juventud y la aurora de la vida pasan fugazmente."
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "file": "__PN1.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "Acuérdate de tu Creador en los días de tu juventud, antes que lleguen los días penosos y vengan los años en los que dirás: «No encuentro en ellos ningún placer»;"
+        },
+        {
+          "number": 2,
+          "text": "antes que se oscurezcan el sol y la luz, la luna y las estrellas, y vuelvan las nubes cargadas de lluvia."
+        },
+        {
+          "number": 3,
+          "text": "En aquel día temblarán los guardianes de la casa y se encorvarán los hombres vigorosos; se detendrán las moledoras, que ya serán pocas, y se oscurecerán las que miran por las ventanas;"
+        },
+        {
+          "number": 4,
+          "text": "se cerrarán las puertas de la calle, mientras declina el ruido del molino; cesará el canto de los pájaros y enmudecerán las que entonan canciones."
+        },
+        {
+          "number": 5,
+          "text": "Entonces se temerán las cuestas empinadas y los terrores acecharán por el camino. El almendro estará florecido, se pondrá pesada la langosta y la alcaparra perderá su eficacia. Porque el hombre se va a su morada eterna, mientras las plañideras rondan por la calle."
+        },
+        {
+          "number": 6,
+          "text": "Sí, acuérdate de él antes que se corte la hebra de plata y se quiebre la ampolla de oro, antes que se haga pedazos el cántaro en la fuente y se rompa la cuerda del aljibe;"
+        },
+        {
+          "number": 7,
+          "text": "antes que el polvo vuelva a la tierra, como lo que es, y el aliento vuelva a Dios, porque es él quien lo dio."
+        },
+        {
+          "number": 8,
+          "text": "¡Vanidad, pura vanidad!, dice Cohélet. ¡Nada más que vanidad!"
+        },
+        {
+          "number": 9,
+          "text": "Cohélet, además de ser sabio, también enseñó la ciencia al pueblo; él pesó, examinó y ajustó numerosos proverbios."
+        },
+        {
+          "number": 10,
+          "text": "Cohélet trató de encontrar sentencias agradables y escribió exactamente palabras verdaderas"
+        },
+        {
+          "number": 11,
+          "text": "Los dichos de los sabios son como aguijones y las colecciones de sentencias, como mojones bien plantados, dones de un solo pastor."
+        },
+        {
+          "number": 12,
+          "text": "Una advertencia más, hijo mío: multiplicar los libros es una cosa interminable y estudiar demasiado deja el cuerpo exhausto."
+        },
+        {
+          "number": 13,
+          "text": "En conclusión: una vez oído todo esto, teme al Señor y observa sus mandamientos, porque esto es todo para el hombre."
+        },
+        {
+          "number": 14,
+          "text": "Dios llevará a juicio todas las obras, aun loa que está escondido, sea bueno o malo."
+        }
+      ]
+    }
+  ],
+  "seenChapterNumbers": {}
+}

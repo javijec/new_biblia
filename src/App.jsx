@@ -2,73 +2,52 @@ import React, { useMemo } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme, CssBaseline, CircularProgress, Box } from "@mui/material";
 import { useBible } from "./context/BibleContext";
+import { useSettings } from "./context/SettingsContext";
 import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/HomePage";
 import ReadPage from "./pages/ReadPage";
 import SearchPage from "./pages/SearchPage";
+import BookmarksPage from "./pages/BookmarksPage";
 import "./App.css";
 
 function App() {
   const { loading } = useBible();
+  const { currentTheme, fontFamily } = useSettings();
 
   const theme = useMemo(
     () =>
       createTheme({
         palette: {
+          mode: currentTheme.name === 'Oscuro' ? 'dark' : 'light',
           primary: {
-            main: "#b45309", // Amber 700
-            light: "#d97706",
-            dark: "#78350f",
-            contrastText: "#ffffff",
-          },
-          secondary: {
-            main: "#78350f", // Amber 900
-            light: "#92400e",
-            dark: "#451a03",
+            main: currentTheme.primary,
           },
           background: {
-            default: "#fdfbf7", // Warm off-white/paper
-            paper: "#ffffff",
+            default: currentTheme.bg,
+            paper: currentTheme.paper,
           },
           text: {
-            primary: "#292524", // Stone 800
-            secondary: "#57534e", // Stone 600
+            primary: currentTheme.text,
           },
         },
         typography: {
-          fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
-          h1: { fontFamily: '"Georgia", serif', fontWeight: 700 },
-          h2: { fontFamily: '"Georgia", serif', fontWeight: 700 },
-          h3: { fontFamily: '"Georgia", serif', fontWeight: 700 },
-          h4: { fontFamily: '"Georgia", serif', fontWeight: 700 },
-          h5: { fontFamily: '"Georgia", serif', fontWeight: 600 },
-          h6: { fontFamily: '"Georgia", serif', fontWeight: 600 },
-          body1: {
-            fontSize: "1.05rem",
-            lineHeight: 1.8,
-            color: "#292524",
-          },
-        },
-        shape: {
-          borderRadius: 12,
+          fontFamily: fontFamily === 'serif'
+            ? '"Georgia", "Garamond", "Times New Roman", serif'
+            : '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+          h1: { fontWeight: 700 },
+          h2: { fontWeight: 700 },
+          h3: { fontWeight: 700 },
+          h4: { fontWeight: 700 },
+          h5: { fontWeight: 600 },
+          h6: { fontWeight: 600 },
         },
         components: {
           MuiAppBar: {
             styleOverrides: {
               root: {
-                backgroundColor: "#ffffff",
-                color: "#451a03",
-                boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+                backgroundColor: currentTheme.paper,
+                color: currentTheme.text,
                 backgroundImage: "none",
-              },
-            },
-          },
-          MuiButton: {
-            styleOverrides: {
-              root: {
-                textTransform: "none",
-                fontWeight: 600,
-                borderRadius: 8,
               },
             },
           },
@@ -77,14 +56,11 @@ function App() {
               root: {
                 backgroundImage: "none",
               },
-              elevation1: {
-                boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
-              },
             },
           },
         },
       }),
-    []
+    [currentTheme, fontFamily]
   );
 
   if (loading) {
@@ -106,6 +82,7 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="read/:bookId/:chapter" element={<ReadPage />} />
           <Route path="search" element={<SearchPage />} />
+          <Route path="bookmarks" element={<BookmarksPage />} />
         </Route>
       </Routes>
     </ThemeProvider>

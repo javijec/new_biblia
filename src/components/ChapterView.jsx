@@ -1,170 +1,229 @@
-import React, { useState } from "react";
-import {
-  Box,
-  Paper,
-  Typography,
-  Button,
-  Chip,
-  Divider,
-  Fade,
-} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, Typography, Paper, IconButton, Tooltip, Fade } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import CheckIcon from "@mui/icons-material/Check";
-import ClearIcon from "@mui/icons-material/Clear";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import ClearAllIcon from "@mui/icons-material/ClearAll";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import ShareIcon from "@mui/icons-material/Share";
 import VerseItem from "./VerseItem";
+import { useSettings } from "../context/SettingsContext";
+import { useBookmarks } from "../context/BookmarksContext";
 
 export default function ChapterView({ chapter, onWordSearch }) {
   const [selectedVerses, setSelectedVerses] = useState(new Set());
-  const [copySuccess, setCopySuccess] = useState(false);
+  const { fontSize } = useSettings();
+  const { toggleBookmark, isBookmarked, addToHistory } = useBookmarks();
 
-  const toggleVerse = (verseNum) => {
-    const newSelected = new Set(selectedVerses);
-    if (newSelected.has(verseNum)) {
-      newSelected.delete(verseNum);
-    } else {
-      newSelected.add(verseNum);
+  // Reset selection when chapter changes and track history
+  useEffect(() => {
+    setSelectedVerses(new Set());
+    if (chapter) {
+      addToHistory(chapter.bookId, chapter.bookTitle, chapter.number);
     }
-    setSelectedVerses(newSelected);
+  }, [chapter]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleVerseClick = (verseNumber) => {
+    const newSelection = new Set(selectedVerses);
+    if (newSelection.has(verseNumber)) {
+      newSelection.delete(verseNumber);
+    } else {
+      newSelection.add(verseNumber);
+    }
+    setSelectedVerses(newSelection);
   };
 
-  const copySelected = () => {
-    if (selectedVerses.size === 0) return;
-
-    const selectedText = chapter.verses
-      .filter((v) => selectedVerses.has(v.number))
-      .map((v) => `${v.number} ${v.text}`)
+  const handleCopy = () => {
+    const sortedVerses = [...selectedVerses].sort((a, b) => a - b);
+    const textToCopy = sortedVerses
+      .map((num) => {
+        const verse = chapter.verses.find((v) => v.number === num);
+        return `${num}. ${verse.text}`;
+      })
       .join("\n");
 
-    navigator.clipboard.writeText(selectedText);
-    setCopySuccess(true);
-    setTimeout(() => setCopySuccess(false), 2000);
+    const reference = `${chapter.bookTitle} ${chapter.number}:${sortedVerses.join(",")}`;
+    navigator.clipboard.writeText(`${reference}\n\n${textToCopy}`);
+    setSelectedVerses(new Set());
   };
 
-  if (!chapter || !chapter.verses) {
-    return null;
-  }
+  const handleBookmarkSelection = () => {
+    selectedVerses.forEach(verseNum => {
+      const verse = chapter.verses.find(v => v.number === verseNum);
+      toggleBookmark(chapter.bookId, chapter.bookTitle, chapter.number, verseNum, verse.text);
+    });
+    setSelectedVerses(new Set());
+  };
+
+  const handleShare = async () => {
+    const sortedVerses = [...selectedVerses].sort((a, b) => a - b);
+    const textToShare = sortedVerses
+      .map((num) => {
+        const verse = chapter.verses.find((v) => v.number === num);
+        return `${num}. ${verse.text}`;
+      })
+      .join("\n");
+
+    const reference = `${chapter.bookTitle} ${chapter.number}:${sortedVerses.join(",")}`;
+    const fullText = `${reference}\n\n${textToShare}`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: reference,
+          text: fullText,
+          url: window.location.href
+        });
+      } catch (error) {
+        console.log('Error sharing:', error);
+      }
+    } else {
+      handleCopy(); // Fallback to copy
+    }
+    setSelectedVerses(new Set());
+  };
+
+  if (!chapter) return null;
 
   return (
     <Paper
       elevation={0}
       sx={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        bgcolor: "white",
+        maxWidth: 800,
+        mx: "auto",
+        p: { xs: 2, md: 6 },
+        minHeight: "80vh",
+        bgcolor: "background.paper",
         borderRadius: 2,
-        border: "1px solid",
-        borderColor: "divider",
-        overflow: "hidden",
+        position: "relative"
       }}
     >
       {/* Header */}
-      <Box
-        sx={{
-          p: { xs: 2, md: 4 },
-          pb: { xs: 2, md: 2 },
-          borderBottom: "1px solid",
-          borderColor: "divider",
-          display: "flex",
-          flexDirection: { xs: "column", sm: "row" },
-          justifyContent: "space-between",
-          alignItems: { xs: "flex-start", sm: "center" },
-          gap: 2,
-          bgcolor: "#fffcf5", // Very subtle warm background for header
-        }}
-      >
-        <Box>
-          <Typography
-            variant="h4"
-            component="h2"
-            sx={{
-              color: "secondary.main",
-              mb: 0.5,
-            }}
-          >
-            {chapter.bookTitle} {chapter.chapterNumber || chapter.number}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            {chapter.verses.length} versículos
-          </Typography>
-        </Box>
-
-        {/* Actions */}
-        <Fade in={selectedVerses.size > 0}>
-          <Box sx={{ display: "flex", gap: 1 }}>
-            <Button
-              variant="outlined"
-              size="small"
-              color="inherit"
-              onClick={() => setSelectedVerses(new Set())}
-              startIcon={<ClearIcon />}
-              sx={{ borderColor: "divider" }}
-            >
-              Limpiar
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              onClick={copySelected}
-              startIcon={copySuccess ? <CheckIcon /> : <ContentCopyIcon />}
-              color={copySuccess ? "success" : "primary"}
-              sx={{ color: "white" }}
-            >
-              {copySuccess ? "Copiado" : `Copiar (${selectedVerses.size})`}
-            </Button>
-          </Box>
-        </Fade>
-      </Box>
-
-      {/* Content */}
-      <Box
-        sx={{
-          flex: 1,
-          overflowY: "auto",
-          p: { xs: 1, md: 2 },
-          scrollBehavior: "smooth",
-        }}
-      >
-        <Box sx={{ maxWidth: "800px", mx: "auto" }}>
-          {chapter.verses.map((verse) => (
-            <VerseItem
-              key={verse.number}
-              verse={verse}
-              isSelected={selectedVerses.has(verse.number)}
-              onToggle={toggleVerse}
-              onWordSearch={onWordSearch}
-            />
-          ))}
-        </Box>
-
-        <Box sx={{ mt: 8, mb: 4, textAlign: "center", opacity: 0.5 }}>
-          <Typography variant="caption" sx={{ fontStyle: "italic" }}>
-            Fin del capítulo
-          </Typography>
-        </Box>
-      </Box>
-
-      {/* Footer Hint */}
-      {selectedVerses.size === 0 && (
-        <Box
+      <Box sx={{ mb: 4, textAlign: "center", borderBottom: "1px solid", borderColor: "divider", pb: 2 }}>
+        <Typography
+          variant="h4"
+          component="h1"
+          gutterBottom
           sx={{
-            p: 1,
-            bgcolor: "grey.50",
-            borderTop: "1px solid",
-            borderColor: "divider",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 1,
+            fontFamily: "Georgia, serif",
+            color: "primary.main",
+            fontWeight: 700
           }}
         >
-          <InfoOutlinedIcon fontSize="small" color="action" sx={{ fontSize: 16 }} />
-          <Typography variant="caption" color="text.secondary">
-            Haz clic en un versículo para seleccionarlo o en una palabra para buscarla
+          {chapter.bookTitle} {chapter.number}
+        </Typography>
+      </Box>
+
+      {/* Verses */}
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
+        {chapter.verses.map((verse) => {
+          const marked = isBookmarked(chapter.bookId, chapter.number, verse.number);
+          return (
+            <Box
+              key={verse.number}
+              sx={{
+                fontSize: `${fontSize}px`,
+                lineHeight: 1.6,
+                position: "relative",
+                pr: marked ? 3 : 0
+              }}
+            >
+              {marked && (
+                <BookmarkIcon
+                  sx={{
+                    position: "absolute",
+                    right: 0,
+                    top: 4,
+                    fontSize: 16,
+                    color: "primary.light",
+                    opacity: 0.5
+                  }}
+                />
+              )}
+              <VerseItem
+                verse={verse}
+                isSelected={selectedVerses.has(verse.number)}
+                onClick={() => handleVerseClick(verse.number)}
+                onWordSearch={onWordSearch}
+              />
+            </Box>
+          );
+        })}
+      </Box>
+
+      {/* Floating Action Bar for Selection */}
+      <Fade in={selectedVerses.size > 0}>
+        <Paper
+          elevation={4}
+          sx={{
+            position: "fixed",
+            bottom: 32,
+            left: "50%",
+            transform: "translateX(-50%)",
+            bgcolor: "text.primary",
+            color: "background.paper",
+            px: 3,
+            py: 1.5,
+            borderRadius: 8,
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+            zIndex: 1000,
+          }}
+        >
+          <Typography variant="subtitle2" fontWeight="bold">
+            {selectedVerses.size}
           </Typography>
-        </Box>
-      )}
+
+          <Box sx={{ height: 24, width: 1, bgcolor: "rgba(255,255,255,0.2)" }} />
+
+          <Tooltip title="Copiar">
+            <IconButton
+              size="small"
+              onClick={handleCopy}
+              sx={{ color: "inherit", "&:hover": { bgcolor: "rgba(255,255,255,0.1)" } }}
+            >
+              <ContentCopyIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title="Marcar/Desmarcar">
+            <IconButton
+              size="small"
+              onClick={handleBookmarkSelection}
+              sx={{ color: "inherit", "&:hover": { bgcolor: "rgba(255,255,255,0.1)" } }}
+            >
+              <BookmarkBorderIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title="Compartir">
+            <IconButton
+              size="small"
+              onClick={handleShare}
+              sx={{ color: "inherit", "&:hover": { bgcolor: "rgba(255,255,255,0.1)" } }}
+            >
+              <ShareIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title="Limpiar selección">
+            <IconButton
+              size="small"
+              onClick={() => setSelectedVerses(new Set())}
+              sx={{ color: "inherit", "&:hover": { bgcolor: "rgba(255,255,255,0.1)" } }}
+            >
+              <ClearAllIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Paper>
+      </Fade>
+
+      {/* Footer Hint */}
+      <Box sx={{ mt: 8, pt: 4, borderTop: "1px solid", borderColor: "divider", textAlign: "center", opacity: 0.6 }}>
+        <Typography variant="caption" fontStyle="italic">
+          Tip: Haz clic en un versículo para seleccionarlo. Haz clic en una palabra para buscarla.
+        </Typography>
+      </Box>
     </Paper>
   );
 }

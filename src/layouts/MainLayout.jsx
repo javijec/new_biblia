@@ -19,6 +19,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import Sidebar from "../components/Sidebar";
+import ReadingSettings from "../components/ReadingSettings";
 import { useBible } from "../context/BibleContext";
 
 export default function MainLayout() {
@@ -123,7 +124,7 @@ export default function MainLayout() {
                                 display: searchOpen ? "flex" : "none",
                                 alignItems: "center",
                                 width: { xs: "100%", sm: 300, md: 400 },
-                                backgroundColor: "grey.100",
+                                backgroundColor: "action.hover",
                                 position: { xs: "absolute", sm: "relative" },
                                 left: { xs: 0, sm: "auto" },
                                 right: { xs: 0, sm: "auto" },
@@ -153,13 +154,15 @@ export default function MainLayout() {
                         </Paper>
                     </Fade>
 
+                    <ReadingSettings />
+
                     <IconButton
                         onClick={() => {
                             setSearchOpen(!searchOpen);
                             if (!searchOpen) setTimeout(() => document.querySelector('input[placeholder="Buscar..."]')?.focus(), 100);
                         }}
                         sx={{
-                            bgcolor: searchOpen ? "grey.100" : "transparent",
+                            bgcolor: searchOpen ? "action.selected" : "transparent",
                             color: searchOpen ? "primary.main" : "text.secondary"
                         }}
                     >
@@ -179,7 +182,7 @@ export default function MainLayout() {
                         display: { xs: "none", md: "block" },
                         borderRight: "1px solid",
                         borderColor: "divider",
-                        bgcolor: "white",
+                        bgcolor: "background.paper",
                     }}
                 >
                     <Sidebar
@@ -199,7 +202,7 @@ export default function MainLayout() {
                         "& .MuiDrawer-paper": {
                             width: 280,
                             boxSizing: "border-box",
-                            bgcolor: "white",
+                            bgcolor: "background.paper",
                         },
                     }}
                 >

@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import BookSelector from "./BookSelector";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 export default function Sidebar({
   data,
@@ -34,9 +35,20 @@ export default function Sidebar({
         >
           Navegación
         </Typography>
-        <Typography variant="caption" color="text.secondary">
-          Selecciona un libro para leer
-        </Typography>
+        <Button
+          startIcon={<BookmarkIcon />}
+          onClick={() => onNavigate('/bookmarks')}
+          fullWidth
+          sx={{
+            mt: 2,
+            justifyContent: "flex-start",
+            color: "primary.main",
+            bgcolor: "primary.50",
+            "&:hover": { bgcolor: "primary.100" }
+          }}
+        >
+          Mi Biblioteca
+        </Button>
       </Box>
 
       <Box
