@@ -21,6 +21,7 @@
     "@tailwindcss/vite": "^4.1.17",
     "cheerio": "^1.0.0-rc.12",
     "comlink": "^4.4.2",
+    "driver.js": "^1.4.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^6.20.0",

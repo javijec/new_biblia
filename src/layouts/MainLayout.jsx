@@ -21,6 +21,7 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import Sidebar from "../components/Sidebar";
 import ReadingSettings from "../components/ReadingSettings";
 import { useBible } from "../context/BibleContext";
+import Tutorial from "../components/Tutorial";
 
 export default function MainLayout() {
     const { data } = useBible();
@@ -62,10 +63,12 @@ export default function MainLayout() {
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", height: "100vh", bgcolor: "background.default" }}>
+            <Tutorial />
             {/* AppBar */}
             <AppBar position="static" elevation={0} sx={{ borderBottom: "1px solid", borderColor: "divider" }}>
                 <Toolbar sx={{ gap: 2, minHeight: { xs: 56, sm: 64 } }}>
                     <IconButton
+                        id="mobile-menu-btn"
                         color="inherit"
                         edge="start"
                         onClick={handleDrawerToggle}
@@ -133,7 +136,7 @@ export default function MainLayout() {
                                 display: searchOpen ? "flex" : "none",
                                 alignItems: "center",
                                 width: { xs: "100%", sm: 300, md: 400 },
-                                backgroundColor: "action.hover",
+                                backgroundColor: { xs: "background.paper", sm: "action.hover" },
                                 position: { xs: "absolute", sm: "relative" },
                                 left: { xs: 0, sm: "auto" },
                                 right: { xs: 0, sm: "auto" },
@@ -163,9 +166,12 @@ export default function MainLayout() {
                         </Paper>
                     </Fade>
 
-                    <ReadingSettings />
+                    <Box id="settings-trigger">
+                        <ReadingSettings />
+                    </Box>
 
                     <IconButton
+                        id="search-trigger"
                         onClick={() => {
                             setSearchOpen(!searchOpen);
                             if (!searchOpen) setTimeout(() => document.querySelector('input[placeholder="Buscar..."]')?.focus(), 100);
@@ -184,6 +190,7 @@ export default function MainLayout() {
             <Box sx={{ display: "flex", flex: 1, overflow: "hidden" }}>
                 {/* Desktop Sidebar */}
                 <Box
+                    id="sidebar-nav"
                     component="nav"
                     sx={{
                         width: { md: 300, lg: 340 },

@@ -276,3 +276,80 @@ mark {
     font-size: 1.125rem;
   }
 }
+
+/* Driver.js Custom Styling */
+.driver-popover {
+  background-color: var(--parchment) !important;
+  color: var(--text-dark) !important;
+  border-radius: 12px !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: 0 10px 25px -5px rgba(61, 40, 23, 0.2), 0 8px 10px -6px rgba(61, 40, 23, 0.1) !important;
+  font-family: "Georgia", serif !important;
+  padding: 20px !important;
+}
+
+.driver-popover-title {
+  font-family: "Georgia", serif !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  color: var(--text-dark) !important;
+  margin-bottom: 8px !important;
+}
+
+.driver-popover-description {
+  font-family: "Georgia", serif !important;
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+  color: var(--text-light) !important;
+  margin-bottom: 20px !important;
+}
+
+.driver-popover-footer {
+  margin-top: 15px !important;
+}
+
+.driver-popover-footer button {
+  background-color: var(--accent-brown) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 20px !important;
+  padding: 8px 16px !important;
+  font-family: "Georgia", serif !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  text-shadow: none !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+.driver-popover-footer button:hover {
+  background-color: var(--text-dark) !important;
+  transform: translateY(-1px);
+}
+
+.driver-popover-footer .driver-prev-btn {
+  background-color: transparent !important;
+  color: var(--text-light) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+.driver-popover-footer .driver-prev-btn:hover {
+  background-color: rgba(0,0,0,0.05) !important;
+  color: var(--text-dark) !important;
+}
+
+.driver-popover-arrow-side-left.driver-popover-arrow {
+  border-left-color: var(--parchment) !important;
+}
+
+.driver-popover-arrow-side-right.driver-popover-arrow {
+  border-right-color: var(--parchment) !important;
+}
+
+.driver-popover-arrow-side-top.driver-popover-arrow {
+  border-top-color: var(--parchment) !important;
+}
+
+.driver-popover-arrow-side-bottom.driver-popover-arrow {
+  border-bottom-color: var(--parchment) !important;
+}
