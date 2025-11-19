@@ -21,6 +21,7 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import Sidebar from "../components/Sidebar";
 import ReadingSettings from "../components/ReadingSettings";
 import { useBible } from "../context/BibleContext";
+import Tutorial from "../components/Tutorial";
 
 export default function MainLayout() {
     const { data } = useBible();
@@ -62,6 +63,7 @@ export default function MainLayout() {
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", height: "100vh", bgcolor: "background.default" }}>
+            <Tutorial />
             {/* AppBar */}
             <AppBar position="static" elevation={0} sx={{ borderBottom: "1px solid", borderColor: "divider" }}>
                 <Toolbar sx={{ gap: 2, minHeight: { xs: 56, sm: 64 } }}>
