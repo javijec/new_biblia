@@ -7,7 +7,7 @@ export default function SearchPage() {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const query = searchParams.get("q");
-    const { searchAllBooks } = useBibleSearch();
+    const { searchAllBooks, isReady } = useBibleSearch();
 
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -17,10 +17,11 @@ export default function SearchPage() {
         const performSearch = async () => {
             if (!query) return;
 
+            if (!isReady) return;
+
             setLoading(true);
             setResults([]);
             try {
-                // TODO: This will be updated to use the Web Worker later
                 const searchResults = await searchAllBooks(query);
                 setResults(searchResults);
             } catch (error) {
@@ -31,7 +32,16 @@ export default function SearchPage() {
         };
 
         performSearch();
-    }, [query, searchAllBooks]);
+    }, [query, searchAllBooks, isReady]);
+
+    if (!isReady) {
+        return (
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", pt: 8, gap: 2 }}>
+                <CircularProgress />
+                <Typography color="text.secondary">Indexando libros para la búsqueda...</Typography>
+            </Box>
+        );
+    }
 
     if (loading) {
         return (

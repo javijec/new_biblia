@@ -13,6 +13,7 @@ import {
   ListItemButton,
   ListItemText,
   Divider,
+  alpha,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
@@ -95,10 +96,10 @@ export default function BookSelector({
                   borderRadius: 1,
                   py: 1,
                   "&.Mui-selected": {
-                    bgcolor: "primary.50",
+                    bgcolor: (theme) => alpha(theme.palette.primary.main, 0.1),
                     color: "primary.main",
                     "&:hover": {
-                      bgcolor: "primary.100",
+                      bgcolor: (theme) => alpha(theme.palette.primary.main, 0.2),
                     },
                   },
                 }}
@@ -118,7 +119,7 @@ export default function BookSelector({
               </ListItemButton>
 
               <Collapse in={isExpanded} timeout="auto" unmountOnExit>
-                <Box sx={{ p: 2, bgcolor: "grey.50", borderRadius: 1, mt: 0.5 }}>
+                <Box sx={{ p: 2, bgcolor: "action.hover", borderRadius: 1, mt: 0.5 }}>
                   {isLoading ? (
                     <Box sx={{ display: "flex", justifyContent: "center", py: 2 }}>
                       <CircularProgress size={24} />
@@ -145,7 +146,7 @@ export default function BookSelector({
                               justifyContent: "center",
                               borderRadius: 1,
                               cursor: "pointer",
-                              bgcolor: "white",
+                              bgcolor: "background.paper",
                               border: "1px solid",
                               borderColor: "divider",
                               fontSize: "0.9rem",
@@ -153,7 +154,7 @@ export default function BookSelector({
                               color: "text.secondary",
                               "&:hover": {
                                 bgcolor: "primary.main",
-                                color: "white",
+                                color: "primary.contrastText",
                                 borderColor: "primary.main",
                               },
                               transition: "all 0.2s",
@@ -200,7 +201,7 @@ export default function BookSelector({
         }}
         sx={{
           "& .MuiOutlinedInput-root": {
-            bgcolor: "white",
+            bgcolor: "background.paper",
           },
         }}
       />
@@ -231,7 +232,7 @@ export default function BookSelector({
             <Chip
               label={oldBooks.length}
               size="small"
-              sx={{ height: 20, fontSize: "0.75rem", bgcolor: "grey.200" }}
+              sx={{ height: 20, fontSize: "0.75rem", bgcolor: "action.selected" }}
             />
             {expandedTestament === "old" ? <ExpandLessIcon /> : <ExpandMoreIcon />}
           </Box>
@@ -269,7 +270,7 @@ export default function BookSelector({
             <Chip
               label={newBooks.length}
               size="small"
-              sx={{ height: 20, fontSize: "0.75rem", bgcolor: "grey.200" }}
+              sx={{ height: 20, fontSize: "0.75rem", bgcolor: "action.selected" }}
             />
             {expandedTestament === "new" ? <ExpandLessIcon /> : <ExpandMoreIcon />}
           </Box>
