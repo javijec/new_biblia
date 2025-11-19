@@ -7,7 +7,6 @@ import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/HomePage";
 import ReadPage from "./pages/ReadPage";
 import SearchPage from "./pages/SearchPage";
-import BookmarksPage from "./pages/BookmarksPage";
 import "./App.css";
 
 function App() {
@@ -82,7 +81,6 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="read/:bookId/:chapter" element={<ReadPage />} />
           <Route path="search" element={<SearchPage />} />
-          <Route path="bookmarks" element={<BookmarksPage />} />
         </Route>
       </Routes>
     </ThemeProvider>
