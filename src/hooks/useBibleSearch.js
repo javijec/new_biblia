@@ -49,5 +49,5 @@ export function useBibleSearch() {
     });
   }, [isWorkerReady]);
 
-  return { searchAllBooks };
+  return { searchAllBooks, isReady: isWorkerReady };
 }

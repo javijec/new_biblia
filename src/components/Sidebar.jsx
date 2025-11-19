@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, alpha } from "@mui/material";
 import BookSelector from "./BookSelector";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 
@@ -43,8 +43,8 @@ export default function Sidebar({
             mt: 2,
             justifyContent: "flex-start",
             color: "primary.main",
-            bgcolor: "primary.50",
-            "&:hover": { bgcolor: "primary.100" }
+            bgcolor: (theme) => alpha(theme.palette.primary.main, 0.1),
+            "&:hover": { bgcolor: (theme) => alpha(theme.palette.primary.main, 0.2) }
           }}
         >
           Mi Biblioteca
@@ -64,10 +64,10 @@ export default function Sidebar({
             background: "transparent",
           },
           "&::-webkit-scrollbar-thumb": {
-            background: "rgba(0,0,0,0.1)",
+            background: (theme) => theme.palette.action.hover,
             borderRadius: "3px",
             "&:hover": {
-              background: "rgba(0,0,0,0.2)",
+              background: (theme) => theme.palette.action.selected,
             },
           },
         }}

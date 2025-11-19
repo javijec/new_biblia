@@ -225,7 +225,7 @@ export default function MainLayout() {
                     <Container
                         maxWidth="lg"
                         sx={{
-                            height: "100%",
+                            minHeight: "100%", // Changed from height: "100%" to minHeight
                             py: { xs: 2, md: 4 },
                             px: { xs: 2, md: 4 }
                         }}

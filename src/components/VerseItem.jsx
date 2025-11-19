@@ -89,14 +89,14 @@ export default function VerseItem({
       sx={{
         display: "flex",
         gap: 2,
-        py: 1,
+        py: 0.5, // Reduced padding
         px: 2,
         cursor: "pointer",
         borderRadius: 1,
         position: "relative",
         backgroundColor: isSelected ? "primary.50" : "transparent",
         "&:hover": {
-          backgroundColor: isSelected ? "primary.100" : "grey.50",
+          backgroundColor: isSelected ? "primary.100" : "action.hover",
         },
         transition: "background-color 0.2s ease",
       }}
@@ -146,8 +146,8 @@ export default function VerseItem({
           flex: 1,
           color: isSelected ? "text.primary" : "text.primary",
           fontFamily: "Georgia, serif",
-          fontSize: { xs: "1.05rem", md: "1.15rem" },
-          lineHeight: 1.8,
+          fontSize: "inherit", // Inherit from parent
+          lineHeight: "inherit", // Inherit from parent
         }}
       >
         {renderClickableText()}
