@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Box, Typography, Paper, IconButton, Tooltip, Fade, Divider, alpha } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
@@ -7,6 +7,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForwardIos";
 import VerseItem from "./VerseItem";
 import { useSettings } from "../context/SettingsContext";
+import { useSelection } from "../context/SelectionContext";
+import { getAbbreviation } from "../utils/bookAbbreviations";
 
 export default function ChapterView({
   chapter,
@@ -16,55 +18,113 @@ export default function ChapterView({
   hasPrev,
   hasNext
 }) {
-  const [selectedVerses, setSelectedVerses] = useState(new Set());
   const { fontSize, fontFamily } = useSettings();
+  const { toggleSelection, isSelected, clearSelection, getSelectedVerses, selectionCount } = useSelection();
 
-  // Reset selection when chapter changes
-  useEffect(() => {
-    setSelectedVerses(new Set());
-  }, [chapter]);
+  const handleVerseClick = (verse) => {
+    toggleSelection({
+      bookId: chapter.bookId,
+      bookTitle: chapter.bookTitle,
+      chapterNumber: chapter.number,
+      verseNumber: verse.number,
+      text: verse.text
+    });
+  };
 
-  const handleVerseClick = (verseNumber) => {
-    const newSelection = new Set(selectedVerses);
-    if (newSelection.has(verseNumber)) {
-      newSelection.delete(verseNumber);
-    } else {
-      newSelection.add(verseNumber);
-    }
-    setSelectedVerses(newSelection);
+  const formatSelectionForExport = () => {
+    const verses = getSelectedVerses();
+
+    // Group by Book
+    const versesByBook = {};
+    verses.forEach(v => {
+      if (!versesByBook[v.bookTitle]) versesByBook[v.bookTitle] = [];
+      versesByBook[v.bookTitle].push(v);
+    });
+
+    let exportBlocks = [];
+
+    Object.entries(versesByBook).forEach(([bookTitle, bookVerses]) => {
+      // Sort by chapter then verse
+      bookVerses.sort((a, b) => {
+        if (a.chapterNumber !== b.chapterNumber) return a.chapterNumber - b.chapterNumber;
+        return a.verseNumber - b.verseNumber;
+      });
+
+      // Build continuous blocks
+      const blocks = [];
+      let currentBlock = [bookVerses[0]];
+
+      for (let i = 1; i < bookVerses.length; i++) {
+        const prev = bookVerses[i - 1];
+        const curr = bookVerses[i];
+
+        const isSameChapterConsecutive = curr.chapterNumber === prev.chapterNumber && curr.verseNumber === prev.verseNumber + 1;
+        const isNextChapterStart = curr.chapterNumber === prev.chapterNumber + 1 && curr.verseNumber === 1;
+
+        if (isSameChapterConsecutive || isNextChapterStart) {
+          currentBlock.push(curr);
+        } else {
+          blocks.push(currentBlock);
+          currentBlock = [curr];
+        }
+      }
+      blocks.push(currentBlock);
+
+      // Format each block
+      blocks.forEach(block => {
+        const start = block[0];
+        const end = block[block.length - 1];
+        const abbr = getAbbreviation(bookTitle);
+
+        let header = "";
+        if (start.chapterNumber === end.chapterNumber) {
+          // Single chapter: "Gn 1:1-3" or "Gn 1:1"
+          const range = start.verseNumber === end.verseNumber
+            ? `${start.verseNumber}`
+            : `${start.verseNumber}-${end.verseNumber}`;
+          header = `${abbr} ${start.chapterNumber}:${range}`;
+        } else {
+          // Multi chapter: "Gn 1:31-2:3"
+          header = `${abbr} ${start.chapterNumber}:${start.verseNumber}-${end.chapterNumber}:${end.verseNumber}`;
+        }
+
+        // Format text lines
+        const textLines = block.map(v => {
+          // Only show (Book Chapter) suffix if we are crossing chapters to avoid confusion? 
+          // Or just keep it simple: "Number. Text"
+          // User asked for: "10. Text... (GENESIS 25)" in previous prompt, but then "con todo los versiculos abajo" in the latest.
+          // Let's stick to "Number. Text" to keep it clean, as the header explains the range.
+          // BUT, if crossing chapters, we might want to indicate where the new chapter starts in the text?
+          // Example:
+          // 31. Text...
+          // 1. Text...
+          // It's implicit.
+          return `${v.verseNumber}. ${v.text}`;
+        });
+
+        exportBlocks.push(`${header}\n${textLines.join("\n")}`);
+      });
+    });
+
+    return {
+      text: exportBlocks.join("\n\n")
+    };
   };
 
   const handleCopy = () => {
-    const sortedVerses = [...selectedVerses].sort((a, b) => a - b);
-    const textToCopy = sortedVerses
-      .map((num) => {
-        const verse = chapter.verses.find((v) => v.number === num);
-        return `${num}. ${verse.text}`;
-      })
-      .join("\n");
-
-    const reference = `${chapter.bookTitle} ${chapter.number}:${sortedVerses.join(",")}`;
-    navigator.clipboard.writeText(`${reference}\n\n${textToCopy}`);
-    setSelectedVerses(new Set());
+    const { text } = formatSelectionForExport();
+    navigator.clipboard.writeText(text);
+    clearSelection();
   };
 
   const handleShare = async () => {
-    const sortedVerses = [...selectedVerses].sort((a, b) => a - b);
-    const textToShare = sortedVerses
-      .map((num) => {
-        const verse = chapter.verses.find((v) => v.number === num);
-        return `${num}. ${verse.text}`;
-      })
-      .join("\n");
-
-    const reference = `${chapter.bookTitle} ${chapter.number}:${sortedVerses.join(",")}`;
-    const fullText = `${reference}\n\n${textToShare}`;
+    const { text } = formatSelectionForExport();
 
     if (navigator.share) {
       try {
         await navigator.share({
-          title: reference,
-          text: fullText,
+          title: "Versículos Bíblicos",
+          text: text,
           url: window.location.href
         });
       } catch (error) {
@@ -73,12 +133,12 @@ export default function ChapterView({
     } else {
       handleCopy(); // Fallback to copy
     }
-    setSelectedVerses(new Set());
+    clearSelection();
   };
 
   if (!chapter) return null;
 
-  const isSelectionMode = selectedVerses.size > 0;
+  const isSelectionMode = selectionCount > 0;
 
   // Map font family setting to actual CSS font-family
   const getFontFamily = (font) => {
@@ -137,8 +197,8 @@ export default function ChapterView({
             >
               <VerseItem
                 verse={verse}
-                isSelected={selectedVerses.has(verse.number)}
-                onToggle={() => handleVerseClick(verse.number)}
+                isSelected={isSelected(chapter.bookId, chapter.number, verse.number)}
+                onToggle={() => handleVerseClick(verse)}
                 onWordSearch={onWordSearch}
               />
             </Box>
@@ -195,7 +255,7 @@ export default function ChapterView({
               <Divider orientation="vertical" flexItem sx={{ mx: 0.5 }} />
 
               <Typography variant="subtitle2" fontWeight="bold" sx={{ minWidth: 20, textAlign: "center" }}>
-                {selectedVerses.size}
+                {selectionCount}
               </Typography>
 
               <Tooltip title="Copiar">
@@ -221,7 +281,7 @@ export default function ChapterView({
               <Tooltip title="Limpiar selección">
                 <IconButton
                   size="small"
-                  onClick={() => setSelectedVerses(new Set())}
+                  onClick={clearSelection}
                   sx={{ color: "text.secondary", "&:hover": { color: "error.main", bgcolor: "action.hover" } }}
                 >
                   <ClearAllIcon fontSize="small" />
