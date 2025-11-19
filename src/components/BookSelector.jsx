@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useBible } from "../context/BibleContext";
 import {
   Box,
-  Button,
   Collapse,
   TextField,
   Typography,
@@ -22,9 +21,7 @@ import SearchIcon from "@mui/icons-material/Search";
 
 export default function BookSelector({
   data,
-  selectedBook,
-  onSelectBook,
-  onSelectChapter,
+  onNavigate,
   onTestamentChange,
 }) {
   const [expandedTestament, setExpandedTestament] = useState("old");
@@ -140,14 +137,7 @@ export default function BookSelector({
                         .map((chapter, idx) => (
                           <Box
                             key={idx}
-                            onClick={() =>
-                              onSelectChapter &&
-                              onSelectChapter({
-                                ...chapter,
-                                bookTitle: bookName,
-                                bookId: book.id,
-                              })
-                            }
+                            onClick={() => onNavigate && onNavigate(`/read/${book.id}/${chapter.number}`)}
                             sx={{
                               height: 36,
                               display: "flex",

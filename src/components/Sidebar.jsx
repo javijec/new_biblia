@@ -4,9 +4,7 @@ import BookSelector from "./BookSelector";
 
 export default function Sidebar({
   data,
-  selectedBook,
-  onSelectBook,
-  onSelectChapter,
+  onNavigate,
 }) {
   const scrollContainerRef = useRef(null);
 
@@ -64,9 +62,7 @@ export default function Sidebar({
       >
         <BookSelector
           data={data}
-          selectedBook={selectedBook}
-          onSelectBook={onSelectBook}
-          onSelectChapter={onSelectChapter}
+          onNavigate={onNavigate}
           onTestamentChange={handleTestamentChange}
         />
       </Box>

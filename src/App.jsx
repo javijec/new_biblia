@@ -1,49 +1,22 @@
-import React, { useState, useMemo } from "react";
+import React, { useMemo } from "react";
+import { Routes, Route } from "react-router-dom";
+import { ThemeProvider, createTheme, CssBaseline, CircularProgress, Box } from "@mui/material";
 import { useBible } from "./context/BibleContext";
-import {
-  ThemeProvider,
-  createTheme,
-  CssBaseline,
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  Box,
-  Container,
-  Drawer,
-  useMediaQuery,
-  CircularProgress,
-  Paper,
-  InputBase,
-  Fade,
-  alpha,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
-import CloseIcon from "@mui/icons-material/Close";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
-import Sidebar from "./components/Sidebar";
-import MainContent from "./components/MainContent";
+import MainLayout from "./layouts/MainLayout";
+import HomePage from "./pages/HomePage";
+import ReadPage from "./pages/ReadPage";
+import SearchPage from "./pages/SearchPage";
 import "./App.css";
 
 function App() {
-  const { data, loading } = useBible();
-  const [selectedBook, setSelectedBook] = useState(null);
-  const [selectedChapter, setSelectedChapter] = useState(null);
-  const [searchResults, setSearchResults] = useState(null);
-  const [resultsVisible, setResultsVisible] = useState(20);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const isMobile = useMediaQuery("(max-width:900px)");
+  const { loading } = useBible();
 
   const theme = useMemo(
     () =>
       createTheme({
         palette: {
           primary: {
-            main: "#b45309", // Amber 700 - More sophisticated than bright orange
+            main: "#b45309", // Amber 700
             light: "#d97706",
             dark: "#78350f",
             contrastText: "#ffffff",
@@ -58,7 +31,7 @@ function App() {
             paper: "#ffffff",
           },
           text: {
-            primary: "#292524", // Stone 800 - Softer than pure black
+            primary: "#292524", // Stone 800
             secondary: "#57534e", // Stone 600
           },
         },
@@ -118,298 +91,23 @@ function App() {
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            minHeight: "100vh",
-            bgcolor: "background.default",
-          }}
-        >
-          <CircularProgress size={40} thickness={4} sx={{ color: "primary.main" }} />
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+          <CircularProgress />
         </Box>
       </ThemeProvider>
     );
   }
-
-  if (!data) {
-    return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            minHeight: "100vh",
-            bgcolor: "background.default",
-          }}
-        >
-          <Paper
-            elevation={0}
-            sx={{
-              p: 4,
-              textAlign: "center",
-              border: "1px solid",
-              borderColor: "error.light",
-              bgcolor: "#fff5f5",
-              borderRadius: 2,
-            }}
-          >
-            <Typography variant="h6" color="error.main" gutterBottom>
-              Error al cargar
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Por favor, recarga la página
-            </Typography>
-          </Paper>
-        </Box>
-      </ThemeProvider>
-    );
-  }
-
-  const handleSelectChapter = (book, chapter) => {
-    setSelectedBook(book);
-    setSelectedChapter(chapter);
-    setSearchResults(null);
-    if (isMobile) setMobileOpen(false);
-  };
-
-  const handleClearAll = () => {
-    setSelectedBook(null);
-    setSelectedChapter(null);
-    setSearchResults(null);
-  };
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
-  const handleSearchToggle = () => {
-    setSearchOpen(!searchOpen);
-    if (!searchOpen) {
-      setTimeout(() => document.getElementById("search-input")?.focus(), 100);
-    }
-  };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          height: "100vh",
-          bgcolor: "background.default",
-        }}
-      >
-        {/* AppBar */}
-        <AppBar position="static" elevation={0} sx={{ borderBottom: "1px solid", borderColor: "divider" }}>
-          <Toolbar sx={{ gap: 2, minHeight: { xs: 56, sm: 64 } }}>
-            <IconButton
-              color="inherit"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 1, display: { md: "none" } }}
-            >
-              <MenuIcon />
-            </IconButton>
-
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1.5,
-                cursor: "pointer",
-                flexShrink: 0,
-              }}
-              onClick={handleClearAll}
-            >
-              <Box
-                sx={{
-                  bgcolor: "primary.main",
-                  color: "white",
-                  p: 0.5,
-                  borderRadius: 1,
-                  display: "flex",
-                }}
-              >
-                <MenuBookIcon sx={{ fontSize: 24 }} />
-              </Box>
-              <Box>
-                <Typography
-                  variant="h6"
-                  component="h1"
-                  sx={{
-                    fontWeight: 700,
-                    lineHeight: 1.2,
-                    color: "text.primary",
-                    fontSize: { xs: "1rem", sm: "1.1rem" },
-                  }}
-                >
-                  Biblia Digital
-                </Typography>
-                <Typography
-                  variant="caption"
-                  sx={{
-                    color: "text.secondary",
-                    display: { xs: "none", sm: "block" },
-                    lineHeight: 1,
-                  }}
-                >
-                  Pueblo de Dios
-                </Typography>
-              </Box>
-            </Box>
-
-            <Box sx={{ flexGrow: 1 }} />
-
-            <Fade in={searchOpen}>
-              <Paper
-                component="form"
-                onSubmit={(e) => e.preventDefault()}
-                elevation={0}
-                sx={{
-                  p: "2px 8px",
-                  display: searchOpen ? "flex" : "none",
-                  alignItems: "center",
-                  width: { xs: "100%", sm: 300, md: 400 },
-                  backgroundColor: "grey.100",
-                  position: { xs: "absolute", sm: "relative" },
-                  left: { xs: 0, sm: "auto" },
-                  right: { xs: 0, sm: "auto" },
-                  top: { xs: "100%", sm: "auto" },
-                  mx: { xs: 0, sm: 0 },
-                  zIndex: 10,
-                  borderBottom: { xs: "1px solid #e5e7eb", sm: "none" },
-                  borderRadius: { xs: 0, sm: 8 },
-                }}
-              >
-                <SearchIcon sx={{ color: "text.secondary", mr: 1 }} />
-                <InputBase
-                  id="search-input"
-                  sx={{ ml: 1, flex: 1 }}
-                  placeholder="Buscar..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                {searchTerm && (
-                  <IconButton
-                    size="small"
-                    onClick={() => {
-                      setSearchTerm("");
-                      setSearchResults(null);
-                    }}
-                  >
-                    <CloseIcon fontSize="small" />
-                  </IconButton>
-                )}
-              </Paper>
-            </Fade>
-
-            <IconButton
-              onClick={handleSearchToggle}
-              sx={{
-                bgcolor: searchOpen ? "grey.100" : "transparent",
-                color: searchOpen ? "primary.main" : "text.secondary"
-              }}
-            >
-              {searchOpen ? <CloseIcon /> : <SearchIcon />}
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-
-        {/* Main Content */}
-        <Box sx={{ display: "flex", flex: 1, overflow: "hidden" }}>
-          {/* Desktop Sidebar */}
-          <Box
-            component="nav"
-            sx={{
-              width: { md: 300, lg: 340 },
-              flexShrink: 0,
-              display: { xs: "none", md: "block" },
-              borderRight: "1px solid",
-              borderColor: "divider",
-              bgcolor: "white",
-            }}
-          >
-            <Sidebar
-              data={data}
-              selectedBook={selectedBook}
-              onSelectBook={(book) => {
-                setSelectedBook(book);
-                setSelectedChapter(null);
-                setSearchResults(null);
-              }}
-              onSelectChapter={(chapter) => {
-                handleSelectChapter(chapter.bookTitle, chapter);
-              }}
-            />
-          </Box>
-
-          {/* Mobile Drawer */}
-          <Drawer
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            ModalProps={{ keepMounted: true }}
-            sx={{
-              display: { xs: "block", md: "none" },
-              "& .MuiDrawer-paper": {
-                width: 280,
-                boxSizing: "border-box",
-                bgcolor: "white",
-              },
-            }}
-          >
-            <Sidebar
-              data={data}
-              selectedBook={selectedBook}
-              onSelectBook={(book) => {
-                setSelectedBook(book);
-                setSelectedChapter(null);
-                setSearchResults(null);
-              }}
-              onSelectChapter={(chapter) => {
-                handleSelectChapter(chapter.bookTitle, chapter);
-              }}
-            />
-          </Drawer>
-
-          {/* Main Content Area */}
-          <Box
-            component="main"
-            sx={{
-              flexGrow: 1,
-              overflow: "auto",
-              bgcolor: "background.default",
-              position: "relative",
-            }}
-          >
-            <Container
-              maxWidth="lg"
-              sx={{
-                height: "100%",
-                py: { xs: 2, md: 4 },
-                px: { xs: 2, md: 4 }
-              }}
-            >
-              <MainContent
-                data={data}
-                selectedBook={selectedBook}
-                selectedChapter={selectedChapter}
-                searchResults={searchResults}
-                resultsVisible={resultsVisible}
-                setResultsVisible={setResultsVisible}
-                onSearch={setSearchResults}
-                onSelectChapter={handleSelectChapter}
-                searchTerm={searchTerm}
-              />
-            </Container>
-          </Box>
-        </Box>
-      </Box>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path="read/:bookId/:chapter" element={<ReadPage />} />
+          <Route path="search" element={<SearchPage />} />
+        </Route>
+      </Routes>
     </ThemeProvider>
   );
 }
