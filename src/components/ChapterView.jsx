@@ -8,6 +8,29 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForwardIos";
 import VerseItem from "./VerseItem";
 import { useSettings } from "../context/SettingsContext";
 
+// Helper to format verse ranges (e.g., "1-3, 5, 8-10")
+const formatVerseRange = (verses) => {
+  if (!verses || verses.length === 0) return "";
+
+  const sorted = [...verses].sort((a, b) => a - b);
+  const ranges = [];
+  let start = sorted[0];
+  let end = sorted[0];
+
+  for (let i = 1; i < sorted.length; i++) {
+    if (sorted[i] === end + 1) {
+      end = sorted[i];
+    } else {
+      ranges.push(start === end ? `${start}` : `${start}-${end}`);
+      start = sorted[i];
+      end = sorted[i];
+    }
+  }
+  ranges.push(start === end ? `${start}` : `${start}-${end}`);
+
+  return ranges.join(", ");
+};
+
 export default function ChapterView({
   chapter,
   onWordSearch,
@@ -43,7 +66,8 @@ export default function ChapterView({
       })
       .join("\n");
 
-    const reference = `${chapter.bookTitle} ${chapter.number}:${sortedVerses.join(",")}`;
+    const formattedVerses = formatVerseRange(sortedVerses);
+    const reference = `${chapter.bookTitle} ${chapter.number}:${formattedVerses}`;
     navigator.clipboard.writeText(`${reference}\n\n${textToCopy}`);
     setSelectedVerses(new Set());
   };
@@ -57,7 +81,8 @@ export default function ChapterView({
       })
       .join("\n");
 
-    const reference = `${chapter.bookTitle} ${chapter.number}:${sortedVerses.join(",")}`;
+    const formattedVerses = formatVerseRange(sortedVerses);
+    const reference = `${chapter.bookTitle} ${chapter.number}:${formattedVerses}`;
     const fullText = `${reference}\n\n${textToShare}`;
 
     if (navigator.share) {
