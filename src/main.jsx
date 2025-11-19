@@ -5,13 +5,16 @@ import './index.css'
 import App from './App.jsx'
 import { BibleProvider } from './context/BibleContext'
 import { SettingsProvider } from './context/SettingsContext'
+import { SelectionProvider } from './context/SelectionContext'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <SettingsProvider>
         <BibleProvider>
-          <App />
+          <SelectionProvider>
+            <App />
+          </SelectionProvider>
         </BibleProvider>
       </SettingsProvider>
     </BrowserRouter>
