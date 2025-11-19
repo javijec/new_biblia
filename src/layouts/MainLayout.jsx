@@ -68,6 +68,7 @@ export default function MainLayout() {
             <AppBar position="static" elevation={0} sx={{ borderBottom: "1px solid", borderColor: "divider" }}>
                 <Toolbar sx={{ gap: 2, minHeight: { xs: 56, sm: 64 } }}>
                     <IconButton
+                        id="mobile-menu-btn"
                         color="inherit"
                         edge="start"
                         onClick={handleDrawerToggle}
@@ -165,9 +166,12 @@ export default function MainLayout() {
                         </Paper>
                     </Fade>
 
-                    <ReadingSettings />
+                    <Box id="settings-trigger">
+                        <ReadingSettings />
+                    </Box>
 
                     <IconButton
+                        id="search-trigger"
                         onClick={() => {
                             setSearchOpen(!searchOpen);
                             if (!searchOpen) setTimeout(() => document.querySelector('input[placeholder="Buscar..."]')?.focus(), 100);
@@ -186,6 +190,7 @@ export default function MainLayout() {
             <Box sx={{ display: "flex", flex: 1, overflow: "hidden" }}>
                 {/* Desktop Sidebar */}
                 <Box
+                    id="sidebar-nav"
                     component="nav"
                     sx={{
                         width: { md: 300, lg: 340 },
