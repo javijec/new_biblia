@@ -1,0 +1,664 @@
+{
+  "id": "carta-a-los-efesios",
+  "name": "CARTA A LOS EFESIOS",
+  "testament": "El Nuevo Testamento",
+  "chapters": [
+    {
+      "number": 1,
+      "file": "__PYZ.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "Pablo, Apóstol de Jesucristo por la voluntad de Dios, saluda a los santos que creen en Cristo Jesús."
+        },
+        {
+          "number": 2,
+          "text": "Llegue a ustedes la gracia y la paz de parte de Dios, nuestro Padre, y del Señor Jesucristo."
+        },
+        {
+          "number": 3,
+          "text": "Bendito sea Dios, el Padre de nuestro Señor Jesucristo, que nos ha bendecido en Cristo con toda clase de bienes espirituales en el cielo,"
+        },
+        {
+          "number": 4,
+          "text": "y nos ha elegido en él, antes de la creación del mundo, para que fuéramos santos e irreprochables en su presencia, por el amor."
+        },
+        {
+          "number": 5,
+          "text": "El nos predestinó a ser sus hijos adoptivos por medio de Jesucristo, conforme al beneplácito de su voluntad,"
+        },
+        {
+          "number": 6,
+          "text": "para alabanza de la gloria de su gracia, que nos dio en su Hijo muy querido."
+        },
+        {
+          "number": 7,
+          "text": "En él hemos sido redimidos por su sangre y hemos recibido el perdón de los pecados, según la riqueza de su gracia,"
+        },
+        {
+          "number": 8,
+          "text": "que Dios derramó sobre nosotros, dándonos toda sabiduría y entendimiento."
+        },
+        {
+          "number": 9,
+          "text": "El nos hizo conocer el misterio de su voluntad, conforme al designio misericordioso que estableció de antemano en Cristo,"
+        },
+        {
+          "number": 10,
+          "text": "para que se cumpliera en la plenitud de los tiempos: reunir todas las cosas, las del cielo y las de la tierra, bajo un solo jefe, que es Cristo."
+        },
+        {
+          "number": 11,
+          "text": "En él hemos sido constituidos herederos, y destinados de antemano –según el previo designio del que realiza todas las cosas conforme a su voluntad–"
+        },
+        {
+          "number": 12,
+          "text": "a ser aquellos que han puesto su esperanza en Cristo, para alabanza de su gloria."
+        },
+        {
+          "number": 13,
+          "text": "En él, ustedes, los que escucharon la Palabra de la verdad, la Buena Noticia de la salvación, y creyeron en ella, también han sido marcados con un sello por el Espíritu Santo prometido."
+        },
+        {
+          "number": 14,
+          "text": "Ese Espíritu es el anticipo de nuestra herencia y prepara la redención del pueblo que Dios adquirió para sí, para alabanza de su gloria."
+        },
+        {
+          "number": 15,
+          "text": "Por eso, habiéndome enterado de la fe que ustedes tienen en el Señor Jesús y del amor que demuestran por todos los hermanos,"
+        },
+        {
+          "number": 16,
+          "text": "doy gracias sin cesar por ustedes recordándoles siempre en mis oraciones"
+        },
+        {
+          "number": 17,
+          "text": "Que el Dios de nuestro Señor Jesucristo, el Padre de la gloria, les conceda un espíritu de sabiduría y de revelación que les permita conocerlo verdaderamente."
+        },
+        {
+          "number": 18,
+          "text": "Que él ilumine sus corazones, para que ustedes puedan valorar la esperanza a la que han sido llamados, los tesoros de gloria que encierra su herencia entre los santos,"
+        },
+        {
+          "number": 19,
+          "text": "y la extraordinaria grandeza del poder con que él obra en nosotros, los creyentes, por la eficacia de su fuerza. Este es el mismo poder"
+        },
+        {
+          "number": 20,
+          "text": "que Dios manifestó en Cristo, cuando lo resucitó de entre los muertos y lo hizo sentar a su derecha en el cielo,"
+        },
+        {
+          "number": 21,
+          "text": "elevándolo por encima de todo Principado, Potestad, Poder y Dominación, y de cualquier otra dignidad que pueda mencionarse tanto en este mundo como en el futuro."
+        },
+        {
+          "number": 22,
+          "text": "El puso todas las cosas bajo sus pies y lo constituyó, por encima de todo, Cabeza de la Iglesia,"
+        },
+        {
+          "number": 23,
+          "text": "que es su Cuerpo y la Plenitud de aquel que llena completamente todas las cosas."
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "file": "__PZ0.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "Ustedes estaban muertos a causa de las faltas y pecados"
+        },
+        {
+          "number": 2,
+          "text": "que cometían, cuando vivían conforme al criterio de este mundo, según el Príncipe que domina en el espacio, el mismo Espíritu que sigue actuando en aquellos que se rebelan."
+        },
+        {
+          "number": 3,
+          "text": "Todos nosotros también nos comportábamos así en otro tiempo, viviendo conforme a nuestros deseos carnales y satisfaciendo nuestra concupiscencia y nuestras malas inclinaciones, de manera que por nuestra condición estábamos condenados a la ira, igual que los demás."
+        },
+        {
+          "number": 4,
+          "text": "Pero Dios, que es rico en misericordia, por el gran amor con que nos amó,"
+        },
+        {
+          "number": 5,
+          "text": "precisamente cuando estábamos muertos a causa de nuestros pecados, nos hizo revivir con Cristo –¡ustedes han sido salvados gratuitamente!–"
+        },
+        {
+          "number": 6,
+          "text": "y con Cristo Jesús nos resucitó y nos hizo reinar con él en el cielo."
+        },
+        {
+          "number": 7,
+          "text": "Así, Dios ha querido demostrar a los tiempos futuros la inmensa riqueza de su gracia por el amor que nos tiene en Cristo Jesús."
+        },
+        {
+          "number": 8,
+          "text": "Porque ustedes han sido salvados por su gracia, mediante la fe. Esto no proviene de ustedes, sino que es un don de Dios;"
+        },
+        {
+          "number": 9,
+          "text": "y no es el resultado de las obras, para que nadie se gloríe."
+        },
+        {
+          "number": 10,
+          "text": "Nosotros somos creación suya: fuimos creados en Cristo Jesús, a fin de realizar aquellas buenas obras, que Dios preparó de antemano para que las practicáramos."
+        },
+        {
+          "number": 11,
+          "text": "Por eso, recuerden lo que ustedes eran antes: paganos de nacimiento, llamados «incircuncisos» por aquellos que se dicen «circuncisos», en virtud de un corte practicado en la carne."
+        },
+        {
+          "number": 12,
+          "text": "Entonces ustedes no tenían a Cristo y estaban excluidos de la comunidad de Israel, ajenos a las alianzas de la promesa, sin esperanza y sin Dios en el mundo."
+        },
+        {
+          "number": 13,
+          "text": "Pero ahora, en Cristo Jesús, ustedes, los que antes estaban lejos, han sido acercados por la sangre de Cristo."
+        },
+        {
+          "number": 14,
+          "text": "Porque Cristo es nuestra paz; él ha unido a los dos pueblos en uno solo, derribando el muro de enemistad que los separaba,"
+        },
+        {
+          "number": 15,
+          "text": "y aboliendo en su propia carne la Ley con sus mandamientos y prescripciones. Así creó con los dos pueblos un solo Hombre nuevo en su propia persona, restableciendo la paz,"
+        },
+        {
+          "number": 16,
+          "text": "y los reconcilió con Dios en un solo Cuerpo, por medio de la cruz, destruyendo la enemistad en su persona."
+        },
+        {
+          "number": 17,
+          "text": "Y él vino a proclamar la Buena Noticia de la paz, paz para ustedes, que estaban lejos, paz también para aquellos que estaban cerca."
+        },
+        {
+          "number": 18,
+          "text": "Porque por medio de Cristo, todos sin distinción tenemos acceso al Padre, en un mismo Espíritu."
+        },
+        {
+          "number": 19,
+          "text": "Por lo tanto, ustedes ya no son extranjeros ni huéspedes, sino conciudadanos de los santos y miembros de la familia de Dios."
+        },
+        {
+          "number": 20,
+          "text": "Ustedes están edificados sobre los apóstoles y los profetas, que son los cimientos, mientras que la piedra angular es el mismo Jesucristo."
+        },
+        {
+          "number": 21,
+          "text": "En él, todo el edificio, bien trabado, va creciendo para constituir un templo santo en el Señor."
+        },
+        {
+          "number": 22,
+          "text": "En él, también ustedes son incorporados al edificio, para llegar a ser una morada de Dios en el Espíritu."
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "file": "__PZ1.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "Por eso yo, Pablo, estoy preso por Cristo Jesús, a causa de ustedes, los de origen pagano."
+        },
+        {
+          "number": 2,
+          "text": "Porque seguramente habrán oído hablar de la gracia de Dios, que me ha sido dispensada en beneficio de ustedes."
+        },
+        {
+          "number": 3,
+          "text": "Fue por medio de una revelación como se me dio a conocer este misterio, tal como acabo de exponérselo en pocas palabras."
+        },
+        {
+          "number": 4,
+          "text": "Al leerlas, se darán cuenta de la comprensión que tengo del misterio de Cristo,"
+        },
+        {
+          "number": 5,
+          "text": "que no fue manifestado a las generaciones pasadas, pero que ahora ha sido revelado por medio del Espíritu a sus santos apóstoles y profetas."
+        },
+        {
+          "number": 6,
+          "text": "Este misterio consiste en que también los paganos participan de una misma herencia, son miembros de un mismo Cuerpo y beneficiarios de la misma promesa en Cristo Jesús, por medio del Evangelio."
+        },
+        {
+          "number": 7,
+          "text": "De este Evangelio, yo fui constituido ministro por el don de la gracia que recibí de Dios, en virtud de la eficacia de su poder."
+        },
+        {
+          "number": 8,
+          "text": "Yo, el menor de todos los santos, he recibido la gracia de anunciar a los paganos la insondable riqueza de Cristo,"
+        },
+        {
+          "number": 9,
+          "text": "y poner de manifiesto la dispensación del misterio que estaba oculto desde siempre en Dios, el creador de todas las cosas,"
+        },
+        {
+          "number": 10,
+          "text": "para que los Principados y las Potestades celestiales conozcan la infinita variedad de la sabiduría de Dios por medio de la Iglesia."
+        },
+        {
+          "number": 11,
+          "text": "Este es el designio que Dios concibió desde toda la eternidad en Cristo Jesús, nuestro Señor,"
+        },
+        {
+          "number": 12,
+          "text": "por quien nos atrevemos a acercarnos a Dios con toda confianza, mediante la fe en él."
+        },
+        {
+          "number": 13,
+          "text": "Les pido, por lo tanto, que no se desanimen a causa de las tribulaciones que padezco por ustedes: ¡ellas son su gloria!"
+        },
+        {
+          "number": 14,
+          "text": "Por eso doblo mis rodillas delante del Padre,"
+        },
+        {
+          "number": 15,
+          "text": "de quien procede toda paternidad en el cielo y en la tierra."
+        },
+        {
+          "number": 16,
+          "text": "Que él se digne fortificarlos por medio de su Espíritu, con forme a la riqueza de su gloria, para que crezca en ustedes el hombre interior."
+        },
+        {
+          "number": 17,
+          "text": "Que Cristo habite en sus corazones por la fe, y sean arraigados y edificados en el amor."
+        },
+        {
+          "number": 18,
+          "text": "Así podrán comprender, con todos los santos, cuál es la anchura y la longitud, la altura y la profundidad,"
+        },
+        {
+          "number": 19,
+          "text": "en una palabra, ustedes podrán conocer el amor de Cristo, que supera todo conocimiento, para ser colmados por la plenitud de Dios."
+        },
+        {
+          "number": 20,
+          "text": "¡A aquel que es capaz de hacer infinitamente más de lo que podemos pedir o pensar, por el poder que obra en nosotros,"
+        },
+        {
+          "number": 21,
+          "text": "a él sea la gloria en la Iglesia y en Cristo Jesús, por todas las generaciones y para siempre! Amén."
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "file": "__PZ2.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "Yo, que estoy preso por el Señor, los exhorto a comportarse de una manera digna de la vocación que han recibido."
+        },
+        {
+          "number": 2,
+          "text": "Con mucha humildad, mansedumbre y paciencia, sopórtense mutuamente por amor."
+        },
+        {
+          "number": 3,
+          "text": "Traten de conservar la unidad del Espíritu mediante el vínculo de la paz."
+        },
+        {
+          "number": 4,
+          "text": "Hay un solo Cuerpo y un solo Espíritu, así como hay una misma esperanza, a la que ustedes han sido llamados, de acuerdo con la vocación recibida."
+        },
+        {
+          "number": 5,
+          "text": "hay un solo Señor, una sola fe, un solo bautismo."
+        },
+        {
+          "number": 6,
+          "text": "Hay un solo Dios y Padre de todos, que está sobre todos, lo penetra todo y está en todos."
+        },
+        {
+          "number": 7,
+          "text": "Sin embargo, cada uno de nosotros ha recibido su propio don, en la medida que Cristo los ha distribuido."
+        },
+        {
+          "number": 8,
+          "text": "Por eso dice la Escritura: \"Cuando subió a lo alto, llevó consigo a los cautivos y repartió dones a los hombres\"."
+        },
+        {
+          "number": 9,
+          "text": "Pero si decimos que subió, significa que primero descendió a las regiones inferiores de la tierra."
+        },
+        {
+          "number": 10,
+          "text": "El que descendió es el mismo que subió más allá de los cielos, para colmar todo el universo."
+        },
+        {
+          "number": 11,
+          "text": "El comunicó a unos el don de ser apóstoles, a otros profetas, a otros predicadores del Evangelio, a otros pastores o maestros."
+        },
+        {
+          "number": 12,
+          "text": "Así organizó a los santos para la obra del ministerio, en orden a la edificación del Cuerpo de Cristo,"
+        },
+        {
+          "number": 13,
+          "text": "hasta que todos lleguemos a la unidad de la fe y del conocimiento del Hijo de Dios, al estado de hombre perfecto y a la madurez que corresponde a la plenitud de Cristo."
+        },
+        {
+          "number": 14,
+          "text": "Así dejaremos de ser niños, sacudidos por las olas y arrastrados por el viento de cualquier doctrina, a merced de la malicia de los hombres y de su astucia para enseñar el error."
+        },
+        {
+          "number": 15,
+          "text": "Por el contrario, viviendo en la verdad y en el amor, crezcamos plenamente, unidos a Cristo. El es la Cabeza,"
+        },
+        {
+          "number": 16,
+          "text": "y de él, todo el Cuerpo recibe unidad y cohesión, gracias a los ligamentos que lo vivifican y a la acción armoniosa de todos los miembros. Así el Cuerpo crece y se edifica en el amor."
+        },
+        {
+          "number": 17,
+          "text": "Les digo y les recomiendo en nombre del Señor: no procedan como los paganos, que se dejan llevar por la frivolidad de sus pensamientos"
+        },
+        {
+          "number": 18,
+          "text": "y tienen la mente oscurecida. Ellos están apartados de la Vida de Dios por su ignorancia y su obstinación,"
+        },
+        {
+          "number": 19,
+          "text": "y habiendo perdido el sentido moral, se han entregado al vicio, cometiendo desenfrenadamente toda clase de impurezas."
+        },
+        {
+          "number": 20,
+          "text": "Pero no es eso lo que ustedes aprendieron de Cristo,"
+        },
+        {
+          "number": 21,
+          "text": "si es que de veras oyeron predicar de él y fueron enseñados según la verdad que reside en Jesús."
+        },
+        {
+          "number": 22,
+          "text": "De él aprendieron que es preciso renunciar a la vida que llevaban, despojándose del hombre viejo, que se va corrompiendo por la seducción de la concupiscencia,"
+        },
+        {
+          "number": 23,
+          "text": "para renovarse en lo más íntimo de su espíritu"
+        },
+        {
+          "number": 24,
+          "text": "y revestirse del hombre nuevo, creado a imagen de Dios en la justicia y en la verdadera santidad."
+        },
+        {
+          "number": 25,
+          "text": "Por eso, renuncien a la mentira y digan siempre la verdad a su prójimo, ya que todos somos miembros, los unos de los otros."
+        },
+        {
+          "number": 26,
+          "text": "Si se enojan, no se dejen arrastrar al pecado ni permitan que la noche los sorprenda enojados,"
+        },
+        {
+          "number": 27,
+          "text": "dando así ocasión al demonio."
+        },
+        {
+          "number": 28,
+          "text": "El que robaba, que deje de robar y se ponga a trabajar honestamente con sus manos, para poder ayudar al que está necesitado."
+        },
+        {
+          "number": 29,
+          "text": "No profieran palabras inconvenientes; al contrario, que sus palabras sean siempre buenas, para que resulten edificantes cuando sea necesario y hagan bien a aquellos que las escuchan."
+        },
+        {
+          "number": 30,
+          "text": "No entristezcan al Espíritu Santo de Dios, que los ha marcado con un sello para el día de la redención."
+        },
+        {
+          "number": 31,
+          "text": "Eviten la amargura, los arrebatos, la ira, los gritos, los insultos y toda clase de maldad."
+        },
+        {
+          "number": 32,
+          "text": "Por el contrario, sean mutuamente buenos y compasivos, perdonándose los unos a los otros como Dios los ha perdonado en Cristo."
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "file": "__PZ3.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "Traten de imitar a Dios, como hijos suyos muy queridos."
+        },
+        {
+          "number": 2,
+          "text": "Practiquen el amor, a ejemplo de Cristo, que nos amó y se entregó por nosotros, como ofrenda y sacrificio agradable a Dios."
+        },
+        {
+          "number": 3,
+          "text": "En cuanto al pecado carnal y cualquier clase de impureza o avaricia, ni siquiera se los mencione entre ustedes, como conviene a los santos."
+        },
+        {
+          "number": 4,
+          "text": "Lo mismo digo acerca de las obscenidades, de las malas conversaciones y de las bromas groseras: todo esto está fuera de lugar. Lo que deben hacer es dar gracias a Dios."
+        },
+        {
+          "number": 5,
+          "text": "Y sépanlo bien: ni el hombre lujurioso, ni el impuro, ni el avaro –que es un idólatra– tendrán parte en la herencia del Reino de Cristo y de Dios."
+        },
+        {
+          "number": 6,
+          "text": "No se dejen engañar por falsas razones: todo eso atrae la ira de Dios sobre los que se resisten a obedecerle."
+        },
+        {
+          "number": 7,
+          "text": "No se hagan cómplices de los que obran así!"
+        },
+        {
+          "number": 8,
+          "text": "Antes, ustedes eran tinieblas, pero ahora son luz en el Señor. Vivan como hijos de la luz."
+        },
+        {
+          "number": 9,
+          "text": "Ahora bien, el fruto de la luz es la bondad, la justicia y la verdad."
+        },
+        {
+          "number": 10,
+          "text": "Sepan discernir lo que agrada al Señor,"
+        },
+        {
+          "number": 11,
+          "text": "y no participen de las obras estériles de las tinieblas; al contrario, pónganlas en evidencia."
+        },
+        {
+          "number": 12,
+          "text": "Es verdad que resulta vergonzoso aun mencionar las cosas que esa gente hace ocultamente."
+        },
+        {
+          "number": 13,
+          "text": "Pero cuando se las pone de manifiesto, aparecen iluminadas por la luz,"
+        },
+        {
+          "number": 14,
+          "text": "porque todo lo que se pone de manifiesto es luz. Por eso se dice: Despiértate, tú que duermes, levántate de entre los muertos, y Cristo te iluminará."
+        },
+        {
+          "number": 15,
+          "text": "Cuiden mucho su conducta y no procedan como necios, sino como personas sensatas"
+        },
+        {
+          "number": 16,
+          "text": "que saben aprovechar bien el momento presente, porque estos tiempos son malos."
+        },
+        {
+          "number": 17,
+          "text": "No sean irresponsables, sino traten de saber cuál es la voluntad del Señor."
+        },
+        {
+          "number": 18,
+          "text": "No abusen del vino que lleva al libertinaje; más bien, llénense del Espíritu Santo."
+        },
+        {
+          "number": 19,
+          "text": "Cuando se reúnan, reciten salmos, himnos y cantos espirituales, cantando y celebrando al Señor de todo corazón."
+        },
+        {
+          "number": 20,
+          "text": "Siempre y por cualquier motivo, den gracias a Dios, nuestro Padre, en nombre de nuestro Señor Jesucristo."
+        },
+        {
+          "number": 21,
+          "text": "Sométanse los unos a los otros, por consideración a Cristo."
+        },
+        {
+          "number": 22,
+          "text": "Las mujeres deben respetar a su marido como al Señor,"
+        },
+        {
+          "number": 23,
+          "text": "porque el varón es la cabeza de la mujer, como Cristo es la Cabeza y el Salvador de la Iglesia, que es su Cuerpo."
+        },
+        {
+          "number": 24,
+          "text": "Así como la Iglesia está sometida a Cristo, de la misma manera las mujeres deben respetar en todo a su marido."
+        },
+        {
+          "number": 25,
+          "text": "Maridos, amen a su esposa, como Cristo amó a la Iglesia y se entregó por ella,"
+        },
+        {
+          "number": 26,
+          "text": "para santificarla. El la purificó con el bautismo del agua y la palabra,"
+        },
+        {
+          "number": 27,
+          "text": "porque quiso para sí una Iglesia resplandeciente, sin mancha ni arruga y sin ningún defecto, sino santa e inmaculada."
+        },
+        {
+          "number": 28,
+          "text": "Del mismo modo, los maridos deben amar a su mujer como a su propio cuerpo. El que ama a su esposa se ama a sí mismo."
+        },
+        {
+          "number": 29,
+          "text": "Nadie menosprecia a su propio cuerpo, sino que lo alimenta y lo cuida. Así hace Cristo por la Iglesia,"
+        },
+        {
+          "number": 30,
+          "text": "por nosotros, que somos los miembros de su Cuerpo."
+        },
+        {
+          "number": 31,
+          "text": "Por eso, el hombre dejará a su padre y a su madre para unirse a su mujer, y los dos serán una sola carne."
+        },
+        {
+          "number": 32,
+          "text": "Este es un gran misterio: y yo digo que se refiere a Cristo y a la Iglesia."
+        },
+        {
+          "number": 33,
+          "text": "En cuanto a ustedes, cada uno debe amar a su mujer como así mismo, y la esposa debe respetar a su marido."
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "file": "__PZ4.HTM",
+      "verses": [
+        {
+          "number": 1,
+          "text": "Hijos, obedezcan a sus padres en el Señor porque esto es lo justo,"
+        },
+        {
+          "number": 2,
+          "text": "ya que el primer mandamiento que contiene una promesa es este: Honra a tu padre y a tu madre,"
+        },
+        {
+          "number": 3,
+          "text": "para que seas feliz y tengas una larga vida en la tierra."
+        },
+        {
+          "number": 4,
+          "text": "Padres, no irriten a sus hijos; al contrario, edúquenlos, corrigiéndolos y aconsejándolos, según el espíritu del Señor."
+        },
+        {
+          "number": 5,
+          "text": "Esclavos, obedezcan a sus patrones con temor y respeto, sin ninguna clase de doblez, como si sirvieran a Cristo;"
+        },
+        {
+          "number": 6,
+          "text": "no con una obediencia fingida que trata de agradar a los hombres, sino como servidores de Cristo, cumpliendo de todo corazón la voluntad de Dios."
+        },
+        {
+          "number": 7,
+          "text": "Sirvan a sus dueños de buena gana, como si se tratara del Señor y no de los hombres,"
+        },
+        {
+          "number": 8,
+          "text": "teniendo en cuenta que el Señor retribuirá a cada uno el bien que haya hecho, sea un esclavo o un hombre libre."
+        },
+        {
+          "number": 9,
+          "text": "Y ustedes, patrones, compórtense de la misma manera con sus servidores y dejen a un lado las amenazas, sabiendo que el Señor de ellos, que lo es también de ustedes, está en el cielo, y no hace acepción de personas."
+        },
+        {
+          "number": 10,
+          "text": "Por lo demás, fortalézcanse en el Señor con la fuerza de su poder."
+        },
+        {
+          "number": 11,
+          "text": "Revístanse con la armadura de Dios, para que puedan resistir las insidias del demonio."
+        },
+        {
+          "number": 12,
+          "text": "Porque nuestra lucha no es contra enemigos de carne y sangre, sino contra los Principados y Potestades, contra los Soberanos de este mundo de tinieblas, contra los espíritus del mal que habitan en el espacio."
+        },
+        {
+          "number": 13,
+          "text": "Por lo tanto, tomen la armadura de Dios, para que puedan resistir en el día malo y mantenerse firmes después de haber superado todos los obstáculos."
+        },
+        {
+          "number": 14,
+          "text": "Permanezcan de pie, ceñidos con el cinturón de la verdad y vistiendo la justicia como coraza."
+        },
+        {
+          "number": 15,
+          "text": "Calcen sus pies con el celo para propagar la Buena Noticia de la paz."
+        },
+        {
+          "number": 16,
+          "text": "Tengan siempre en la mano el escudo de la fe, con el que podrán apagar todas las flechas encendidas del Maligno."
+        },
+        {
+          "number": 17,
+          "text": "Tomen el casco de la salvación, y la espada del Espíritu, que es la Palabra de Dios."
+        },
+        {
+          "number": 18,
+          "text": "Eleven constantemente toda clase de oraciones y súplicas, animadas por el Espíritu. Dedíquense con perseverancia incansable a interceder por todos los hermanos,"
+        },
+        {
+          "number": 19,
+          "text": "y también por mí, a fin de que encuentre palabras adecuadas para anunciar resueltamente el misterio del Evangelio,"
+        },
+        {
+          "number": 20,
+          "text": "del cual yo soy embajador en medio de mis cadenas. ¡Así podré hablar libremente de él, como debo hacerlo!"
+        },
+        {
+          "number": 21,
+          "text": "Tíquico, el querido hermano y fiel servidor en el Señor, los pondrá al corriente de cómo me encuentro y de lo que estoy haciendo."
+        },
+        {
+          "number": 22,
+          "text": "Con este propósito, lo envié para que él les dé noticias nuestras y los conforte interiormente."
+        },
+        {
+          "number": 23,
+          "text": "Llegue a todos los hermanos la paz, el amor y la fe, que proceden de Dios, el Padre, y el Señor Jesucristo."
+        },
+        {
+          "number": 24,
+          "text": "La gracia permanezca con todos los que aman a nuestro Señor Jesucristo con un amor incorruptible."
+        }
+      ]
+    }
+  ],
+  "seenChapterNumbers": {}
+}

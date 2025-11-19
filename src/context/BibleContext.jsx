@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import bookIndex from '../data/books/index.json';
 
 const BibleContext = createContext();
 
@@ -13,16 +12,24 @@ export function BibleProvider({ children }) {
 
   useEffect(() => {
     // Cargar el índice inicial
-    const organized = organizeIndex(bookIndex);
-    setData(organized);
-    setLoading(false);
+    fetch('/books/index.json')
+      .then(res => res.json())
+      .then(indexData => {
+        const organized = organizeIndex(indexData);
+        setData(organized);
+        setLoading(false);
 
-    // Precarga de libros en background (después de 2 segundos)
-    const preloadTimer = setTimeout(() => {
-      preloadAllBooks(organized.bookIndex.books);
-    }, 2000);
+        // Precarga de libros en background (después de 2 segundos)
+        const preloadTimer = setTimeout(() => {
+          preloadAllBooks(organized.bookIndex.books);
+        }, 2000);
 
-    return () => clearTimeout(preloadTimer);
+        return () => clearTimeout(preloadTimer);
+      })
+      .catch(err => {
+        console.error("Error loading index:", err);
+        setLoading(false);
+      });
   }, []);
 
   const preloadAllBooks = useCallback(async (books) => {
@@ -43,8 +50,10 @@ export function BibleProvider({ children }) {
     }
 
     try {
-      const module = await import(`../data/books/${bookId}.json`);
-      const book = module.default;
+      const response = await fetch(`/books/${bookId}.json`);
+      if (!response.ok) throw new Error('Network response was not ok');
+      const book = await response.json();
+
       bookCache[bookId] = book;
       setLoadedBooks(prev => new Set(prev).add(bookId));
       return book;
@@ -89,7 +98,7 @@ function organizeIndex(indexData) {
 
   indexData.books.forEach((book) => {
     const tKey = identifyTestamentKey(book.testament);
-    
+
     organized.booksById[book.id] = {
       id: book.id,
       name: book.name,

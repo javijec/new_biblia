@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from "react";
-import { Box, Typography, Button, Paper, Grid, alpha } from "@mui/material";
+import { Box, Typography, Button, Paper, Grid, Chip } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ChapterView from "./ChapterView";
 import { useBibleSearch } from "../hooks/useBibleSearch";
 import { verbConjugations, normalizeVerb } from "../hooks/verbConjugations";
@@ -79,38 +80,29 @@ export default function MainContent({
     <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       {/* Search Results */}
       {searchResults && searchResults.length > 0 && (
-        <Paper
-          elevation={3}
-          sx={{
-            mb: 4,
-            p: { xs: 3, md: 4 },
-            background: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)",
-            border: "2px solid",
-            borderColor: "primary.main",
-          }}
-        >
-          <Typography
-            variant="h5"
-            sx={{
-              fontWeight: 700,
-              mb: 3,
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-              color: "text.primary",
-              fontFamily: "Georgia, serif",
-            }}
-          >
-            <SearchIcon /> {searchResults.length} versículos (
-            {countWordOccurrences(searchResults, searchResults[0]?.query)}{" "}
-            apariciones)
-          </Typography>
+        <Box sx={{ pb: 4 }}>
+          <Box sx={{ mb: 3, display: "flex", alignItems: "center", gap: 2 }}>
+            <Typography variant="h5" color="text.primary">
+              Resultados de búsqueda
+            </Typography>
+            <Chip
+              label={`${searchResults.length} versículos`}
+              color="primary"
+              variant="outlined"
+              size="small"
+            />
+            <Chip
+              label={`${countWordOccurrences(searchResults, searchResults[0]?.query)} coincidencias`}
+              size="small"
+              sx={{ bgcolor: "grey.100" }}
+            />
+          </Box>
 
           <Grid container spacing={2}>
             {searchResults.slice(0, resultsVisible).map((result, idx) => (
               <Grid item xs={12} md={6} key={idx}>
                 <Paper
-                  elevation={2}
+                  elevation={0}
                   onClick={() => {
                     onSelectChapter(result.bookTitle, result.chapter || result);
                     onSearch(null);
@@ -118,22 +110,24 @@ export default function MainContent({
                   sx={{
                     p: 2.5,
                     cursor: "pointer",
-                    borderLeft: "4px solid",
-                    borderColor: "primary.main",
-                    transition: "all 0.3s ease",
+                    border: "1px solid",
+                    borderColor: "divider",
+                    borderRadius: 2,
+                    height: "100%",
+                    transition: "all 0.2s ease",
                     "&:hover": {
-                      transform: "translateY(-4px)",
-                      boxShadow: 4,
-                      background: alpha("#fbbf24", 0.1),
+                      borderColor: "primary.main",
+                      transform: "translateY(-2px)",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
                     },
                   }}
                 >
                   <Typography
                     variant="subtitle2"
                     sx={{
-                      fontWeight: 700,
-                      color: "primary.dark",
+                      color: "primary.main",
                       mb: 1,
+                      fontWeight: 700,
                       fontFamily: "Georgia, serif",
                     }}
                   >
@@ -144,6 +138,8 @@ export default function MainContent({
                     variant="body2"
                     color="text.primary"
                     sx={{
+                      fontFamily: "Georgia, serif",
+                      lineHeight: 1.6,
                       display: "-webkit-box",
                       WebkitLineClamp: 3,
                       WebkitBoxOrient: "vertical",
@@ -158,133 +154,64 @@ export default function MainContent({
           </Grid>
 
           {searchResults.length > resultsVisible && (
-            <Box
-              sx={{
-                mt: 4,
-                display: "flex",
-                flexDirection: { xs: "column", sm: "row" },
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 2,
-              }}
-            >
+            <Box sx={{ mt: 4, textAlign: "center" }}>
               <Button
-                variant="contained"
+                variant="outlined"
                 size="large"
                 onClick={() => setResultsVisible((s) => s + 20)}
-                sx={{
-                  px: 4,
-                  py: 1.5,
-                  fontWeight: 600,
-                  background:
-                    "linear-gradient(135deg, #d97706 0%, #f59e0b 100%)",
-                  "&:hover": {
-                    background:
-                      "linear-gradient(135deg, #b45309 0%, #d97706 100%)",
-                    transform: "translateY(-2px)",
-                    boxShadow: 4,
-                  },
-                  transition: "all 0.3s ease",
-                }}
+                sx={{ px: 4, borderRadius: 8 }}
               >
-                Mostrar más
+                Cargar más resultados
               </Button>
-              <Typography
-                variant="body1"
-                color="text.secondary"
-                fontWeight={600}
-              >
-                {Math.min(resultsVisible, searchResults.length)} de{" "}
-                {searchResults.length}
-              </Typography>
             </Box>
           )}
-        </Paper>
+        </Box>
       )}
 
       {/* Main Content */}
       {!searchResults || searchResults.length === 0 ? (
-        <Box sx={{ flex: 1 }}>
+        <Box sx={{ flex: 1, height: "100%" }}>
           {selectedBook && selectedChapter ? (
             <ChapterView
               chapter={selectedChapter}
               onWordSearch={handleWordSearch}
             />
-          ) : selectedBook ? (
-            <Paper
-              elevation={3}
-              sx={{
-                p: { xs: 2, md: 2 },
-                textAlign: "center",
-                border: "2px solid",
-                borderColor: "primary.main",
-                background: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)",
-              }}
-            >
-              <Typography variant="h6" color="text.primary" fontWeight={600}>
-                👆 Selecciona un capítulo para comenzar
-              </Typography>
-            </Paper>
           ) : (
-            <Paper
-              elevation={4}
+            <Box
               sx={{
-                p: { xs: 2, md: 6 },
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
                 textAlign: "center",
-                border: "2px solid",
-                borderColor: "primary.main",
-                background: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)",
+                opacity: 0.8,
+                p: 4,
               }}
             >
-              <Box sx={{ fontSize: { xs: 64, md: 96 }, mb: 3 }}>📚</Box>
-              <Typography
-                variant="h3"
+              <Box
                 sx={{
-                  fontWeight: 700,
+                  width: 80,
+                  height: 80,
+                  bgcolor: "primary.50",
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                   mb: 3,
-                  fontFamily: "Georgia, serif",
-                  color: "text.primary",
-                  fontSize: { xs: "2rem", md: "3rem" },
+                  color: "primary.main",
                 }}
               >
-                Bienvenido a Biblia Digital
+                <MenuBookIcon sx={{ fontSize: 40 }} />
+              </Box>
+              <Typography variant="h4" gutterBottom color="text.primary">
+                Bienvenido a la Biblia Digital
               </Typography>
-              <Typography
-                variant="body1"
-                color="text.secondary"
-                sx={{
-                  mb: 4,
-                  maxWidth: 600,
-                  mx: "auto",
-                  lineHeight: 1.8,
-                  fontSize: { xs: "1rem", md: "1.1rem" },
-                }}
-              >
-                Selecciona un libro en el menú lateral para comenzar a explorar
+              <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 500, mb: 4 }}>
+                Selecciona un libro del menú lateral para comenzar tu lectura.
+                Puedes buscar palabras específicas o navegar capítulo por capítulo.
               </Typography>
-              <Paper
-                elevation={2}
-                sx={{
-                  p: { xs: 3, md: 4 },
-                  border: "2px solid",
-                  borderColor: "primary.light",
-                  maxWidth: 500,
-                  mx: "auto",
-                  background: alpha("#fff", 0.7),
-                }}
-              >
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontWeight: 600,
-                    fontFamily: "Georgia, serif",
-                    color: "text.primary",
-                  }}
-                >
-                  ✨ Versión: Biblia del Pueblo de Dios
-                </Typography>
-              </Paper>
-            </Paper>
+            </Box>
           )}
         </Box>
       ) : null}
@@ -344,8 +271,10 @@ function highlight(text, query) {
       <mark
         key={`mark-${matchPos.start}`}
         style={{
-          backgroundColor: "#fef08a",
-          padding: "2px 4px",
+          backgroundColor: "#fde68a", // Amber 200
+          color: "#451a03", // Amber 950
+          padding: "0 2px",
+          borderRadius: "2px",
           fontWeight: 600,
         }}
       >
