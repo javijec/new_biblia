@@ -2,14 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography, Paper, IconButton, Tooltip, Fade, Divider, alpha } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ShareIcon from "@mui/icons-material/Share";
 import ArrowBackIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForwardIos";
 import VerseItem from "./VerseItem";
 import { useSettings } from "../context/SettingsContext";
-import { useBookmarks } from "../context/BookmarksContext";
 
 export default function ChapterView({
   chapter,
@@ -21,15 +18,11 @@ export default function ChapterView({
 }) {
   const [selectedVerses, setSelectedVerses] = useState(new Set());
   const { fontSize, fontFamily } = useSettings();
-  const { toggleBookmark, isBookmarked, addToHistory } = useBookmarks();
 
-  // Reset selection when chapter changes and track history
+  // Reset selection when chapter changes
   useEffect(() => {
     setSelectedVerses(new Set());
-    if (chapter) {
-      addToHistory(chapter.bookId, chapter.bookTitle, chapter.number);
-    }
-  }, [chapter]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [chapter]);
 
   const handleVerseClick = (verseNumber) => {
     const newSelection = new Set(selectedVerses);
@@ -52,14 +45,6 @@ export default function ChapterView({
 
     const reference = `${chapter.bookTitle} ${chapter.number}:${sortedVerses.join(",")}`;
     navigator.clipboard.writeText(`${reference}\n\n${textToCopy}`);
-    setSelectedVerses(new Set());
-  };
-
-  const handleBookmarkSelection = () => {
-    selectedVerses.forEach(verseNum => {
-      const verse = chapter.verses.find(v => v.number === verseNum);
-      toggleBookmark(chapter.bookId, chapter.bookTitle, chapter.number, verseNum, verse.text);
-    });
     setSelectedVerses(new Set());
   };
 
@@ -140,7 +125,6 @@ export default function ChapterView({
       {/* Verses */}
       <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
         {chapter.verses.map((verse) => {
-          const marked = isBookmarked(chapter.bookId, chapter.number, verse.number);
           return (
             <Box
               key={verse.number}
@@ -149,21 +133,8 @@ export default function ChapterView({
                 fontFamily: currentFontFamily,
                 lineHeight: 1.6,
                 position: "relative",
-                pr: marked ? 3 : 0
               }}
             >
-              {marked && (
-                <BookmarkIcon
-                  sx={{
-                    position: "absolute",
-                    right: 0,
-                    top: 4,
-                    fontSize: 16,
-                    color: "primary.light",
-                    opacity: 0.5
-                  }}
-                />
-              )}
               <VerseItem
                 verse={verse}
                 isSelected={selectedVerses.has(verse.number)}
@@ -234,16 +205,6 @@ export default function ChapterView({
                   sx={{ color: "text.secondary", "&:hover": { color: "primary.main", bgcolor: "action.hover" } }}
                 >
                   <ContentCopyIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
-
-              <Tooltip title="Marcar/Desmarcar">
-                <IconButton
-                  size="small"
-                  onClick={handleBookmarkSelection}
-                  sx={{ color: "text.secondary", "&:hover": { color: "primary.main", bgcolor: "action.hover" } }}
-                >
-                  <BookmarkBorderIcon fontSize="small" />
                 </IconButton>
               </Tooltip>
 
