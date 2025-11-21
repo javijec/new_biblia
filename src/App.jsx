@@ -7,6 +7,8 @@ import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/HomePage";
 import ReadPage from "./pages/ReadPage";
 import SearchPage from "./pages/SearchPage";
+import OfflineIndicator from "./components/OfflineIndicator";
+import InstallPrompt from "./components/InstallPrompt";
 import "./App.css";
 
 function App() {
@@ -76,6 +78,8 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <OfflineIndicator />
+      <InstallPrompt />
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
