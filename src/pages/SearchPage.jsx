@@ -176,6 +176,9 @@ export default function SearchPage() {
                     onChange={handleFilterChange}
                     textColor="primary"
                     indicatorColor="primary"
+                    variant="scrollable"
+                    scrollButtons="auto"
+                    allowScrollButtonsMobile
                     sx={{ borderBottom: 1, borderColor: 'divider' }}
                 >
                     <Tab label="Todos" value="all" />
