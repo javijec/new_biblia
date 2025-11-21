@@ -1,6 +1,6 @@
 # 📖 Biblia Digital
 
-Una aplicación web moderna y rápida para leer y buscar en la Biblia del Pueblo de Dios. Construida con React, Vite y Tailwind CSS.
+Una aplicación web moderna y rápida para leer y buscar en la Biblia del Pueblo de Dios. Construida con React, Vite, Material-UI y Tailwind CSS.
 
 ## ✨ Características
 
@@ -9,6 +9,7 @@ Una aplicación web moderna y rápida para leer y buscar en la Biblia del Pueblo
 - Separación clara entre **Antiguo Testamento** y **Nuevo Testamento**
 - Selección rápida de capítulos numerados
 - Carga dinámica de capítulos bajo demanda
+- **Diseño Responsive** optimizado para móviles y escritorio
 
 ### 🔍 Búsqueda Avanzada
 - **Búsqueda por palabra completa** usando expresiones regulares con límites de palabra
@@ -17,10 +18,11 @@ Una aplicación web moderna y rápida para leer y buscar en la Biblia del Pueblo
 - Búsqueda desde palabras individuales dentro de versículos
 
 ### 📖 Lectura Confortable
-- **Interfaz limpia y moderna** con gradientes y sombras suaves
+- **Interfaz limpia y moderna** basada en Material-UI
+- Tema personalizado en tonos ámbar/naranja para una lectura agradable
 - Selección múltiple de versículos para copiar
 - Botón de búsqueda en cada versículo para explorar palabras específicas
-- Modo oscuro/claro
+- Modo oscuro/claro totalmente integrado
 
 ### ⚡ Rendimiento Optimizado
 - **Carga progresiva**: La Biblia se divide en 76 archivos JSON (uno por libro)
@@ -28,36 +30,33 @@ Una aplicación web moderna y rápida para leer y buscar en la Biblia del Pueblo
 - Cache en memoria para libros ya cargados
 - Búsqueda eficiente con resultados instantáneos
 
-### 🎨 Diseño Responsive
-- Interfaz adaptable a diferentes tamaños de pantalla
-- Controles intuitivos y accesibles
-- Colores degradados profesionales (azul, ámbar, rosa)
-
 ## 🚀 Tecnologías
 
 - **React 18+** - Framework UI
 - **Vite** - Bundler ultrarrápido
+- **Material-UI (MUI)** - Biblioteca de componentes y sistema de diseño
+- **Zustand** - Gestión de estado global ligera y potente
 - **Bun** - Runtime y package manager
-- **Tailwind CSS** - Estilos CSS utility-first
-- **React Hooks** - State management moderno
+- **Tailwind CSS** - Utilidades CSS auxiliares
 
 ## 📦 Estructura del Proyecto
 
 ```
 new_biblia/
 ├── src/
-│   ├── App.jsx                 # Componente principal
+│   ├── App.jsx                 # Componente principal (MUI Layout)
 │   ├── App.css                 # Estilos globales
 │   ├── main.jsx                # Punto de entrada
 │   ├── components/
-│   │   ├── Sidebar.jsx         # Navegación lateral
+│   │   ├── Sidebar.jsx         # Navegación lateral (MUI Drawer)
 │   │   ├── MainContent.jsx     # Contenido principal
 │   │   ├── SearchBar.jsx       # Barra de búsqueda
 │   │   ├── BookSelector.jsx    # Selector de libros y capítulos
 │   │   ├── ChapterView.jsx     # Vista del capítulo
 │   │   └── VerseItem.jsx       # Componente individual de versículo
 │   ├── context/
-│   │   └── BibleContext.jsx    # Context para gestión de datos
+│   │   └── BibleContext.jsx    # (Deprecado/Migrando a Zustand)
+│   ├── stores/                 # Stores de Zustand (si aplica)
 │   ├── hooks/
 │   │   └── useBibleSearch.js   # Hook para búsqueda en Biblia
 │   └── data/
@@ -70,7 +69,8 @@ new_biblia/
 │   ├── splitBibleByBook.js     # Genera archivos por libro
 │   ├── checkDuplicates.js      # Verifica duplicados
 │   └── ... (otros scripts)
-└── vite.config.js              # Configuración de Vite
+├── vite.config.js              # Configuración de Vite
+└── eslint.config.js            # Configuración de ESLint
 ```
 
 ## 🛠️ Instalación
@@ -127,34 +127,14 @@ bun scripts/checkDuplicates.js     # Verifica capítulos duplicados
 - Evita coincidencias parciales (ej: "fe" no coincide con "feliz")
 - Búsqueda sensible a mayúsculas/minúsculas
 
-### Gestión de Estado
-- Context API de React para datos globales
-- Hooks personalizados (`useBibleSearch`) para lógica reutilizable
-- Props drilling optimizado
+### Diseño y UI
+- **Material-UI v6**: Uso extensivo de componentes como `AppBar`, `Drawer`, `Card`, `Typography`.
+- **Tema Personalizado**: Paleta de colores cálida (Amber) para evocar la sensación de un libro clásico.
+- **Responsive**: Adaptación fluida a diferentes tamaños de pantalla usando el sistema de breakpoints de MUI.
 
 ## 🌙 Modo Oscuro
 
-Toggle de oscuridad en el header. Las preferencias se mantienen durante la sesión.
-
-## 📱 Responsive Design
-
-- **Desktop** - Layout completo con sidebar y contenido
-- **Tablet** - Sidebar colapsable con más espacio para contenido
-- **Mobile** - Stack vertical optimizado
-
-## 🐛 Solución de Problemas
-
-### La búsqueda es lenta
-- Los libros grandes (como Salmos con 150 capítulos) pueden tomar algunos segundos
-- Los resultados se cachean para búsquedas posteriores
-
-### El versículo no aparece completo
-- Los resultados de búsqueda están truncados a una línea
-- Haz clic para ver el capítulo completo
-
-### Capítulos duplicados
-- Se eliminan automáticamente durante la generación de archivos
-- Ejecuta `bun scripts/splitBibleByBook.js` para regenerar
+Toggle de oscuridad en el header. Las preferencias se mantienen durante la sesión, adaptando todos los componentes MUI automáticamente.
 
 ## 📄 Versión de la Biblia
 
