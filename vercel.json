@@ -1,0 +1,16 @@
+{
+    "rewrites": [
+        {
+            "source": "/api/evangelizo/:match*",
+            "destination": "https://rss.evangelizo.org/:match*"
+        },
+        {
+            "source": "/api/vatican/:match*",
+            "destination": "https://www.vaticannews.va/:match*"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+}
