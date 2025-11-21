@@ -101,7 +101,7 @@ const DailyGospel = () => {
                     </Typography>
                 </Box>
 
-                <Box sx={{ maxWidth: '800px', mx: 'auto' }}>
+                <Box sx={{ mx: 'auto' }}>
                     <Typography
                         variant="body1"
                         color="text.primary"
