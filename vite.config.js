@@ -48,4 +48,18 @@ export default defineConfig({
       }
     })
   ],
+  server: {
+    proxy: {
+      '/api/vatican': {
+        target: 'https://www.vaticannews.va',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/vatican/, '')
+      },
+      '/api/evangelizo': {
+        target: 'https://rss.evangelizo.org',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/evangelizo/, '')
+      }
+    }
+  }
 })

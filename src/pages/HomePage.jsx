@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, Paper, alpha } from "@mui/material";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import DailyGospel from "../components/DailyGospel";
 
 export default function HomePage() {
     return (
@@ -69,6 +70,10 @@ export default function HomePage() {
                     Una experiencia de lectura moderna para la Biblia del Pueblo de Dios.
                     Navega por los libros, busca versículos y estudia con comodidad.
                 </Typography>
+
+                <Box sx={{ width: '100%', maxWidth: 1000, mb: 4 }}>
+                    <DailyGospel />
+                </Box>
 
                 <Box
                     sx={{
