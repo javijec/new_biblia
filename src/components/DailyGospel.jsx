@@ -76,7 +76,7 @@ const DailyGospel = () => {
                 overflow: 'hidden'
             }}
         >
-            <CardContent sx={{ p: { xs: 3, md: 4 } }}>
+            <CardContent sx={{ p: { xs: 2, md: 4 } }}>
                 <Box display="flex" flexDirection="column" alignItems="center" mb={3}>
                     <Box
                         sx={{

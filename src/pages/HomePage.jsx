@@ -14,13 +14,14 @@ export default function HomePage() {
                 justifyContent: "center",
                 textAlign: "center",
                 opacity: 0.9,
-                p: 2,
+                p: { xs: 0, md: 2 },
             }}
         >
             <Paper
                 elevation={0}
                 sx={{
-                    p: { xs: 4, md: 8 },
+                    p: { xs: 0, md: 8 },
+                    width: "100%",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
