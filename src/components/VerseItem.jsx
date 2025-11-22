@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, Typography, alpha } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 
 export default function VerseItem({
   verse,
@@ -85,73 +86,80 @@ export default function VerseItem({
 
   return (
     <Box
-      onClick={() => onToggle(verse.number)}
       sx={{
         display: "flex",
-        gap: { xs: 1, md: 2 },
-        py: 0.5,
+        gap: { xs: 1.5, md: 2 },
+        py: 1,
         px: { xs: 1, md: 2 },
-        cursor: "pointer",
-        borderRadius: 1,
+        borderRadius: 2,
         position: "relative",
         backgroundColor: isSelected ? "primary.50" : "transparent",
+        transition: "all 0.2s ease",
         "&:hover": {
           backgroundColor: isSelected ? "primary.100" : "action.hover",
+          "& .selection-indicator": {
+            opacity: 1,
+            transform: "scale(1)",
+          }
         },
-        transition: "background-color 0.2s ease",
       }}
     >
-      {/* Selection Indicator Line */}
-      {isSelected && (
-        <Box
-          sx={{
-            position: "absolute",
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: 4,
-            bgcolor: "primary.main",
-            borderTopLeftRadius: 4,
-            borderBottomLeftRadius: 4,
-          }}
-        />
-      )}
+      {/* Verse Number & Text */}
+      <Box sx={{ flex: 1 }}>
+        <Box sx={{ display: "inline", mr: 1 }}>
+          <Typography
+            variant="caption"
+            sx={{
+              fontWeight: 700,
+              color: "primary.main",
+              fontSize: "0.85rem",
+              verticalAlign: "text-top",
+            }}
+          >
+            {verse.number}
+          </Typography>
+        </Box>
 
-      {/* Verse Number */}
-      <Box
-        sx={{
-          flexShrink: 0,
-          width: 24,
-          pt: 0.5,
-        }}
-      >
         <Typography
-          variant="caption"
+          variant="body1"
+          component="span"
           sx={{
-            fontWeight: 700,
-            color: isSelected ? "primary.main" : "primary.light",
-            fontFamily: "inherit", // Inherit from parent
-            fontSize: "0.85rem",
+            color: "text.primary",
+            fontSize: "1.05rem",
+            lineHeight: 1.7,
           }}
         >
-          {verse.number}
+          {renderClickableText()}
         </Typography>
       </Box>
 
-      {/* Verse Text */}
-      <Typography
-        variant="body1"
-        component="div"
+      {/* Selection Indicator Area */}
+      <Box
+        onClick={() => onToggle(verse.number)}
         sx={{
-          flex: 1,
-          color: isSelected ? "text.primary" : "text.primary",
-          fontFamily: "inherit", // Inherit from parent
-          fontSize: "inherit", // Inherit from parent
-          lineHeight: "inherit", // Inherit from parent
+          pt: 0.5,
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "flex-start",
+          color: isSelected ? "primary.main" : "text.disabled",
+          "&:hover": {
+            color: "primary.main",
+          }
         }}
       >
-        {renderClickableText()}
-      </Typography>
+        {isSelected ? (
+          <CheckCircleIcon sx={{ fontSize: 22 }} />
+        ) : (
+          <RadioButtonUncheckedIcon
+            className="selection-indicator"
+            sx={{
+              fontSize: 22,
+              opacity: { xs: 1, md: 0.5 }, // Always visible on mobile, semi-transparent on desktop until hover
+              transition: "all 0.2s ease"
+            }}
+          />
+        )}
+      </Box>
     </Box>
   );
 }
