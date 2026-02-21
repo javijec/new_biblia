@@ -17,6 +17,7 @@ const READING_LABELS = {
     SR: 'Segunda lectura',
     GSP: 'Evangelio'
 };
+const GOSPEL_CACHE_KEY = 'daily_gospel_cache_v1';
 let cachedDate = null;
 let cachedGospel = null;
 let inFlightDate = null;
@@ -33,6 +34,28 @@ const formatDateForApi = (date = new Date()) => {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}${month}${day}`;
+};
+
+const readPersistedGospel = (date) => {
+    try {
+        const raw = localStorage.getItem(GOSPEL_CACHE_KEY);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (parsed?.date === date && parsed?.data) {
+            return parsed.data;
+        }
+    } catch (error) {
+        console.warn('No se pudo leer cache local del evangelio:', error);
+    }
+    return null;
+};
+
+const persistGospel = (date, data) => {
+    try {
+        localStorage.setItem(GOSPEL_CACHE_KEY, JSON.stringify({ date, data }));
+    } catch (error) {
+        console.warn('No se pudo persistir cache local del evangelio:', error);
+    }
 };
 
 const fetchText = async (url) => {
@@ -113,6 +136,15 @@ export const fetchDailyGospel = async ({ force = false } = {}) => {
         return cachedGospel;
     }
 
+    if (!force) {
+        const persisted = readPersistedGospel(date);
+        if (persisted) {
+            cachedDate = date;
+            cachedGospel = persisted;
+            return persisted;
+        }
+    }
+
     if (!force && inFlightDate === date && inFlightPromise) {
         return inFlightPromise;
     }
@@ -186,6 +218,7 @@ export const fetchDailyGospel = async ({ force = false } = {}) => {
         };
         cachedDate = date;
         cachedGospel = gospel;
+        persistGospel(date, gospel);
         return gospel;
     })();
 
