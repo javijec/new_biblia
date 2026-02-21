@@ -10,6 +10,13 @@ const EVANGELIZO_READER_PATHS = [
     'https://rss.evangelizo.org/v2/reader.php'
 ];
 const DEFAULT_LANG = 'SP';
+const READING_ORDER = ['FR', 'PS', 'SR', 'GSP'];
+const READING_LABELS = {
+    FR: 'Primera lectura',
+    PS: 'Salmo',
+    SR: 'Segunda lectura',
+    GSP: 'Evangelio'
+};
 
 const buildReaderUrl = ({ basePath, date, type, lang = DEFAULT_LANG, content = 'GSP' }) => {
     const params = new URLSearchParams({ date, type, lang });
@@ -38,40 +45,19 @@ const decodeHtml = (value) => {
     return (doc.body.textContent || '').trim();
 };
 
-const sanitizeReadingLines = (rawReading) => {
-    const withLineBreaks = rawReading.replace(/<br\s*\/?>/gi, '\n');
-    const decoded = decodeHtml(withLineBreaks);
-    return decoded
-        .split('\n')
-        .map((line) => line.trim())
-        .filter((line) => line)
-        .filter((line) =>
-            !/extra[ií]do de la biblia/i.test(line) &&
-            !/para recibir cada ma[nñ]ana el evangelio/i.test(line) &&
-            !/evangeliodeldia\.org/i.test(line)
-        );
-};
+const sanitizeReadingHtml = (rawReading) => {
+    let cleaned = rawReading.replace(/\r/g, '');
 
-const extractVerseStart = (citation) => {
-    const match = citation.match(/(\d+)\s*[,.:]\s*(\d+)(?:\s*[-\u2013]\s*(\d+))?/);
-    if (!match) return null;
-    return Number.parseInt(match[2], 10);
-};
+    cleaned = cleaned.replace(
+        /<br\s*\/?>\s*<br\s*\/?>\s*(?:<br\s*\/?>\s*)?Extra[íi]do\s+de\s+la\s+Biblia[\s\S]*$/i,
+        ''
+    );
+    cleaned = cleaned.replace(/Extra[íi]do\s+de\s+la\s+Biblia[\s\S]*$/i, '');
 
-const formatReadingWithVerseNumbers = (lines, citation) => {
-    const verseStart = extractVerseStart(citation);
-    if (!verseStart) {
-        return `<p>${lines.join(' ')}</p>`;
-    }
+    cleaned = cleaned.trim();
+    if (!cleaned) return '';
 
-    const html = lines
-        .map((line, index) => {
-            const verse = verseStart + index;
-            return `<sup style="font-size: 0.7em; font-weight: bold; color: #b45309; margin-right: 4px;">${verse}</sup>${line}`;
-        })
-        .join(' ');
-
-    return `<p>${html}</p>`;
+    return `<p>${cleaned}</p>`;
 };
 
 const extractSaintOfDay = (rawSaint) => {
@@ -116,18 +102,61 @@ export const fetchDailyGospel = async () => {
     const date = formatDateForApi();
 
     try {
-        const [citationResult, contentResult, saintResult] = await Promise.all([
-            fetchReaderWithFallback({ date, type: 'reading_lt', content: 'GSP', langs: ['SP', 'AM'] }),
-            fetchReaderWithFallback({ date, type: 'reading', content: 'GSP', langs: ['SP', 'AM'] }),
-            fetchReaderWithFallback({ date, type: 'saint', content: null, langs: ['SP', 'AM'], optional: true })
-        ]);
+        const saintPromise = fetchReaderWithFallback({
+            date,
+            type: 'saint',
+            content: null,
+            langs: ['SP', 'AM'],
+            optional: true
+        });
 
-        const citation = decodeHtml(citationResult.text);
-        const readingLines = sanitizeReadingLines(contentResult.text);
+        const sectionPromises = READING_ORDER.map(async (contentCode) => {
+            const isRequired = contentCode === 'GSP';
+            const [titleResult, contentResult] = await Promise.all([
+                fetchReaderWithFallback({
+                    date,
+                    type: 'reading_lt',
+                    content: contentCode,
+                    langs: ['SP', 'AM'],
+                    optional: !isRequired
+                }),
+                fetchReaderWithFallback({
+                    date,
+                    type: 'reading',
+                    content: contentCode,
+                    langs: ['SP', 'AM'],
+                    optional: !isRequired
+                })
+            ]);
+
+            if (!contentResult.text) {
+                return null;
+            }
+
+            const citation = decodeHtml(titleResult.text);
+            const formattedContent = sanitizeReadingHtml(contentResult.text);
+            if (!formattedContent) {
+                return null;
+            }
+
+            return {
+                key: contentCode,
+                label: READING_LABELS[contentCode],
+                citation: citation || READING_LABELS[contentCode],
+                content: formattedContent
+            };
+        });
+
+        const [saintResult, ...sectionsWithNulls] = await Promise.all([saintPromise, ...sectionPromises]);
+        const sections = sectionsWithNulls.filter(Boolean);
+        const gospelSection = sections.find((section) => section.key === 'GSP');
+        if (!gospelSection) {
+            throw new Error('No se pudo obtener el evangelio del día.');
+        }
 
         return {
-            title: 'Evangelio del Día',
-            citation,
+            title: 'Lecturas del Día',
+            citation: gospelSection.citation,
             saint: extractSaintOfDay(saintResult.text),
             date: new Date().toLocaleDateString('es-ES', {
                 weekday: 'long',
@@ -135,7 +164,8 @@ export const fetchDailyGospel = async () => {
                 month: 'long',
                 day: 'numeric'
             }),
-            content: formatReadingWithVerseNumbers(readingLines, citation)
+            content: gospelSection.content,
+            sections
         };
     } catch (error) {
         console.error('Error fetching Gospel:', error);
