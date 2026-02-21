@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
-import { Box, Typography, alpha } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import BookSelector from "./BookSelector";
 
 export default function Sidebar({
@@ -62,6 +63,19 @@ export default function Sidebar({
           onNavigate={onNavigate}
           onTestamentChange={handleTestamentChange}
         />
+      </Box>
+
+      <Box sx={{ p: 2, borderTop: "1px solid", borderColor: "divider" }}>
+        <Button
+          fullWidth
+          variant="outlined"
+          startIcon={<MailOutlineIcon />}
+          component="a"
+          href="mailto:javijec@gmail.com?subject=Errores%20o%20sugerencias%20-%20Biblia%20Digital"
+          sx={{ justifyContent: "flex-start", textTransform: "none" }}
+        >
+          Errores o sugerencias
+        </Button>
       </Box>
     </Box>
   );
