@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, Snackbar } from '@mui/material';
 import { registerSW } from 'virtual:pwa-register';
+import { logError, logEvent } from '../utils/telemetry';
 
 export default function PwaUpdatePrompt() {
   const [showRefreshPrompt, setShowRefreshPrompt] = useState(false);
@@ -10,9 +11,11 @@ export default function PwaUpdatePrompt() {
   useEffect(() => {
     const updateServiceWorker = registerSW({
       onNeedRefresh() {
+        logEvent('pwa_update_available');
         setShowRefreshPrompt(true);
       },
       onOfflineReady() {
+        logEvent('pwa_offline_ready');
         setShowOfflineReady(true);
       },
       onRegistered(registration) {
@@ -22,7 +25,7 @@ export default function PwaUpdatePrompt() {
         }, 60 * 60 * 1000);
       },
       onRegisterError(error) {
-        console.error('Service Worker registration failed:', error);
+        logError('pwa_register_failed', error);
       },
     });
 

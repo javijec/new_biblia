@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { logError } from '../utils/telemetry';
 
 const BibleContext = createContext();
 
@@ -27,7 +28,7 @@ export function BibleProvider({ children }) {
         return () => clearTimeout(preloadTimer);
       })
       .catch(err => {
-        console.error("Error loading index:", err);
+        logError('bible_index_load_failed', err);
         setLoading(false);
       });
   }, []);
@@ -67,7 +68,7 @@ export function BibleProvider({ children }) {
       setLoadedBooks(prev => new Set(prev).add(bookId));
       return book;
     } catch (error) {
-      console.error(`Error cargando libro ${bookId}:`, error);
+      logError('book_load_failed', error, { bookId });
       return null;
     }
   }, [loadedBooks]);

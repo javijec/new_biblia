@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import ChapterView from "../components/ChapterView";
 import { useBible } from "../context/BibleContext";
+import { logError, logEvent } from "../utils/telemetry";
 
 export default function ReadPage() {
     const { bookId, chapter } = useParams();
@@ -18,7 +19,7 @@ export default function ReadPage() {
                 const book = await loadBook(bookId);
                 setCurrentBook(book);
             } catch (error) {
-                console.error("Error loading book:", error);
+                logError("read_page_load_failed", error, { bookId, chapter });
             } finally {
                 setLoading(false);
             }
@@ -59,17 +60,20 @@ export default function ReadPage() {
     // Navigation handlers
     const handlePrevChapter = () => {
         if (chapterNum > 1) {
+            logEvent("chapter_navigation", { direction: "prev", bookId, chapter: chapterNum });
             navigate(`/read/${bookId}/${chapterNum - 1}`);
         }
     };
 
     const handleNextChapter = () => {
         if (chapterNum < currentBook.chapters.length) {
+            logEvent("chapter_navigation", { direction: "next", bookId, chapter: chapterNum });
             navigate(`/read/${bookId}/${chapterNum + 1}`);
         }
     };
 
     const handleWordSearch = (word) => {
+        logEvent("word_search_from_read", { bookId, chapter: chapterNum, wordLength: word?.length || 0 });
         navigate(`/search?q=${encodeURIComponent(word)}`);
     };
 

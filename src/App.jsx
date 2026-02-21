@@ -6,6 +6,7 @@ import { useSettings } from "./context/SettingsContext";
 import OfflineIndicator from "./components/OfflineIndicator";
 import InstallPrompt from "./components/InstallPrompt";
 import PwaUpdatePrompt from "./components/PwaUpdatePrompt";
+import TelemetryBootstrap from "./components/TelemetryBootstrap";
 import "./App.css";
 
 const MainLayout = lazy(() => import("./layouts/MainLayout"));
@@ -80,6 +81,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <TelemetryBootstrap />
       <OfflineIndicator />
       <InstallPrompt />
       <PwaUpdatePrompt />

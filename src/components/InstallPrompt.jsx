@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Snackbar, Alert, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import GetAppIcon from '@mui/icons-material/GetApp';
+import { logEvent } from '../utils/telemetry';
 
 /**
  * InstallPrompt Component
@@ -55,9 +56,9 @@ export default function InstallPrompt() {
         const { outcome } = await deferredPrompt.userChoice;
 
         if (outcome === 'accepted') {
-            console.log('User accepted the install prompt');
+            logEvent('pwa_install_prompt_outcome', { outcome: 'accepted' });
         } else {
-            console.log('User dismissed the install prompt');
+            logEvent('pwa_install_prompt_outcome', { outcome: 'dismissed' });
         }
 
         // Clear the deferredPrompt
@@ -67,6 +68,7 @@ export default function InstallPrompt() {
 
     const handleDismiss = () => {
         setShowPrompt(false);
+        logEvent('pwa_install_prompt_closed');
         // Remember that user dismissed the prompt
         localStorage.setItem('pwa-install-dismissed', 'true');
     };

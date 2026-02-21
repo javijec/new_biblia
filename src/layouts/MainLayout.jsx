@@ -22,6 +22,7 @@ import Sidebar from "../components/Sidebar";
 import ReadingSettings from "../components/ReadingSettings";
 import { useBible } from "../context/BibleContext";
 import Tutorial from "../components/Tutorial";
+import { logEvent } from "../utils/telemetry";
 
 export default function MainLayout() {
     const { data } = useBible();
@@ -50,6 +51,7 @@ export default function MainLayout() {
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         if (searchTerm.trim()) {
+            logEvent("search_submitted", { queryLength: searchTerm.trim().length, fromPath: location.pathname });
             navigate(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
             setSearchOpen(false);
             setMobileOpen(false);

@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
+import AppErrorBoundary from './components/AppErrorBoundary'
 import { BibleProvider } from './context/BibleContext'
 import { SettingsProvider } from './context/SettingsContext'
 import { SelectionProvider } from './context/SelectionContext'
@@ -13,7 +14,9 @@ createRoot(document.getElementById('root')).render(
       <SettingsProvider>
         <BibleProvider>
           <SelectionProvider>
-            <App />
+            <AppErrorBoundary>
+              <App />
+            </AppErrorBoundary>
           </SelectionProvider>
         </BibleProvider>
       </SettingsProvider>

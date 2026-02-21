@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { Box, Typography, CircularProgress, Paper, Chip, Tabs, Tab, alpha } from "@mui/material";
 import { useBibleSearch } from "../hooks/useBibleSearch";
 import { getAbbreviation } from "../utils/bookAbbreviations";
+import { logError, logEvent } from "../utils/telemetry";
 
 const normalizeText = (text) =>
     text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -88,8 +89,13 @@ export default function SearchPage() {
                 setResults(searchResults);
                 setSearchTerms(terms);
                 setElapsedMs(elapsed || 0);
+                logEvent("search_completed", {
+                    queryLength: query.length,
+                    results: searchResults.length,
+                    elapsedMs: elapsed || 0
+                });
             } catch (error) {
-                console.error("Search error:", error);
+                logError("search_failed", error, { query });
             } finally {
                 if (activeQueryRef.current === query) {
                     setLoading(false);

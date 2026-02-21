@@ -18,6 +18,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { logError, logEvent } from "../utils/telemetry";
 
 export default function BookSelector({
   data,
@@ -42,11 +43,12 @@ export default function BookSelector({
 
   const handleBookClick = async (book) => {
     setSelectedBook(book);
+    logEvent("book_selected", { bookId: book.id, bookName: book.name });
     try {
       const fullBook = await loadBook(book.id);
       setChapters(fullBook.chapters || []);
     } catch (error) {
-      console.error("Error loading chapters", error);
+      logError("book_chapters_load_failed", error, { bookId: book.id });
     }
   };
 
