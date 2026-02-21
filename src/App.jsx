@@ -7,6 +7,7 @@ import OfflineIndicator from "./components/OfflineIndicator";
 import InstallPrompt from "./components/InstallPrompt";
 import PwaUpdatePrompt from "./components/PwaUpdatePrompt";
 import TelemetryBootstrap from "./components/TelemetryBootstrap";
+import TelemetryDebugPanel from "./components/TelemetryDebugPanel";
 import "./App.css";
 
 const MainLayout = lazy(() => import("./layouts/MainLayout"));
@@ -85,6 +86,7 @@ function App() {
       <OfflineIndicator />
       <InstallPrompt />
       <PwaUpdatePrompt />
+      <TelemetryDebugPanel />
       <Suspense
         fallback={
           <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
