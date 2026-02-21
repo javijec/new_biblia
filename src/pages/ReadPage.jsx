@@ -4,6 +4,7 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 import ChapterView from "../components/ChapterView";
 import { useBible } from "../context/BibleContext";
 import { logError, logEvent } from "../utils/telemetry";
+import BookCorrectionsPanel from "../components/BookCorrectionsPanel";
 
 export default function ReadPage() {
     const { bookId, chapter } = useParams();
@@ -90,6 +91,33 @@ export default function ReadPage() {
                 onNextChapter={handleNextChapter}
                 hasPrev={chapterNum > 1}
                 hasNext={chapterNum < currentBook.chapters.length}
+            />
+            <BookCorrectionsPanel
+                book={currentBook}
+                chapter={currentChapterData}
+                onApply={(verseNumber, newText) => {
+                    setCurrentBook((prev) => {
+                        if (!prev) return prev;
+                        return {
+                            ...prev,
+                            chapters: prev.chapters.map((chapter) => {
+                                if (chapter.number !== chapterNum) return chapter;
+                                return {
+                                    ...chapter,
+                                    verses: chapter.verses.map((verse) =>
+                                        String(verse.number) === String(verseNumber)
+                                            ? { ...verse, text: newText }
+                                            : verse
+                                    ),
+                                };
+                            }),
+                        };
+                    });
+                }}
+                onPersist={async () => {
+                    const refreshed = await loadBook(bookId, { force: true });
+                    if (refreshed) setCurrentBook(refreshed);
+                }}
             />
         </Box>
     );

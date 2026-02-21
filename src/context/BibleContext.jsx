@@ -45,8 +45,9 @@ export function BibleProvider({ children }) {
     }
   }, []);
 
-  const loadBook = useCallback(async (bookId) => {
-    if (bookCache[bookId] || loadedBooks.has(bookId)) {
+  const loadBook = useCallback(async (bookId, options = {}) => {
+    const { force = false } = options;
+    if (!force && (bookCache[bookId] || loadedBooks.has(bookId))) {
       return bookCache[bookId];
     }
 

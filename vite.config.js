@@ -2,15 +2,106 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import tailwindcss from '@tailwindcss/vite'
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
+import { promises as fs } from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const packageJson = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf-8'))
 const APP_VERSION = packageJson.version || '0.0.0'
 const CACHE_PREFIX = `biblia-digital-${APP_VERSION}`
+const ROOT_DIR = path.dirname(fileURLToPath(import.meta.url))
+
+function jsonResponse(res, statusCode, body) {
+  res.statusCode = statusCode
+  res.setHeader('Content-Type', 'application/json')
+  res.end(JSON.stringify(body))
+}
+
+async function readJsonBody(req) {
+  return new Promise((resolve, reject) => {
+    let data = ''
+    req.on('data', (chunk) => {
+      data += chunk
+    })
+    req.on('end', () => {
+      try {
+        resolve(data ? JSON.parse(data) : {})
+      } catch (error) {
+        reject(error)
+      }
+    })
+    req.on('error', reject)
+  })
+}
+
+function getTargetPaths(bookId, target = 'both') {
+  const candidates = {
+    public: path.join(ROOT_DIR, 'public', 'books', `${bookId}.json`),
+    src: path.join(ROOT_DIR, 'src', 'data', 'books', `${bookId}.json`),
+  }
+
+  if (target === 'public') return [candidates.public]
+  if (target === 'src') return [candidates.src]
+  return [candidates.public, candidates.src]
+}
+
+async function updateVerseInFile(filePath, chapterNumber, verseNumber, text) {
+  const raw = await fs.readFile(filePath, 'utf-8')
+  const book = JSON.parse(raw)
+  const chapter = book?.chapters?.find((c) => String(c.number) === String(chapterNumber))
+  if (!chapter) {
+    throw new Error(`Capitulo ${chapterNumber} no encontrado en ${path.basename(filePath)}`)
+  }
+  const verse = chapter?.verses?.find((v) => String(v.number) === String(verseNumber))
+  if (!verse) {
+    throw new Error(`Versiculo ${verseNumber} no encontrado en ${path.basename(filePath)}`)
+  }
+
+  verse.text = text
+  await fs.writeFile(filePath, `${JSON.stringify(book, null, 2)}\n`, 'utf-8')
+}
+
+function localBookEditorPlugin() {
+  return {
+    name: 'local-book-editor',
+    apply: 'serve',
+    configureServer(server) {
+      server.middlewares.use('/__local/book-verse', async (req, res) => {
+        if (req.method !== 'POST') {
+          return jsonResponse(res, 405, { error: 'Method not allowed' })
+        }
+
+        try {
+          const body = await readJsonBody(req)
+          const { bookId, chapterNumber, verseNumber, text, target = 'both' } = body
+
+          if (!bookId || !chapterNumber || !verseNumber || typeof text !== 'string') {
+            return jsonResponse(res, 400, { error: 'Payload invalido' })
+          }
+
+          const targetPaths = getTargetPaths(bookId, target).filter((p) => existsSync(p))
+          if (targetPaths.length === 0) {
+            return jsonResponse(res, 404, { error: `No se encontro archivo para ${bookId}` })
+          }
+
+          await Promise.all(targetPaths.map((filePath) =>
+            updateVerseInFile(filePath, chapterNumber, verseNumber, text)
+          ))
+
+          return jsonResponse(res, 200, { ok: true, files: targetPaths })
+        } catch (error) {
+          return jsonResponse(res, 500, { error: error.message || 'No se pudo actualizar el archivo' })
+        }
+      })
+    },
+  }
+}
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    localBookEditorPlugin(),
     react(),
     tailwindcss(),
     VitePWA({
