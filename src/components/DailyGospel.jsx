@@ -25,11 +25,11 @@ const DailyGospel = () => {
     const [expanded, setExpanded] = useState('GSP');
     const theme = useTheme();
 
-    const loadGospel = async () => {
+    const loadGospel = async ({ force = false } = {}) => {
         setLoading(true);
         setError(null);
         try {
-            const data = await fetchDailyGospel();
+            const data = await fetchDailyGospel({ force });
             setGospel(data);
         } catch {
             setError('No se pudo cargar el Evangelio. Verifica tu conexión.');
@@ -56,7 +56,7 @@ const DailyGospel = () => {
                 <Typography color="error" gutterBottom variant="body2">{error}</Typography>
                 <Button
                     startIcon={<RefreshIcon />}
-                    onClick={loadGospel}
+                    onClick={() => loadGospel({ force: true })}
                     variant="outlined"
                     size="small"
                     sx={{ mt: 1 }}

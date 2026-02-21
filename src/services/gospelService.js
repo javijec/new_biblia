@@ -17,6 +17,10 @@ const READING_LABELS = {
     SR: 'Segunda lectura',
     GSP: 'Evangelio'
 };
+let cachedDate = null;
+let cachedGospel = null;
+let inFlightDate = null;
+let inFlightPromise = null;
 
 const buildReaderUrl = ({ basePath, date, type, lang = DEFAULT_LANG, content = 'GSP' }) => {
     const params = new URLSearchParams({ date, type, lang });
@@ -102,10 +106,19 @@ const fetchReaderWithFallback = async ({ date, type, content, langs, optional = 
     throw new Error(`Evangelizo request failed (${type}). ${errors.join(' | ')}`);
 };
 
-export const fetchDailyGospel = async () => {
+export const fetchDailyGospel = async ({ force = false } = {}) => {
     const date = formatDateForApi();
 
-    try {
+    if (!force && cachedDate === date && cachedGospel) {
+        return cachedGospel;
+    }
+
+    if (!force && inFlightDate === date && inFlightPromise) {
+        return inFlightPromise;
+    }
+
+    inFlightDate = date;
+    inFlightPromise = (async () => {
         const saintPromise = fetchReaderWithFallback({
             date,
             type: 'saint',
@@ -158,7 +171,7 @@ export const fetchDailyGospel = async () => {
             throw new Error('No se pudo obtener el evangelio del día.');
         }
 
-        return {
+        const gospel = {
             title: 'Lecturas del Día',
             citation: gospelSection.citation,
             saint: extractSaintOfDay(saintResult.text),
@@ -171,8 +184,18 @@ export const fetchDailyGospel = async () => {
             content: gospelSection.content,
             sections
         };
+        cachedDate = date;
+        cachedGospel = gospel;
+        return gospel;
+    })();
+
+    try {
+        return await inFlightPromise;
     } catch (error) {
         console.error('Error fetching Gospel:', error);
         throw error;
+    } finally {
+        inFlightPromise = null;
+        inFlightDate = null;
     }
 };
