@@ -5,6 +5,7 @@ import { useBible } from "./context/BibleContext";
 import { useSettings } from "./context/SettingsContext";
 import OfflineIndicator from "./components/OfflineIndicator";
 import InstallPrompt from "./components/InstallPrompt";
+import PwaUpdatePrompt from "./components/PwaUpdatePrompt";
 import "./App.css";
 
 const MainLayout = lazy(() => import("./layouts/MainLayout"));
@@ -81,6 +82,7 @@ function App() {
       <CssBaseline />
       <OfflineIndicator />
       <InstallPrompt />
+      <PwaUpdatePrompt />
       <Suspense
         fallback={
           <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>

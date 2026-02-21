@@ -2,6 +2,11 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import tailwindcss from '@tailwindcss/vite'
+import { readFileSync } from 'node:fs'
+
+const packageJson = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf-8'))
+const APP_VERSION = packageJson.version || '0.0.0'
+const CACHE_PREFIX = `biblia-digital-${APP_VERSION}`
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -44,6 +49,7 @@ export default defineConfig({
         ]
       },
       workbox: {
+        cacheId: CACHE_PREFIX,
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json,woff,woff2}'],
         runtimeCaching: [
           {
@@ -51,7 +57,7 @@ export default defineConfig({
             urlPattern: ({ url }) => url.pathname.startsWith('/books/') && url.pathname.endsWith('.json'),
             handler: 'CacheFirst',
             options: {
-              cacheName: 'bible-books-cache',
+              cacheName: `${CACHE_PREFIX}-books`,
               expiration: {
                 maxEntries: 80, // 77 books + index + extras
                 maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
@@ -66,7 +72,7 @@ export default defineConfig({
             urlPattern: ({ url }) => url.pathname.startsWith('/api/'),
             handler: 'NetworkFirst',
             options: {
-              cacheName: 'api-cache',
+              cacheName: `${CACHE_PREFIX}-api`,
               expiration: {
                 maxEntries: 50,
                 maxAgeSeconds: 60 * 60 * 24 // 1 day
@@ -81,7 +87,7 @@ export default defineConfig({
               request.destination === 'font',
             handler: 'CacheFirst',
             options: {
-              cacheName: 'assets-cache',
+              cacheName: `${CACHE_PREFIX}-assets`,
               expiration: {
                 maxEntries: 100,
                 maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
