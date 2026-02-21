@@ -12,6 +12,7 @@
     "test:run": "vitest run",
     "preview": "vite preview",
     "extract:bible": "node scripts/extractBibleData.js",
+    "books:init-versions": "node scripts/initBookVersions.js",
     "optimize": "vite optimize",
     "performance": "vite build --mode production && npx lighthouse http://localhost:4173 --output-path=./lighthouse-report.html"
   },

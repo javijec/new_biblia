@@ -37,25 +37,15 @@ async function readJsonBody(req) {
 }
 
 function getTargetPaths(bookId, target = 'both') {
-  const candidates = {
-    public: path.join(ROOT_DIR, 'public', 'books', `${bookId}.json`),
-    src: path.join(ROOT_DIR, 'src', 'data', 'books', `${bookId}.json`),
-  }
-
-  if (target === 'public') return [candidates.public]
-  if (target === 'src') return [candidates.src]
-  return [candidates.public, candidates.src]
+  const publicPath = path.join(ROOT_DIR, 'public', 'books', `${bookId}.json`)
+  return [publicPath]
 }
 
 function getIndexPathForBookFile(filePath) {
   const publicBooksDir = path.join(ROOT_DIR, 'public', 'books')
-  const srcBooksDir = path.join(ROOT_DIR, 'src', 'data', 'books')
 
   if (filePath.startsWith(publicBooksDir)) {
     return path.join(publicBooksDir, 'index.json')
-  }
-  if (filePath.startsWith(srcBooksDir)) {
-    return path.join(srcBooksDir, 'index.json')
   }
   return null
 }

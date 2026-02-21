@@ -9,7 +9,7 @@ const biblePath = path.join(__dirname, '../src/data/bible-complete.json');
 const bibleData = JSON.parse(fs.readFileSync(biblePath, 'utf-8'));
 
 // Directorio de salida
-const outputDir = path.join(__dirname, '../src/data/books');
+const outputDir = path.join(__dirname, '../public/books');
 if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir, { recursive: true });
 }

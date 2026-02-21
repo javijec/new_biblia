@@ -3,7 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const booksDir = path.join(__dirname, '../src/data/books');
+const booksDir = path.join(__dirname, '../public/books');
 
 // Verificar cada libro
 const files = fs.readdirSync(booksDir).filter(f => f.endsWith('.json') && f !== 'index.json');

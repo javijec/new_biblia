@@ -82,7 +82,7 @@ export default function BookCorrectionsPanel({ book, chapter, onApply, onPersist
         chapterNumber: chapter.number,
         verseNumber: selectedVerse,
         text,
-        target: 'both',
+        target: 'public',
       });
       onApply?.(selectedVerse, text);
       await onPersist?.();
@@ -105,7 +105,7 @@ export default function BookCorrectionsPanel({ book, chapter, onApply, onPersist
         chapterNumber: chapter.number,
         verseNumber: selectedVerse,
         text: originalText,
-        target: 'both',
+        target: 'public',
       });
       setText(originalText);
       onApply?.(selectedVerse, originalText);

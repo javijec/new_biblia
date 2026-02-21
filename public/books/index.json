@@ -7,457 +7,533 @@
       "id": "genesis",
       "name": "GENESIS",
       "testament": "El Antiguo Testamento",
-      "chapters": 50
+      "chapters": 50,
+      "version": "1771717785119"
     },
     {
       "id": "exodo",
       "name": "EXODO",
       "testament": "El Antiguo Testamento",
-      "chapters": 40
+      "chapters": 40,
+      "version": "1771717785120"
     },
     {
       "id": "levitico",
       "name": "LEVITICO",
       "testament": "El Antiguo Testamento",
-      "chapters": 27
+      "chapters": 27,
+      "version": "1771717785121"
     },
     {
       "id": "numeros",
       "name": "NUMEROS",
       "testament": "El Antiguo Testamento",
-      "chapters": 36
+      "chapters": 36,
+      "version": "1771717785122"
     },
     {
       "id": "deuteronomio",
       "name": "DEUTERONOMIO",
       "testament": "El Antiguo Testamento",
-      "chapters": 34
+      "chapters": 34,
+      "version": "1771717785123"
     },
     {
       "id": "josue",
       "name": "JOSUE",
       "testament": "El Antiguo Testamento",
-      "chapters": 24
+      "chapters": 24,
+      "version": "1771717785124"
     },
     {
       "id": "jueces",
       "name": "JUECES",
       "testament": "El Antiguo Testamento",
-      "chapters": 21
+      "chapters": 21,
+      "version": "1771717785125"
     },
     {
       "id": "rut",
       "name": "RUT",
       "testament": "El Antiguo Testamento",
-      "chapters": 4
+      "chapters": 4,
+      "version": "1771717785126"
     },
     {
       "id": "primer-libro-de-samuel",
       "name": "PRIMER LIBRO DE SAMUEL",
       "testament": "El Antiguo Testamento",
-      "chapters": 31
+      "chapters": 31,
+      "version": "1771717785127"
     },
     {
       "id": "segundo-libro-de-samuel",
       "name": "SEGUNDO LIBRO DE SAMUEL",
       "testament": "El Antiguo Testamento",
-      "chapters": 24
+      "chapters": 24,
+      "version": "1771717785128"
     },
     {
       "id": "primer-libro-de-los-reyes",
       "name": "PRIMER LIBRO DE LOS REYES",
       "testament": "El Antiguo Testamento",
-      "chapters": 22
+      "chapters": 22,
+      "version": "1771717785129"
     },
     {
       "id": "segundo-libro-de-los-reyes",
       "name": "SEGUNDO LIBRO DE LOS REYES",
       "testament": "El Antiguo Testamento",
-      "chapters": 25
+      "chapters": 25,
+      "version": "1771717785130"
     },
     {
       "id": "primer-libro-de-las-cronicas",
       "name": "PRIMER LIBRO DE LAS CRONICAS",
       "testament": "El Antiguo Testamento",
-      "chapters": 29
+      "chapters": 29,
+      "version": "1771717785131"
     },
     {
       "id": "segundo-libro-de-las-cronicas",
       "name": "SEGUNDO LIBRO DE LAS CRONICAS",
       "testament": "El Antiguo Testamento",
-      "chapters": 36
+      "chapters": 36,
+      "version": "1771717785132"
     },
     {
       "id": "esdras",
       "name": "ESDRAS",
       "testament": "El Antiguo Testamento",
-      "chapters": 10
+      "chapters": 10,
+      "version": "1771717785133"
     },
     {
       "id": "nehemias",
       "name": "NEHEMIAS",
       "testament": "El Antiguo Testamento",
-      "chapters": 13
+      "chapters": 13,
+      "version": "1771717785134"
     },
     {
       "id": "ester",
       "name": "ESTER",
       "testament": "El Antiguo Testamento",
-      "chapters": 10
+      "chapters": 10,
+      "version": "1771717785135"
     },
     {
       "id": "ester-suplementos-griegos",
       "name": "ESTER SUPLEMENTOS GRIEGOS",
       "testament": "El Antiguo Testamento",
-      "chapters": 6
+      "chapters": 6,
+      "version": "1771717785136"
     },
     {
       "id": "job",
       "name": "JOB",
       "testament": "El Antiguo Testamento",
-      "chapters": 42
+      "chapters": 42,
+      "version": "1771717785137"
     },
     {
       "id": "salmos",
       "name": "SALMOS",
       "testament": "El Antiguo Testamento",
-      "chapters": 150
+      "chapters": 150,
+      "version": "1771717785138"
     },
     {
       "id": "proverbios",
       "name": "PROVERBIOS",
       "testament": "El Antiguo Testamento",
-      "chapters": 31
+      "chapters": 31,
+      "version": "1771717785139"
     },
     {
       "id": "eclesiastes",
       "name": "ECLESIASTES",
       "testament": "El Antiguo Testamento",
-      "chapters": 12
+      "chapters": 12,
+      "version": "1771717785140"
     },
     {
       "id": "cantar-de-los-cantares",
       "name": "CANTAR DE LOS CANTARES",
       "testament": "El Antiguo Testamento",
-      "chapters": 8
+      "chapters": 8,
+      "version": "1771717785141"
     },
     {
       "id": "isaias",
       "name": "ISAIAS",
       "testament": "El Antiguo Testamento",
-      "chapters": 66
+      "chapters": 66,
+      "version": "1771717785142"
     },
     {
       "id": "jeremias",
       "name": "JEREMIAS",
       "testament": "El Antiguo Testamento",
-      "chapters": 52
+      "chapters": 52,
+      "version": "1771717785143"
     },
     {
       "id": "lamentaciones",
       "name": "LAMENTACIONES",
       "testament": "El Antiguo Testamento",
-      "chapters": 5
+      "chapters": 5,
+      "version": "1771717785144"
     },
     {
       "id": "ezequiel",
       "name": "EZEQUIEL",
       "testament": "El Antiguo Testamento",
-      "chapters": 48
+      "chapters": 48,
+      "version": "1771717785145"
     },
     {
       "id": "daniel",
       "name": "DANIEL",
       "testament": "El Antiguo Testamento",
-      "chapters": 12
+      "chapters": 12,
+      "version": "1771717785146"
     },
     {
       "id": "daniel-suplementos-griegos",
       "name": "DANIEL SUPLEMENTOS GRIEGOS",
       "testament": "El Antiguo Testamento",
-      "chapters": 3
+      "chapters": 3,
+      "version": "1771717785147"
     },
     {
       "id": "oseas",
       "name": "OSEAS",
       "testament": "El Antiguo Testamento",
-      "chapters": 14
+      "chapters": 14,
+      "version": "1771717785148"
     },
     {
       "id": "joel",
       "name": "JOEL",
       "testament": "El Antiguo Testamento",
-      "chapters": 4
+      "chapters": 4,
+      "version": "1771717785149"
     },
     {
       "id": "amos",
       "name": "AMOS",
       "testament": "El Antiguo Testamento",
-      "chapters": 9
+      "chapters": 9,
+      "version": "1771717785150"
     },
     {
       "id": "abdias",
       "name": "ABDIAS",
       "testament": "El Antiguo Testamento",
-      "chapters": 1
+      "chapters": 1,
+      "version": "1771717785151"
     },
     {
       "id": "jonas",
       "name": "JONAS",
       "testament": "El Antiguo Testamento",
-      "chapters": 4
+      "chapters": 4,
+      "version": "1771717785152"
     },
     {
       "id": "miqueas",
       "name": "MIQUEAS",
       "testament": "El Antiguo Testamento",
-      "chapters": 7
+      "chapters": 7,
+      "version": "1771717785153"
     },
     {
       "id": "nahum",
       "name": "NAHUM",
       "testament": "El Antiguo Testamento",
-      "chapters": 3
+      "chapters": 3,
+      "version": "1771717785154"
     },
     {
       "id": "habacuc",
       "name": "HABACUC",
       "testament": "El Antiguo Testamento",
-      "chapters": 3
+      "chapters": 3,
+      "version": "1771717785155"
     },
     {
       "id": "sofonias",
       "name": "SOFONIAS",
       "testament": "El Antiguo Testamento",
-      "chapters": 3
+      "chapters": 3,
+      "version": "1771717785156"
     },
     {
       "id": "ageo",
       "name": "AGEO",
       "testament": "El Antiguo Testamento",
-      "chapters": 2
+      "chapters": 2,
+      "version": "1771717785157"
     },
     {
       "id": "zacarias",
       "name": "ZACARIAS",
       "testament": "El Antiguo Testamento",
-      "chapters": 14
+      "chapters": 14,
+      "version": "1771717785158"
     },
     {
       "id": "malaquias",
       "name": "MALAQUIAS",
       "testament": "El Antiguo Testamento",
-      "chapters": 3
+      "chapters": 3,
+      "version": "1771717785159"
     },
     {
       "id": "tobias",
       "name": "TOBIAS",
       "testament": "El Antiguo Testamento",
-      "chapters": 14
+      "chapters": 14,
+      "version": "1771717785160"
     },
     {
       "id": "judit",
       "name": "JUDIT",
       "testament": "El Antiguo Testamento",
-      "chapters": 16
+      "chapters": 16,
+      "version": "1771717785161"
     },
     {
       "id": "primer-libro-de-los-macabeos",
       "name": "PRIMER LIBRO DE LOS MACABEOS",
       "testament": "El Antiguo Testamento",
-      "chapters": 16
+      "chapters": 16,
+      "version": "1771717785162"
     },
     {
       "id": "segundo-libro-de-los-macabeos",
       "name": "SEGUNDO LIBRO DE LOS MACABEOS",
       "testament": "El Antiguo Testamento",
-      "chapters": 15
+      "chapters": 15,
+      "version": "1771717785163"
     },
     {
       "id": "sabiduria",
       "name": "SABIDURIA",
       "testament": "El Antiguo Testamento",
-      "chapters": 19
+      "chapters": 19,
+      "version": "1771717785164"
     },
     {
       "id": "eclesiastico",
       "name": "ECLESIASTICO",
       "testament": "El Antiguo Testamento",
-      "chapters": 51
+      "chapters": 51,
+      "version": "1771717785165"
     },
     {
       "id": "baruc",
       "name": "BARUC",
       "testament": "El Antiguo Testamento",
-      "chapters": 5
+      "chapters": 5,
+      "version": "1771717785166"
     },
     {
       "id": "carta-de-jeremias",
       "name": "CARTA DE JEREMIAS",
       "testament": "El Antiguo Testamento",
-      "chapters": 1
+      "chapters": 1,
+      "version": "1771717785167"
     },
     {
       "id": "evangelio-segun-san-mateo",
       "name": "EVANGELIO SEGUN SAN MATEO",
       "testament": "El Nuevo Testamento",
-      "chapters": 28
+      "chapters": 28,
+      "version": "1771717785168"
     },
     {
       "id": "evangelio-segun-san-marcos",
       "name": "EVANGELIO SEGUN SAN MARCOS",
       "testament": "El Nuevo Testamento",
-      "chapters": 16
+      "chapters": 16,
+      "version": "1771717785169"
     },
     {
       "id": "evangelio-segun-san-lucas",
       "name": "EVANGELIO SEGUN SAN LUCAS",
       "testament": "El Nuevo Testamento",
-      "chapters": 24
+      "chapters": 24,
+      "version": "1771717785170"
     },
     {
       "id": "evangelio-segun-san-juan",
       "name": "EVANGELIO SEGUN SAN JUAN",
       "testament": "El Nuevo Testamento",
-      "chapters": 21
+      "chapters": 21,
+      "version": "1771717785171"
     },
     {
       "id": "hechos-de-los-apostoles",
       "name": "HECHOS DE LOS APOSTOLES",
       "testament": "El Nuevo Testamento",
-      "chapters": 28
+      "chapters": 28,
+      "version": "1771717785172"
     },
     {
       "id": "carta-a-los-romanos",
       "name": "CARTA A LOS ROMANOS",
       "testament": "El Nuevo Testamento",
-      "chapters": 16
+      "chapters": 16,
+      "version": "1771717785173"
     },
     {
       "id": "primera-carta-a-los-corintios",
       "name": "PRIMERA CARTA A LOS CORINTIOS",
       "testament": "El Nuevo Testamento",
-      "chapters": 16
+      "chapters": 16,
+      "version": "1771717785174"
     },
     {
       "id": "segunda-carta-a-los-corintios",
       "name": "SEGUNDA CARTA A LOS CORINTIOS",
       "testament": "El Nuevo Testamento",
-      "chapters": 13
+      "chapters": 13,
+      "version": "1771717785175"
     },
     {
       "id": "carta-a-los-galatas",
       "name": "CARTA A LOS GALATAS",
       "testament": "El Nuevo Testamento",
-      "chapters": 6
+      "chapters": 6,
+      "version": "1771717785176"
     },
     {
       "id": "carta-a-los-efesios",
       "name": "CARTA A LOS EFESIOS",
       "testament": "El Nuevo Testamento",
-      "chapters": 6
+      "chapters": 6,
+      "version": "1771717785177"
     },
     {
       "id": "carta-a-los-filipenses",
       "name": "CARTA A LOS FILIPENSES",
       "testament": "El Nuevo Testamento",
-      "chapters": 4
+      "chapters": 4,
+      "version": "1771717785178"
     },
     {
       "id": "carta-a-los-colosenses",
       "name": "CARTA A LOS COLOSENSES",
       "testament": "El Nuevo Testamento",
-      "chapters": 4
+      "chapters": 4,
+      "version": "1771717785179"
     },
     {
       "id": "primera-carta-a-los-tesalonicenses",
       "name": "PRIMERA CARTA A LOS TESALONICENSES",
       "testament": "El Nuevo Testamento",
-      "chapters": 5
+      "chapters": 5,
+      "version": "1771717785180"
     },
     {
       "id": "segunda-carta-a-los-tesalonicenses",
       "name": "SEGUNDA CARTA A LOS TESALONICENSES",
       "testament": "El Nuevo Testamento",
-      "chapters": 3
+      "chapters": 3,
+      "version": "1771717785181"
     },
     {
       "id": "primera-carta-a-timoteo",
       "name": "PRIMERA CARTA A TIMOTEO",
       "testament": "El Nuevo Testamento",
-      "chapters": 6
+      "chapters": 6,
+      "version": "1771717785182"
     },
     {
       "id": "segunda-carta-a-timoteo",
       "name": "SEGUNDA CARTA A TIMOTEO",
       "testament": "El Nuevo Testamento",
-      "chapters": 4
+      "chapters": 4,
+      "version": "1771717785183"
     },
     {
       "id": "carta-a-tito",
       "name": "CARTA A TITO",
       "testament": "El Nuevo Testamento",
-      "chapters": 3
+      "chapters": 3,
+      "version": "1771717785184"
     },
     {
       "id": "carta-a-filemon",
       "name": "CARTA A FILEMON",
       "testament": "El Nuevo Testamento",
-      "chapters": 1
+      "chapters": 1,
+      "version": "1771717785185"
     },
     {
       "id": "carta-a-los-hebreos",
       "name": "CARTA A LOS HEBREOS",
       "testament": "El Nuevo Testamento",
-      "chapters": 13
+      "chapters": 13,
+      "version": "1771717785186"
     },
     {
       "id": "carta-de-santiago",
       "name": "CARTA DE SANTIAGO",
       "testament": "El Nuevo Testamento",
-      "chapters": 5
+      "chapters": 5,
+      "version": "1771717785187"
     },
     {
       "id": "primera-carta-de-san-pedro",
       "name": "PRIMERA CARTA DE SAN PEDRO",
       "testament": "El Nuevo Testamento",
-      "chapters": 5
+      "chapters": 5,
+      "version": "1771717785188"
     },
     {
       "id": "segunda-carta-de-san-pedro",
       "name": "SEGUNDA CARTA DE SAN PEDRO",
       "testament": "El Nuevo Testamento",
-      "chapters": 3
+      "chapters": 3,
+      "version": "1771717785189"
     },
     {
       "id": "primera-carta-de-san-juan",
       "name": "PRIMERA CARTA DE SAN JUAN",
       "testament": "El Nuevo Testamento",
-      "chapters": 5
+      "chapters": 5,
+      "version": "1771717785190"
     },
     {
       "id": "segunda-carta-de-san-juan",
       "name": "SEGUNDA CARTA DE SAN JUAN",
       "testament": "El Nuevo Testamento",
-      "chapters": 1
+      "chapters": 1,
+      "version": "1771717785191"
     },
     {
       "id": "tercera-carta-de-san-juan",
       "name": "TERCERA CARTA DE SAN JUAN",
       "testament": "El Nuevo Testamento",
-      "chapters": 1
+      "chapters": 1,
+      "version": "1771717785192"
     },
     {
       "id": "carta-de-san-judas",
       "name": "CARTA DE SAN JUDAS",
       "testament": "El Nuevo Testamento",
-      "chapters": 1
+      "chapters": 1,
+      "version": "1771717785193"
     },
     {
       "id": "apocalipsis",
       "name": "APOCALIPSIS",
       "testament": "El Nuevo Testamento",
-      "chapters": 22
+      "chapters": 22,
+      "version": "1771717785194"
     }
   ]
 }
