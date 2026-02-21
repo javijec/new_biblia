@@ -99,6 +99,15 @@ const DailyGospel = () => {
                     <Typography variant="subtitle1" color="text.secondary" sx={{ fontStyle: 'italic' }}>
                         {gospel.date}
                     </Typography>
+                    {gospel.saint && (
+                        <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            sx={{ mt: 1, fontWeight: 600, textAlign: 'center' }}
+                        >
+                            Santo del día: {gospel.saint}
+                        </Typography>
+                    )}
                 </Box>
 
                 <Box sx={{ mx: 'auto' }}>
