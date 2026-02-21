@@ -4,13 +4,17 @@
  * Docs: /v2/reader.php?type=reading&content=GSP
  */
 
-const EVANGELIZO_READER_PATH = '/api/evangelizo/v2/reader.php';
+const EVANGELIZO_READER_PATHS = [
+    '/api/evangelizo/v2/reader.php',
+    'https://feed.evangelizo.org/v2/reader.php',
+    'https://rss.evangelizo.org/v2/reader.php'
+];
 const DEFAULT_LANG = 'SP';
 
-const buildReaderUrl = ({ date, type, lang = DEFAULT_LANG, content = 'GSP' }) => {
+const buildReaderUrl = ({ basePath, date, type, lang = DEFAULT_LANG, content = 'GSP' }) => {
     const params = new URLSearchParams({ date, type, lang });
     if (content) params.set('content', content);
-    return `${EVANGELIZO_READER_PATH}?${params.toString()}`;
+    return `${basePath}?${params.toString()}`;
 };
 
 const formatDateForApi = (date = new Date()) => {
@@ -85,23 +89,46 @@ const extractSaintOfDay = (rawSaint) => {
     return uniqueLines[0] || '';
 };
 
+const fetchReaderWithFallback = async ({ date, type, content, langs, optional = false }) => {
+    const errors = [];
+
+    for (const lang of langs) {
+        for (const basePath of EVANGELIZO_READER_PATHS) {
+            try {
+                const url = buildReaderUrl({ basePath, date, type, lang, content });
+                const text = await fetchText(url);
+                return { text, lang };
+            } catch (error) {
+                errors.push(`[${type}] ${basePath} lang=${lang}: ${error.message}`);
+            }
+        }
+    }
+
+    if (optional) {
+        console.warn(`Optional Evangelizo request failed (${type}):`, errors.join(' | '));
+        return { text: '', lang: langs[0] };
+    }
+
+    throw new Error(`Evangelizo request failed (${type}). ${errors.join(' | ')}`);
+};
+
 export const fetchDailyGospel = async () => {
     const date = formatDateForApi();
 
     try {
-        const [citationRaw, contentRaw, saintRaw] = await Promise.all([
-            fetchText(buildReaderUrl({ date, type: 'reading_lt', content: 'GSP' })),
-            fetchText(buildReaderUrl({ date, type: 'reading', content: 'GSP' })),
-            fetchText(buildReaderUrl({ date, type: 'saint', content: null }))
+        const [citationResult, contentResult, saintResult] = await Promise.all([
+            fetchReaderWithFallback({ date, type: 'reading_lt', content: 'GSP', langs: ['SP', 'AM'] }),
+            fetchReaderWithFallback({ date, type: 'reading', content: 'GSP', langs: ['SP', 'AM'] }),
+            fetchReaderWithFallback({ date, type: 'saint', content: null, langs: ['SP', 'AM'], optional: true })
         ]);
 
-        const citation = decodeHtml(citationRaw);
-        const readingLines = sanitizeReadingLines(contentRaw);
+        const citation = decodeHtml(citationResult.text);
+        const readingLines = sanitizeReadingLines(contentResult.text);
 
         return {
             title: 'Evangelio del Día',
             citation,
-            saint: extractSaintOfDay(saintRaw),
+            saint: extractSaintOfDay(saintResult.text),
             date: new Date().toLocaleDateString('es-ES', {
                 weekday: 'long',
                 year: 'numeric',
