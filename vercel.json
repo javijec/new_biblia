@@ -2,7 +2,7 @@
     "rewrites": [
         {
             "source": "/api/evangelizo/:match*",
-            "destination": "https://rss.evangelizo.org/:match*"
+            "destination": "https://feed.evangelizo.org/:match*"
         },
         {
             "source": "/api/vatican/:match*",

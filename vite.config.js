@@ -10,6 +10,7 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
+      useCredentials: true,
       includeAssets: ['favicon.ico', 'icon.svg', 'icon-192.png', 'icon-512.png'],
       manifest: {
         name: 'Biblia Digital - Pueblo de Dios',
@@ -44,11 +45,6 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json,woff,woff2}'],
-        // Precache all Bible books for offline access
-        globDirectory: 'public',
-        additionalManifestEntries: [
-          { url: '/books/index.json', revision: null }
-        ],
         runtimeCaching: [
           {
             // Bible books - Cache First (they rarely change)
@@ -112,7 +108,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api\/vatican/, '')
       },
       '/api/evangelizo': {
-        target: 'https://rss.evangelizo.org',
+        target: 'https://feed.evangelizo.org',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\/evangelizo/, '')
       }
