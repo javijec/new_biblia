@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Button, Snackbar } from '@mui/material';
+import { Alert, Snackbar } from '@mui/material';
 import { registerSW } from 'virtual:pwa-register';
 import { logError, logEvent } from '../utils/telemetry';
 
 export default function PwaUpdatePrompt() {
-  const [showRefreshPrompt, setShowRefreshPrompt] = useState(false);
-  const [updateSW, setUpdateSW] = useState(null);
   const [showOfflineReady, setShowOfflineReady] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
     const updateServiceWorker = registerSW({
       onNeedRefresh() {
         logEvent('pwa_update_available');
-        setShowRefreshPrompt(true);
+        setIsUpdating(true);
+        updateServiceWorker(true);
       },
       onOfflineReady() {
         logEvent('pwa_offline_ready');
@@ -29,30 +29,20 @@ export default function PwaUpdatePrompt() {
       },
     });
 
-    setUpdateSW(() => updateServiceWorker);
   }, []);
 
   return (
     <>
       <Snackbar
-        open={showRefreshPrompt}
+        open={isUpdating}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        onClose={() => setShowRefreshPrompt(false)}
+        onClose={() => setIsUpdating(false)}
       >
         <Alert
           severity="info"
-          action={
-            <Button
-              color="inherit"
-              size="small"
-              onClick={() => updateSW?.(true)}
-            >
-              Actualizar
-            </Button>
-          }
           sx={{ width: '100%' }}
         >
-          Hay una nueva versi&oacute;n disponible.
+          Actualizando a la nueva versi&oacute;n...
         </Alert>
       </Snackbar>
 
