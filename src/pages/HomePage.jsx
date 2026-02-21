@@ -1,7 +1,7 @@
-import React from "react";
-import { Box, Typography, Paper, alpha } from "@mui/material";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
-import DailyGospel from "../components/DailyGospel";
+import React, { lazy, Suspense } from "react";
+import { Box, Typography, Paper, CircularProgress } from "@mui/material";
+
+const DailyGospel = lazy(() => import("../components/DailyGospel"));
 
 export default function HomePage() {
     return (
@@ -58,7 +58,15 @@ export default function HomePage() {
                 </Typography>
 
                 <Box sx={{ width: '100%', maxWidth: 1000, mb: 4 }}>
-                    <DailyGospel />
+                    <Suspense
+                        fallback={
+                            <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
+                                <CircularProgress size={28} />
+                            </Box>
+                        }
+                    >
+                        <DailyGospel />
+                    </Suspense>
                 </Box>
 
 

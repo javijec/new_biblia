@@ -3,6 +3,11 @@ import { verbConjugations, normalizeVerb } from '../hooks/verbConjugations';
 // Cache for loaded books in the worker
 const bookCache = {};
 let bookIndex = null;
+const SPANISH_STOP_WORDS = new Set([
+    'a', 'al', 'de', 'del', 'el', 'la', 'las', 'los', 'en', 'y', 'o', 'u',
+    'un', 'una', 'unos', 'unas', 'con', 'por', 'para', 'sin', 'que', 'se',
+    'su', 'sus', 'lo', 'le', 'les', 'como', 'es', 'son'
+]);
 
 self.onmessage = async (e) => {
     const { type, payload } = e.data;
@@ -10,32 +15,80 @@ self.onmessage = async (e) => {
     if (type === 'INIT') {
         bookIndex = payload;
     } else if (type === 'SEARCH') {
-        const { term } = payload;
-        await performSearch(term);
+        const { term, requestId } = payload;
+        await performSearch(term, requestId);
     }
 };
 
-async function performSearch(term) {
+function normalizeText(text) {
+    return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function escapeRegExp(text) {
+    return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function countMatches(text, regex) {
+    regex.lastIndex = 0;
+    const matches = text.match(regex);
+    return matches ? matches.length : 0;
+}
+
+function buildSearchPayload(term) {
+    const normalizedQuery = normalizeText(term.trim());
+    const tokens = normalizedQuery
+        .split(/\s+/)
+        .map(t => t.trim())
+        .filter(Boolean)
+        .filter(t => t.length >= 2 && !SPANISH_STOP_WORDS.has(t));
+
+    const expandedTerms = new Set();
+    tokens.forEach((token) => {
+        expandedTerms.add(token);
+        const baseVerb = normalizeVerb(token);
+        expandedTerms.add(baseVerb);
+
+        if (baseVerb === token) {
+            Object.entries(verbConjugations).forEach(([conjugation, infinitive]) => {
+                if (infinitive === baseVerb) {
+                    expandedTerms.add(conjugation);
+                }
+            });
+        }
+    });
+
+    if (tokens.length === 0 && normalizedQuery) {
+        expandedTerms.add(normalizedQuery);
+    }
+
+    return {
+        normalizedQuery,
+        termsArray: Array.from(expandedTerms),
+    };
+}
+
+function computeRelevance(normalizedText, normalizedQuery, termRegexes, phraseRegex) {
+    const wordMatches = termRegexes.reduce((acc, regex) => acc + countMatches(normalizedText, regex), 0);
+    const phraseMatches = phraseRegex ? countMatches(normalizedText, phraseRegex) : 0;
+
+    const startsWithQuery = normalizedText.startsWith(normalizedQuery) ? 1 : 0;
+    const score = (phraseMatches * 40) + (wordMatches * 10) + (startsWithQuery * 5);
+
+    return { score, wordMatches, phraseMatches };
+}
+
+async function performSearch(term, requestId) {
     if (!term || !term.trim() || !bookIndex) {
-        self.postMessage({ type: 'COMPLETE', results: [], terms: [] });
+        self.postMessage({ type: 'COMPLETE', requestId, results: [], terms: [], elapsedMs: 0, resultCount: 0 });
         return;
     }
 
-    const normalizedTerm = term.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    const baseVerb = normalizeVerb(normalizedTerm);
-    const searchTerms = new Set([normalizedTerm, baseVerb]);
-
-    if (baseVerb === normalizedTerm) {
-        Object.entries(verbConjugations).forEach(([conjugation, infinitive]) => {
-            if (infinitive === baseVerb) {
-                searchTerms.add(conjugation);
-            }
-        });
-    }
-
-    const termsArray = Array.from(searchTerms);
-    // Create regexes for matching whole words
-    const searchRegexes = termsArray.map(t => new RegExp(`\\b${t}\\b`, 'gi')); // Case insensitive flag 'i' added just in case, though we normalize text
+    const startTime = performance.now();
+    const { normalizedQuery, termsArray } = buildSearchPayload(term);
+    const searchRegexes = termsArray.map(t => new RegExp(`\\b${escapeRegExp(t)}\\b`, 'g'));
+    const phraseRegex = normalizedQuery.includes(' ')
+        ? new RegExp(`\\b${escapeRegExp(normalizedQuery)}\\b`, 'g')
+        : null;
 
     const results = [];
     const books = bookIndex.books;
@@ -50,7 +103,7 @@ async function performSearch(term) {
                 if (!response.ok) continue;
                 book = await response.json();
                 bookCache[bookId] = book;
-            } catch (err) {
+            } catch {
                 continue;
             }
         }
@@ -58,15 +111,15 @@ async function performSearch(term) {
         if (book) {
             book.chapters.forEach(chapter => {
                 chapter.verses.forEach(verse => {
-                    const normalizedText = verse.text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                    const normalizedText = normalizeText(verse.text);
+                    const { score, wordMatches, phraseMatches } = computeRelevance(
+                        normalizedText,
+                        normalizedQuery,
+                        searchRegexes,
+                        phraseRegex
+                    );
 
-                    // Check if any of our terms match
-                    const matches = searchRegexes.some(regex => {
-                        regex.lastIndex = 0;
-                        return regex.test(normalizedText);
-                    });
-
-                    if (matches) {
+                    if (score > 0) {
                         results.push({
                             bookTitle: book.name,
                             chapterNumber: chapter.number,
@@ -74,7 +127,11 @@ async function performSearch(term) {
                             text: verse.text,
                             chapter: { bookId: book.id, bookTitle: book.name, number: chapter.number },
                             testament: books[i].testament, // Pass testament for filtering
-                            query: term
+                            query: term,
+                            wordMatches,
+                            phraseMatches,
+                            score,
+                            bookOrder: i,
                         });
                     }
                 });
@@ -82,9 +139,21 @@ async function performSearch(term) {
         }
 
         if ((i + 1) % 5 === 0) {
-            self.postMessage({ type: 'PROGRESS', count: i + 1, total: books.length });
+            self.postMessage({ type: 'PROGRESS', requestId, count: i + 1, total: books.length });
         }
     }
 
-    self.postMessage({ type: 'COMPLETE', results, terms: termsArray });
+    results.sort((a, b) =>
+        (b.score - a.score) ||
+        (a.bookOrder - b.bookOrder) ||
+        (a.chapterNumber - b.chapterNumber) ||
+        (a.verseNumber - b.verseNumber)
+    );
+
+    results.forEach((result) => {
+        delete result.bookOrder;
+    });
+
+    const elapsedMs = Math.round(performance.now() - startTime);
+    self.postMessage({ type: 'COMPLETE', requestId, results, terms: termsArray, elapsedMs, resultCount: results.length });
 }

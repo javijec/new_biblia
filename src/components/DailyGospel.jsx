@@ -31,7 +31,7 @@ const DailyGospel = () => {
         try {
             const data = await fetchDailyGospel();
             setGospel(data);
-        } catch (err) {
+        } catch {
             setError('No se pudo cargar el Evangelio. Verifica tu conexión.');
         } finally {
             setLoading(false);

@@ -1,15 +1,16 @@
-import React, { useMemo } from "react";
+import React, { useMemo, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme, CssBaseline, CircularProgress, Box } from "@mui/material";
 import { useBible } from "./context/BibleContext";
 import { useSettings } from "./context/SettingsContext";
-import MainLayout from "./layouts/MainLayout";
-import HomePage from "./pages/HomePage";
-import ReadPage from "./pages/ReadPage";
-import SearchPage from "./pages/SearchPage";
 import OfflineIndicator from "./components/OfflineIndicator";
 import InstallPrompt from "./components/InstallPrompt";
 import "./App.css";
+
+const MainLayout = lazy(() => import("./layouts/MainLayout"));
+const HomePage = lazy(() => import("./pages/HomePage"));
+const ReadPage = lazy(() => import("./pages/ReadPage"));
+const SearchPage = lazy(() => import("./pages/SearchPage"));
 
 function App() {
   const { loading } = useBible();
@@ -80,13 +81,21 @@ function App() {
       <CssBaseline />
       <OfflineIndicator />
       <InstallPrompt />
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="read/:bookId/:chapter" element={<ReadPage />} />
-          <Route path="search" element={<SearchPage />} />
-        </Route>
-      </Routes>
+      <Suspense
+        fallback={
+          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+            <CircularProgress />
+          </Box>
+        }
+      >
+        <Routes>
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path="read/:bookId/:chapter" element={<ReadPage />} />
+            <Route path="search" element={<SearchPage />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </ThemeProvider>
   );
 }

@@ -9,8 +9,6 @@ import {
   List,
   ListItemButton,
   ListItemText,
-  Divider,
-  alpha,
   Button,
   Fade,
   Tabs,
@@ -30,7 +28,6 @@ export default function BookSelector({
   const [tabValue, setTabValue] = useState(0); // 0: Old, 1: New
   const { loadBook } = useBible();
   const [chapters, setChapters] = useState([]);
-  const [loadingChapters, setLoadingChapters] = useState(false);
 
   // Filter books based on search
   const filteredBooks = useMemo(() => {
@@ -45,14 +42,11 @@ export default function BookSelector({
 
   const handleBookClick = async (book) => {
     setSelectedBook(book);
-    setLoadingChapters(true);
     try {
       const fullBook = await loadBook(book.id);
       setChapters(fullBook.chapters || []);
     } catch (error) {
       console.error("Error loading chapters", error);
-    } finally {
-      setLoadingChapters(false);
     }
   };
 

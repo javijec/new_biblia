@@ -5,6 +5,7 @@ export function useBibleSearch() {
   const { data } = useBible();
   const [isReady, setIsReady] = useState(false);
   const workerRef = useRef(null);
+  const requestIdRef = useRef(0);
 
   useEffect(() => {
     if (data && !workerRef.current) {
@@ -26,23 +27,34 @@ export function useBibleSearch() {
     };
   }, [data]);
 
-  const searchAllBooks = useCallback((term) => {
+  const searchAllBooks = useCallback((term, onProgress) => {
     return new Promise((resolve, reject) => {
       if (!workerRef.current) {
         reject(new Error('Search worker not initialized'));
         return;
       }
 
+      const requestId = ++requestIdRef.current;
+
       const handleMessage = (e) => {
-        const { type, results, terms } = e.data;
+        const { type, requestId: responseRequestId, results, terms, elapsedMs, resultCount, count, total } = e.data;
+        if (responseRequestId !== requestId) {
+          return;
+        }
+
+        if (type === 'PROGRESS') {
+          onProgress?.({ count, total, progress: total ? count / total : 0 });
+          return;
+        }
+
         if (type === 'COMPLETE') {
           workerRef.current.removeEventListener('message', handleMessage);
-          resolve({ results, terms });
+          resolve({ results, terms, elapsedMs, resultCount });
         }
       };
 
       workerRef.current.addEventListener('message', handleMessage);
-      workerRef.current.postMessage({ type: 'SEARCH', payload: { term } });
+      workerRef.current.postMessage({ type: 'SEARCH', payload: { term, requestId } });
     });
   }, []);
 

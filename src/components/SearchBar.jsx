@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useBibleSearch } from "../hooks/useBibleSearch";
 
 export default function SearchBar({
-  data,
   onSearch,
   clearOnChapterSelect,
   initialTerm = "",
@@ -21,12 +20,7 @@ export default function SearchBar({
       }
 
       setSearching(true);
-      const results = await searchAllBooks(term, (progress) => {
-        // Actualizar resultados progresivamente
-        if (progress.results.length > 0) {
-          onSearch(progress.results);
-        }
-      });
+      const { results } = await searchAllBooks(term);
       setSearching(false);
       onSearch(results);
     },
@@ -39,7 +33,7 @@ export default function SearchBar({
       setSearchTerm(initialTerm);
       doSearch(initialTerm);
     }
-  }, [initialTerm, doSearch]);
+  }, [initialTerm, searchTerm, doSearch]);
 
   // Limpiar búsqueda cuando se selecciona un capítulo
   useEffect(() => {

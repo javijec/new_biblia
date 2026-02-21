@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Box, CircularProgress, Typography, useTheme, useMediaQuery } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import ChapterView from "../components/ChapterView";
 import { useBible } from "../context/BibleContext";
 
 export default function ReadPage() {
     const { bookId, chapter } = useParams();
     const navigate = useNavigate();
-    const { loadBook, data } = useBible();
+    const { loadBook } = useBible();
     const [currentBook, setCurrentBook] = useState(null);
     const [loading, setLoading] = useState(true);
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
     useEffect(() => {
         const fetchBook = async () => {

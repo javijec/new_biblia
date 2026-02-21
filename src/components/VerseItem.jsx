@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, alpha } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 

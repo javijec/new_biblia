@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect } from "react";
 import { Box, Typography, Button, Paper, Grid, Chip } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ChapterView from "./ChapterView";
 import { useBibleSearch } from "../hooks/useBibleSearch";
 import { verbConjugations, normalizeVerb } from "../hooks/verbConjugations";
 
 export default function MainContent({
-  data,
   selectedBook,
   selectedChapter,
   searchResults,

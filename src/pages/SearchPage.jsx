@@ -4,6 +4,11 @@ import { Box, Typography, CircularProgress, Paper, Chip, Tabs, Tab, alpha } from
 import { useBibleSearch } from "../hooks/useBibleSearch";
 import { getAbbreviation } from "../utils/bookAbbreviations";
 
+const normalizeText = (text) =>
+    text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
 // Helper component for highlighting text
 const HighlightedText = ({ text, terms }) => {
     if (!terms || terms.length === 0) return <>{text}</>;
@@ -11,7 +16,8 @@ const HighlightedText = ({ text, terms }) => {
     // Create a single regex for all terms
     // Sort by length descending to match longer phrases first if any
     const sortedTerms = [...terms].sort((a, b) => b.length - a.length);
-    const pattern = new RegExp(`\\b(${sortedTerms.join('|')})\\b`, 'gi');
+    const safeTerms = sortedTerms.map(escapeRegExp);
+    const pattern = new RegExp(`\\b(${safeTerms.join('|')})\\b`, 'gi');
 
     // Split text by matches
     const parts = text.split(pattern);
@@ -21,7 +27,7 @@ const HighlightedText = ({ text, terms }) => {
             {parts.map((part, i) => {
                 // Check if this part matches any term (case insensitive)
                 const isMatch = sortedTerms.some(term =>
-                    part.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '') === term
+                    normalizeText(part) === term
                 );
 
                 return isMatch ? (
@@ -58,26 +64,36 @@ export default function SearchPage() {
     const [loading, setLoading] = useState(false);
     const [visibleCount, setVisibleCount] = useState(50);
     const [filter, setFilter] = useState('all'); // 'all', 'old', 'new'
+    const [elapsedMs, setElapsedMs] = useState(0);
 
     // Infinite scroll
     const observerTarget = useRef(null);
+    const activeQueryRef = useRef(null);
 
     useEffect(() => {
         const performSearch = async () => {
             if (!query) return;
             if (!isReady) return;
 
+            activeQueryRef.current = query;
             setLoading(true);
             setResults([]);
             setVisibleCount(50); // Reset on new search
+            setElapsedMs(0);
             try {
-                const { results: searchResults, terms } = await searchAllBooks(query);
+                const { results: searchResults, terms, elapsedMs: elapsed } = await searchAllBooks(query);
+                if (activeQueryRef.current !== query) {
+                    return;
+                }
                 setResults(searchResults);
                 setSearchTerms(terms);
+                setElapsedMs(elapsed || 0);
             } catch (error) {
                 console.error("Search error:", error);
             } finally {
-                setLoading(false);
+                if (activeQueryRef.current === query) {
+                    setLoading(false);
+                }
             }
         };
 
@@ -166,6 +182,11 @@ export default function SearchPage() {
                     <Chip
                         label={`${filteredResults.length} versículos`}
                         color="primary"
+                        variant="outlined"
+                        size="small"
+                    />
+                    <Chip
+                        label={`${elapsedMs} ms`}
                         variant="outlined"
                         size="small"
                     />
