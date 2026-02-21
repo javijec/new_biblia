@@ -21,7 +21,7 @@ export default function TelemetryDebugPanel() {
   };
 
   return (
-    <Box sx={{ position: 'fixed', right: 16, bottom: 16, zIndex: 1400 }}>
+    <Box sx={{ position: 'fixed', left: 16, bottom: 16, zIndex: 1400 }}>
       {!open ? (
         <Button variant="contained" size="small" onClick={() => setOpen(true)}>
           Debug Telemetry
