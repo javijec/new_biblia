@@ -29,6 +29,8 @@ async function persistVerseToJson({ bookId, chapterNumber, verseNumber, text, ta
     const body = await response.text();
     throw new Error(body || 'No se pudo guardar en JSON');
   }
+
+  return response.json();
 }
 
 export default function BookCorrectionsPanel({ book, chapter, onApply, onPersist }) {
@@ -75,7 +77,7 @@ export default function BookCorrectionsPanel({ book, chapter, onApply, onPersist
     setSaving(true);
     setStatus('');
     try {
-      await persistVerseToJson({
+      const result = await persistVerseToJson({
         bookId: book.id,
         chapterNumber: chapter.number,
         verseNumber: selectedVerse,
@@ -84,7 +86,7 @@ export default function BookCorrectionsPanel({ book, chapter, onApply, onPersist
       });
       onApply?.(selectedVerse, text);
       await onPersist?.();
-      setStatus('Guardado en JSON');
+      setStatus(`Guardado en JSON (version: ${result.version || 'n/a'})`);
     } catch (error) {
       setStatus(`Error guardando: ${error.message}`);
     } finally {
@@ -98,7 +100,7 @@ export default function BookCorrectionsPanel({ book, chapter, onApply, onPersist
     setSaving(true);
     setStatus('');
     try {
-      await persistVerseToJson({
+      const result = await persistVerseToJson({
         bookId: book.id,
         chapterNumber: chapter.number,
         verseNumber: selectedVerse,
@@ -108,7 +110,7 @@ export default function BookCorrectionsPanel({ book, chapter, onApply, onPersist
       setText(originalText);
       onApply?.(selectedVerse, originalText);
       await onPersist?.();
-      setStatus('Versiculo restaurado en JSON');
+      setStatus(`Versiculo restaurado en JSON (version: ${result.version || 'n/a'})`);
     } catch (error) {
       setStatus(`Error restaurando: ${error.message}`);
     } finally {

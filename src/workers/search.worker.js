@@ -3,6 +3,7 @@ import { verbConjugations, normalizeVerb } from '../hooks/verbConjugations';
 // Cache for loaded books in the worker
 const bookCache = {};
 let bookIndex = null;
+const getWorkerBookCacheKey = (bookId, version) => `${bookId}@${version || 'base'}`;
 const SPANISH_STOP_WORDS = new Set([
     'a', 'al', 'de', 'del', 'el', 'la', 'las', 'los', 'en', 'y', 'o', 'u',
     'un', 'una', 'unos', 'unas', 'con', 'por', 'para', 'sin', 'que', 'se',
@@ -95,14 +96,22 @@ async function performSearch(term, requestId) {
 
     for (let i = 0; i < books.length; i++) {
         const bookId = books[i].id;
-        let book = bookCache[bookId];
+        const bookVersion = books[i].version || null;
+        const cacheKey = getWorkerBookCacheKey(bookId, bookVersion);
+        let book = bookCache[cacheKey];
 
         if (!book) {
             try {
-                const response = await fetch(`/books/${bookId}.json`);
+                const versionedUrl = bookVersion
+                    ? `/books/${bookId}.json?v=${encodeURIComponent(bookVersion)}`
+                    : `/books/${bookId}.json`;
+                let response = await fetch(versionedUrl);
+                if (!response.ok && bookVersion) {
+                    response = await fetch(`/books/${bookId}.json`);
+                }
                 if (!response.ok) continue;
                 book = await response.json();
-                bookCache[bookId] = book;
+                bookCache[cacheKey] = book;
             } catch {
                 continue;
             }

@@ -5,6 +5,7 @@ const BibleContext = createContext();
 
 // Cache para libros cargados
 const bookCache = {};
+const getBookCacheKey = (bookId, version) => `${bookId}@${version || 'base'}`;
 
 export function BibleProvider({ children }) {
   const [data, setData] = useState(null);
@@ -45,15 +46,31 @@ export function BibleProvider({ children }) {
     }
   }, []);
 
+  const getBookVersion = useCallback((bookId) => {
+    const entry = data?.bookIndex?.books?.find((book) => book.id === bookId);
+    return entry?.version || null;
+  }, [data]);
+
   const loadBook = useCallback(async (bookId, options = {}) => {
     const { force = false } = options;
-    if (!force && (bookCache[bookId] || loadedBooks.has(bookId))) {
-      return bookCache[bookId];
+    const bookVersion = getBookVersion(bookId);
+    const cacheKey = getBookCacheKey(bookId, bookVersion);
+    if (!force && (bookCache[cacheKey] || loadedBooks.has(cacheKey))) {
+      return bookCache[cacheKey];
     }
 
     try {
-      const response = await fetch(`/books/${bookId}.json`);
+      const versionedUrl = bookVersion
+        ? `/books/${bookId}.json?v=${encodeURIComponent(bookVersion)}`
+        : `/books/${bookId}.json`;
+      let response = await fetch(versionedUrl);
+
+      // Fallback para modo offline cuando existe cache anterior sin version.
+      if (!response.ok && bookVersion) {
+        response = await fetch(`/books/${bookId}.json`);
+      }
       if (!response.ok) throw new Error('Network response was not ok');
+
       const book = await response.json();
 
       // Normalize chapters for single-chapter books
@@ -65,14 +82,14 @@ export function BibleProvider({ children }) {
         });
       }
 
-      bookCache[bookId] = book;
-      setLoadedBooks(prev => new Set(prev).add(bookId));
+      bookCache[cacheKey] = book;
+      setLoadedBooks(prev => new Set(prev).add(cacheKey));
       return book;
     } catch (error) {
       logError('book_load_failed', error, { bookId });
       return null;
     }
-  }, [loadedBooks]);
+  }, [getBookVersion, loadedBooks]);
 
   return (
     <BibleContext.Provider value={{ data, loading, loadBook, loadedBooks }}>
@@ -114,13 +131,15 @@ function organizeIndex(indexData) {
       id: book.id,
       name: book.name,
       testament: tKey,
-      chapters: book.chapters
+      chapters: book.chapters,
+      version: book.version || null,
     };
 
     organized.testaments[tKey].push({
       id: book.id,
       name: book.name,
-      chapters: [] // Se cargarán bajo demanda
+      chapters: [], // Se cargarán bajo demanda
+      version: book.version || null,
     });
   });
 

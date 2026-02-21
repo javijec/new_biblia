@@ -9,7 +9,8 @@ import { fileURLToPath } from 'node:url'
 
 const packageJson = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf-8'))
 const APP_VERSION = packageJson.version || '0.0.0'
-const CACHE_PREFIX = `biblia-digital-${APP_VERSION}`
+const BUILD_ID = (process.env.VERCEL_GIT_COMMIT_SHA || process.env.GITHUB_SHA || APP_VERSION).slice(0, 12)
+const CACHE_PREFIX = `biblia-digital-${BUILD_ID}`
 const ROOT_DIR = path.dirname(fileURLToPath(import.meta.url))
 
 function jsonResponse(res, statusCode, body) {
@@ -46,6 +47,23 @@ function getTargetPaths(bookId, target = 'both') {
   return [candidates.public, candidates.src]
 }
 
+function getIndexPathForBookFile(filePath) {
+  const publicBooksDir = path.join(ROOT_DIR, 'public', 'books')
+  const srcBooksDir = path.join(ROOT_DIR, 'src', 'data', 'books')
+
+  if (filePath.startsWith(publicBooksDir)) {
+    return path.join(publicBooksDir, 'index.json')
+  }
+  if (filePath.startsWith(srcBooksDir)) {
+    return path.join(srcBooksDir, 'index.json')
+  }
+  return null
+}
+
+function generateBookVersion() {
+  return String(Date.now())
+}
+
 async function updateVerseInFile(filePath, chapterNumber, verseNumber, text) {
   const raw = await fs.readFile(filePath, 'utf-8')
   const book = JSON.parse(raw)
@@ -60,6 +78,19 @@ async function updateVerseInFile(filePath, chapterNumber, verseNumber, text) {
 
   verse.text = text
   await fs.writeFile(filePath, `${JSON.stringify(book, null, 2)}\n`, 'utf-8')
+}
+
+async function bumpBookVersionInIndex(indexPath, bookId, nextVersion) {
+  if (!indexPath || !existsSync(indexPath)) return false
+
+  const raw = await fs.readFile(indexPath, 'utf-8')
+  const index = JSON.parse(raw)
+  const bookEntry = index?.books?.find((book) => book.id === bookId)
+  if (!bookEntry) return false
+
+  bookEntry.version = nextVersion
+  await fs.writeFile(indexPath, `${JSON.stringify(index, null, 2)}\n`, 'utf-8')
+  return true
 }
 
 function localBookEditorPlugin() {
@@ -89,7 +120,23 @@ function localBookEditorPlugin() {
             updateVerseInFile(filePath, chapterNumber, verseNumber, text)
           ))
 
-          return jsonResponse(res, 200, { ok: true, files: targetPaths })
+          const nextVersion = generateBookVersion()
+          const indexPaths = Array.from(
+            new Set(targetPaths.map((filePath) => getIndexPathForBookFile(filePath)).filter(Boolean))
+          )
+
+          const bumped = []
+          for (const indexPath of indexPaths) {
+            const changed = await bumpBookVersionInIndex(indexPath, bookId, nextVersion)
+            if (changed) bumped.push(indexPath)
+          }
+
+          return jsonResponse(res, 200, {
+            ok: true,
+            files: targetPaths,
+            version: nextVersion,
+            bumpedIndexes: bumped,
+          })
         } catch (error) {
           return jsonResponse(res, 500, { error: error.message || 'No se pudo actualizar el archivo' })
         }
@@ -144,8 +191,27 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json,woff,woff2}'],
         runtimeCaching: [
           {
-            // Bible books - Cache First (they rarely change)
-            urlPattern: ({ url }) => url.pathname.startsWith('/books/') && url.pathname.endsWith('.json'),
+            // Books index is small: check network first to detect catalog changes fast
+            urlPattern: ({ url }) => url.pathname === '/books/index.json',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: `${CACHE_PREFIX}-books-index`,
+              networkTimeoutSeconds: 3,
+              expiration: {
+                maxEntries: 2,
+                maxAgeSeconds: 60 * 60 * 24 // 1 day
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          },
+          {
+            // Individual books: prioritize cache to avoid hammering server
+            urlPattern: ({ url }) =>
+              url.pathname.startsWith('/books/') &&
+              url.pathname.endsWith('.json') &&
+              url.pathname !== '/books/index.json',
             handler: 'CacheFirst',
             options: {
               cacheName: `${CACHE_PREFIX}-books`,
