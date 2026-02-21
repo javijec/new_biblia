@@ -57,6 +57,10 @@ const sanitizeReadingHtml = (rawReading) => {
     cleaned = cleaned.trim();
     if (!cleaned) return '';
 
+    // If after cleanup there is no readable text, treat as missing reading.
+    const plainText = decodeHtml(cleaned).replace(/\s+/g, ' ').trim();
+    if (!plainText) return '';
+
     return `<p>${cleaned}</p>`;
 };
 
