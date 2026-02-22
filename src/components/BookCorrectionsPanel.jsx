@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   IconButton,
-  MenuItem,
   Paper,
   Stack,
   TextField,
@@ -137,18 +136,25 @@ export default function BookCorrectionsPanel({ book, chapter, onApply, onPersist
 
           <Stack spacing={1.2}>
             <TextField
-              select
               size="small"
               label="Versículo"
+              type="number"
               value={selectedVerse}
-              onChange={(e) => setSelectedVerse(e.target.value)}
-            >
-              {verses.map((verse) => (
-                <MenuItem key={verse.number} value={String(verse.number)}>
-                  {verse.number}
-                </MenuItem>
-              ))}
-            </TextField>
+              onChange={(e) => {
+                const raw = e.target.value;
+                if (raw === '') {
+                  setSelectedVerse('');
+                  return;
+                }
+                const max = verses.length;
+                const num = Number(raw);
+                if (Number.isNaN(num)) return;
+                const clamped = Math.max(1, Math.min(max, num));
+                setSelectedVerse(String(clamped));
+              }}
+              inputProps={{ min: 1, max: verses.length, step: 1 }}
+              helperText={verses.length ? `Rango: 1 a ${verses.length}` : ''}
+            />
 
             <TextField
               multiline

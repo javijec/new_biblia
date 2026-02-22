@@ -63,13 +63,20 @@ export function BibleProvider({ children }) {
       const versionedUrl = bookVersion
         ? `/books/${bookId}.json?v=${encodeURIComponent(bookVersion)}`
         : `/books/${bookId}.json`;
-      let response = await fetch(versionedUrl);
+      let response;
 
-      // Fallback para modo offline cuando existe cache anterior sin version.
-      if (!response.ok && bookVersion) {
-        response = await fetch(`/books/${bookId}.json`);
+      try {
+        response = await fetch(versionedUrl);
+      } catch {
+        // Si falla el fetch versionado (red/SW), intentamos el base.
+        response = null;
       }
-      if (!response.ok) throw new Error('Network response was not ok');
+
+      // Fallback para modo offline o SW viejo cuando existe cache anterior sin version.
+      if ((!response || !response.ok) && bookVersion) {
+        response = await fetch(`/books/${bookId}.json`).catch(() => null);
+      }
+      if (!response || !response.ok) throw new Error('Network response was not ok');
 
       const book = await response.json();
 

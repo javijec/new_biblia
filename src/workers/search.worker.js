@@ -105,11 +105,17 @@ async function performSearch(term, requestId) {
                 const versionedUrl = bookVersion
                     ? `/books/${bookId}.json?v=${encodeURIComponent(bookVersion)}`
                     : `/books/${bookId}.json`;
-                let response = await fetch(versionedUrl);
-                if (!response.ok && bookVersion) {
-                    response = await fetch(`/books/${bookId}.json`);
+                let response;
+                try {
+                    response = await fetch(versionedUrl);
+                } catch {
+                    response = null;
                 }
-                if (!response.ok) continue;
+
+                if ((!response || !response.ok) && bookVersion) {
+                    response = await fetch(`/books/${bookId}.json`).catch(() => null);
+                }
+                if (!response || !response.ok) continue;
                 book = await response.json();
                 bookCache[cacheKey] = book;
             } catch {
