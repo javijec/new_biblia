@@ -81,7 +81,7 @@ function extractContent(html) {
         if (!Number.isNaN(n)) result.chapterNumber = n;
       }
     }
-  } catch (e) {
+  } catch {
     // ignore and try other heuristics
   }
 

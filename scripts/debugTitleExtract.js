@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import fs from 'fs';
 import path from 'path';
-const BIBLE_DIR = path.join(process.cwd(), '..', 'old_biblia');
 const file = process.argv[2] || '__PGA.HTM';
 const fp = path.join(process.cwd(), '..', 'old_biblia', file);
 if (!fs.existsSync(fp)) { console.error('file not found', fp); process.exit(1); }

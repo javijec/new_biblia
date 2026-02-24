@@ -52,18 +52,15 @@ const regularVerbTemplates = {
 };
 
 function generateConjugations(infinitive) {
-  let ending, stem, type;
+  let stem, type;
   
   if (infinitive.endsWith('ar')) {
-    ending = 'ar';
     stem = infinitive.slice(0, -2);
     type = 'ar';
   } else if (infinitive.endsWith('er')) {
-    ending = 'er';
     stem = infinitive.slice(0, -2);
     type = 'er';
   } else if (infinitive.endsWith('ir')) {
-    ending = 'ir';
     stem = infinitive.slice(0, -2);
     type = 'ir';
   } else {
@@ -75,7 +72,7 @@ function generateConjugations(infinitive) {
   const conjugations = {};
 
   // Generar todas las formas
-  Object.entries(templates).forEach(([tense, generator]) => {
+  Object.entries(templates).forEach(([_tense, generator]) => {
     const forms = generator(stem);
     
     if (Array.isArray(forms)) {

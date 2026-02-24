@@ -14,13 +14,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const BIBLE_DIR = path.join(__dirname, '../../../old_biblia');
 const OUTPUT_FILE = path.join(__dirname, '../src/data/bible-data.json');
 
-// Estructura de datos para la Biblia
-const bibleData = {
-  testaments: [],
-  books: {},
-  chapters: {},
-};
-
 // Información de libros (basada en el índice)
 const booksInfo = {
   genesis: { testament: 'Antiguo Testamento', name: 'Génesis', chapters: 50 },
@@ -169,7 +162,7 @@ async function main() {
   
   // Leer índice para obtener estructura de libros y capítulos
   const indexPath = path.join(BIBLE_DIR, '_INDEX.HTM');
-  const indexHtml = fs.readFileSync(indexPath, 'latin1');
+  fs.readFileSync(indexPath, 'latin1');
   
   // Procesar archivos
   const files = fs.readdirSync(BIBLE_DIR).filter(f => f.startsWith('__P') && f.endsWith('.HTM'));
