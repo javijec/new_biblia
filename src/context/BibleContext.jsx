@@ -3,6 +3,7 @@ import { logError } from '../utils/telemetry';
 
 const BibleContext = createContext();
 const MAX_PRELOAD_BOOKS = 12;
+const OFFLINE_BOOKS_CACHE = 'biblia-offline-books-v1';
 
 // Cache para libros cargados
 const bookCache = {};
@@ -12,6 +13,14 @@ export function BibleProvider({ children }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loadedBooks, setLoadedBooks] = useState(new Set());
+  const [offlineBooksCount, setOfflineBooksCount] = useState(0);
+  const [downloadState, setDownloadState] = useState({
+    isDownloading: false,
+    downloaded: 0,
+    total: 0,
+    failed: [],
+    error: null,
+  });
   const loadedBooksRef = useRef(new Set());
   const dataRef = useRef(null);
 
@@ -91,6 +100,112 @@ export function BibleProvider({ children }) {
     }
   }, [loadBook]);
 
+  const refreshOfflineAvailability = useCallback(async () => {
+    if (!('caches' in window)) {
+      setOfflineBooksCount(0);
+      return 0;
+    }
+
+    const cachedBookIds = new Set();
+    const cacheNames = await caches.keys();
+
+    for (const cacheName of cacheNames) {
+      const cache = await caches.open(cacheName);
+      const requests = await cache.keys();
+      for (const request of requests) {
+        const pathname = new URL(request.url).pathname;
+        if (!pathname.startsWith('/books/') || !pathname.endsWith('.json') || pathname === '/books/index.json') {
+          continue;
+        }
+
+        const bookId = pathname.split('/').pop()?.replace('.json', '');
+        if (bookId) cachedBookIds.add(bookId);
+      }
+    }
+
+    const count = cachedBookIds.size;
+    setOfflineBooksCount(count);
+    return count;
+  }, []);
+
+  const downloadBooksForOffline = useCallback(async () => {
+    if (!dataRef.current?.bookIndex?.books?.length || downloadState.isDownloading) return;
+    if (!('caches' in window)) {
+      setDownloadState({
+        isDownloading: false,
+        downloaded: 0,
+        total: 0,
+        failed: [],
+        error: 'Cache API no disponible en este navegador',
+      });
+      return;
+    }
+
+    const books = dataRef.current.bookIndex.books;
+    const total = books.length;
+    const failed = [];
+
+    setDownloadState({
+      isDownloading: true,
+      downloaded: 0,
+      total,
+      failed: [],
+      error: null,
+    });
+
+    try {
+      const cache = await caches.open(OFFLINE_BOOKS_CACHE);
+      const indexResponse = await fetch('/books/index.json', { cache: 'no-store' });
+      if (indexResponse.ok) {
+        await cache.put('/books/index.json', indexResponse.clone());
+      }
+
+      for (let i = 0; i < books.length; i += 1) {
+        const book = books[i];
+        const baseUrl = `/books/${book.id}.json`;
+        const versionedUrl = book.version
+          ? `${baseUrl}?v=${encodeURIComponent(book.version)}`
+          : baseUrl;
+
+        try {
+          let response = await fetch(versionedUrl, { cache: 'no-store' });
+          if (!response.ok && book.version) {
+            response = await fetch(baseUrl, { cache: 'no-store' });
+          }
+          if (!response.ok) throw new Error(`No se pudo descargar ${book.id}`);
+
+          await cache.put(baseUrl, response.clone());
+        } catch (error) {
+          failed.push(book.id);
+          logError('offline_book_download_failed', error, { bookId: book.id });
+        } finally {
+          setDownloadState((prev) => ({
+            ...prev,
+            downloaded: i + 1,
+          }));
+        }
+      }
+
+      await refreshOfflineAvailability();
+      setDownloadState({
+        isDownloading: false,
+        downloaded: total,
+        total,
+        failed,
+        error: failed.length ? `No se pudieron descargar ${failed.length} libros` : null,
+      });
+    } catch (error) {
+      logError('offline_download_failed', error);
+      setDownloadState({
+        isDownloading: false,
+        downloaded: 0,
+        total,
+        failed,
+        error: 'Fallo la descarga para uso offline',
+      });
+    }
+  }, [downloadState.isDownloading, refreshOfflineAvailability]);
+
   useEffect(() => {
     let ignore = false;
     let preloadTimer = null;
@@ -128,8 +243,24 @@ export function BibleProvider({ children }) {
     };
   }, [preloadAllBooks]);
 
+  useEffect(() => {
+    refreshOfflineAvailability();
+  }, [refreshOfflineAvailability]);
+
   return (
-    <BibleContext.Provider value={{ data, loading, loadBook, loadedBooks }}>
+    <BibleContext.Provider
+      value={{
+        data,
+        loading,
+        loadBook,
+        loadedBooks,
+        offlineBooksCount,
+        totalBooksCount: data?.bookIndex?.books?.length || 0,
+        downloadState,
+        downloadBooksForOffline,
+        refreshOfflineAvailability,
+      }}
+    >
       {children}
     </BibleContext.Provider>
   );

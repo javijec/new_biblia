@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Snackbar, Alert, Box } from '@mui/material';
 import WifiOffIcon from '@mui/icons-material/WifiOff';
 import WifiIcon from '@mui/icons-material/Wifi';
+import { useBible } from '../context/BibleContext';
 
 /**
  * OfflineIndicator Component
@@ -12,6 +13,7 @@ export default function OfflineIndicator() {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
     const [showNotification, setShowNotification] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
+    const { offlineBooksCount, totalBooksCount, refreshOfflineAvailability } = useBible();
 
     useEffect(() => {
         const handleOnline = () => {
@@ -34,6 +36,10 @@ export default function OfflineIndicator() {
             window.removeEventListener('offline', handleOffline);
         };
     }, []);
+
+    useEffect(() => {
+        refreshOfflineAvailability();
+    }, [isOnline, refreshOfflineAvailability]);
 
     const handleCloseNotification = (event, reason) => {
         if (reason === 'clickaway') {
@@ -64,7 +70,7 @@ export default function OfflineIndicator() {
                 >
                     <WifiOffIcon fontSize="small" />
                     <span style={{ fontSize: '0.875rem', fontWeight: 500 }}>
-                        Modo Offline
+                        Modo Offline ({offlineBooksCount}/{totalBooksCount || '?'} libros)
                     </span>
                 </Box>
             )}
