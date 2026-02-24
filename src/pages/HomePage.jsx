@@ -1,9 +1,16 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { Box, Typography, Paper, CircularProgress } from "@mui/material";
 
 const DailyGospel = lazy(() => import("../components/DailyGospel"));
 
 export default function HomePage() {
+    const [showDailyGospel, setShowDailyGospel] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setShowDailyGospel(true), 1200);
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
         <Box
             sx={{
@@ -57,16 +64,22 @@ export default function HomePage() {
                     Navega por los libros, busca versículos y estudia con comodidad.
                 </Typography>
 
-                <Box sx={{ width: '100%', maxWidth: 1000, mb: 4 }}>
-                    <Suspense
-                        fallback={
-                            <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
-                                <CircularProgress size={28} />
-                            </Box>
-                        }
-                    >
-                        <DailyGospel />
-                    </Suspense>
+                <Box sx={{ width: '100%', maxWidth: 1000, mb: 4, minHeight: 120 }}>
+                    {showDailyGospel ? (
+                        <Suspense
+                            fallback={
+                                <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
+                                    <CircularProgress size={28} />
+                                </Box>
+                            }
+                        >
+                            <DailyGospel />
+                        </Suspense>
+                    ) : (
+                        <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
+                            <CircularProgress size={24} />
+                        </Box>
+                    )}
                 </Box>
 
 

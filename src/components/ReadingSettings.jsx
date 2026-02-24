@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     IconButton,
     Popover,
@@ -13,7 +13,7 @@ import {
 import TextFormatIcon from '@mui/icons-material/TextFormat';
 import { useSettings } from '../context/SettingsContext';
 
-export default function ReadingSettings() {
+export default function ReadingSettings({ initialAnchorEl = null, onInitialAnchorHandled }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const {
         fontSize,
@@ -32,6 +32,12 @@ export default function ReadingSettings() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    useEffect(() => {
+        if (!initialAnchorEl || anchorEl) return;
+        setAnchorEl(initialAnchorEl);
+        onInitialAnchorHandled?.();
+    }, [initialAnchorEl, anchorEl, onInitialAnchorHandled]);
 
     const open = Boolean(anchorEl);
 

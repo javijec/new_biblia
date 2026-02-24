@@ -18,6 +18,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import TextFormatIcon from "@mui/icons-material/TextFormat";
 import Sidebar from "../components/Sidebar";
 import { useBible } from "../context/BibleContext";
 import { logEvent } from "../utils/telemetry";
@@ -30,6 +31,8 @@ export default function MainLayout() {
     const [mobileOpen, setMobileOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+    const [loadReadingSettings, setLoadReadingSettings] = useState(false);
+    const [pendingSettingsAnchor, setPendingSettingsAnchor] = useState(null);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -74,6 +77,18 @@ export default function MainLayout() {
     const handleNavigation = (path) => {
         navigate(path);
         if (isMobile) setMobileOpen(false);
+    };
+
+    const handleReadingSettingsPrefetch = () => {
+        if (loadReadingSettings) return;
+        setLoadReadingSettings(true);
+    };
+
+    const handleReadingSettingsClick = (event) => {
+        if (!loadReadingSettings) {
+            setPendingSettingsAnchor(event.currentTarget);
+            setLoadReadingSettings(true);
+        }
     };
 
     return (
@@ -186,9 +201,24 @@ export default function MainLayout() {
                     </Fade>
 
                     <Box id="settings-trigger">
-                        <Suspense fallback={null}>
-                            <ReadingSettings />
-                        </Suspense>
+                        {loadReadingSettings ? (
+                            <Suspense fallback={null}>
+                                <ReadingSettings
+                                    initialAnchorEl={pendingSettingsAnchor}
+                                    onInitialAnchorHandled={() => setPendingSettingsAnchor(null)}
+                                />
+                            </Suspense>
+                        ) : (
+                            <IconButton
+                                aria-label="Configuración de lectura"
+                                color="inherit"
+                                onMouseEnter={handleReadingSettingsPrefetch}
+                                onFocus={handleReadingSettingsPrefetch}
+                                onClick={handleReadingSettingsClick}
+                            >
+                                <TextFormatIcon />
+                            </IconButton>
+                        )}
                     </Box>
 
                     <IconButton
