@@ -20,7 +20,7 @@ export default function ReadPage() {
                 const book = await loadBook(bookId);
                 setCurrentBook(book);
             } catch (error) {
-                logError("read_page_load_failed", error, { bookId, chapter });
+                logError("read_page_load_failed", error, { bookId });
             } finally {
                 setLoading(false);
             }

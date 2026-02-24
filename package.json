@@ -14,7 +14,7 @@
     "extract:bible": "node scripts/extractBibleData.js",
     "books:init-versions": "node scripts/initBookVersions.js",
     "optimize": "vite optimize",
-    "performance": "vite build --mode production && npx lighthouse http://localhost:4173 --output-path=./lighthouse-report.html"
+    "performance": "vite build --mode production && node scripts/runPerformanceAudit.js"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

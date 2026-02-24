@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { logError } from '../utils/telemetry';
 
 const BibleContext = createContext();
@@ -11,40 +11,7 @@ export function BibleProvider({ children }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loadedBooks, setLoadedBooks] = useState(new Set());
-
-  useEffect(() => {
-    // Cargar el índice inicial
-    fetch('/books/index.json')
-      .then(res => res.json())
-      .then(indexData => {
-        const organized = organizeIndex(indexData);
-        setData(organized);
-        setLoading(false);
-
-        // Precarga de libros en background (después de 2 segundos)
-        const preloadTimer = setTimeout(() => {
-          preloadAllBooks(organized.bookIndex.books);
-        }, 2000);
-
-        return () => clearTimeout(preloadTimer);
-      })
-      .catch(err => {
-        logError('bible_index_load_failed', err);
-        setLoading(false);
-      });
-  }, []);
-
-  const preloadAllBooks = useCallback(async (books) => {
-    // Precarga todos los libros en background sin bloquear
-    for (const bookInfo of books) {
-      // Usar requestIdleCallback si disponible, si no, usar setTimeout
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(() => loadBook(bookInfo.id));
-      } else {
-        setTimeout(() => loadBook(bookInfo.id), 100);
-      }
-    }
-  }, []);
+  const loadedBooksRef = useRef(new Set());
 
   const getBookVersion = useCallback((bookId) => {
     const entry = data?.bookIndex?.books?.find((book) => book.id === bookId);
@@ -55,7 +22,7 @@ export function BibleProvider({ children }) {
     const { force = false } = options;
     const bookVersion = getBookVersion(bookId);
     const cacheKey = getBookCacheKey(bookId, bookVersion);
-    if (!force && (bookCache[cacheKey] || loadedBooks.has(cacheKey))) {
+    if (!force && (bookCache[cacheKey] || loadedBooksRef.current.has(cacheKey))) {
       return bookCache[cacheKey];
     }
 
@@ -90,13 +57,66 @@ export function BibleProvider({ children }) {
       }
 
       bookCache[cacheKey] = book;
-      setLoadedBooks(prev => new Set(prev).add(cacheKey));
+      setLoadedBooks((prev) => {
+        if (prev.has(cacheKey)) return prev;
+        const next = new Set(prev).add(cacheKey);
+        loadedBooksRef.current = next;
+        return next;
+      });
       return book;
     } catch (error) {
       logError('book_load_failed', error, { bookId });
       return null;
     }
-  }, [getBookVersion, loadedBooks]);
+  }, [getBookVersion]);
+
+  const preloadAllBooks = useCallback(async (books) => {
+    // Precarga todos los libros en background sin bloquear
+    for (const bookInfo of books) {
+      // Usar requestIdleCallback si disponible, si no, usar setTimeout
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => loadBook(bookInfo.id));
+      } else {
+        setTimeout(() => loadBook(bookInfo.id), 100);
+      }
+    }
+  }, [loadBook]);
+
+  useEffect(() => {
+    let ignore = false;
+    let preloadTimer = null;
+
+    // Cargar el índice inicial
+    const fetchIndex = async () => {
+      try {
+        const res = await fetch('/books/index.json');
+        const indexData = await res.json();
+        if (ignore) return;
+
+        const organized = organizeIndex(indexData);
+        setData(organized);
+        setLoading(false);
+
+        // Precarga de libros en background (después de 2 segundos)
+        preloadTimer = setTimeout(() => {
+          preloadAllBooks(organized.bookIndex.books);
+        }, 2000);
+      } catch (err) {
+        if (ignore) return;
+        logError('bible_index_load_failed', err);
+        setLoading(false);
+      }
+    };
+
+    fetchIndex();
+
+    return () => {
+      ignore = true;
+      if (preloadTimer) {
+        clearTimeout(preloadTimer);
+      }
+    };
+  }, [preloadAllBooks]);
 
   return (
     <BibleContext.Provider value={{ data, loading, loadBook, loadedBooks }}>
