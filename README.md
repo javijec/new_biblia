@@ -1,153 +1,89 @@
-# 📖 Biblia Digital
+# Biblia Digital
 
-Una aplicación web moderna y rápida para leer y buscar en la Biblia del Pueblo de Dios. Construida con React, Vite, Material-UI y Tailwind CSS.
+Aplicación web para lectura y búsqueda de la Biblia del Pueblo de Dios, optimizada para uso online/offline.
 
-## ✨ Características
+## Stack Real
 
-### 📚 Navegación Intuitiva
-- **Sidebar colapsable** con acceso a los 76 libros de la Biblia
-- Separación clara entre **Antiguo Testamento** y **Nuevo Testamento**
-- Selección rápida de capítulos numerados
-- Carga dinámica de capítulos bajo demanda
-- **Diseño Responsive** optimizado para móviles y escritorio
+- React 19 + React Router 7
+- Vite 7
+- MUI 7 (Material UI)
+- Vitest + Testing Library
+- PWA con `vite-plugin-pwa`
+- Web Worker para búsqueda global
 
-### 🔍 Búsqueda Avanzada
-- **Búsqueda por palabra completa** usando expresiones regulares con límites de palabra
-- Barra de búsqueda expandible en el header
-- Resultados compactos en una sola línea
-- Búsqueda desde palabras individuales dentro de versículos
+## Qué Hace
 
-### 📖 Lectura Confortable
-- **Interfaz limpia y moderna** basada en Material-UI
-- Tema personalizado en tonos ámbar/naranja para una lectura agradable
-- Selección múltiple de versículos para copiar
-- Botón de búsqueda en cada versículo para explorar palabras específicas
-- Modo oscuro/claro totalmente integrado
+- Navegación por libros y capítulos.
+- Lectura de capítulos con navegación anterior/siguiente.
+- Búsqueda en toda la Biblia con ranking de relevancia.
+- Lecturas del día (Evangelio) con fallback de fuentes.
+- Modo offline con service worker.
+- Modo local de corrección de versículos (solo `vite dev`, localhost).
 
-### ⚡ Rendimiento Optimizado
-- **Carga progresiva**: La Biblia se divide en 76 archivos JSON (uno por libro)
-- Los libros se cargan bajo demanda cuando se seleccionan
-- Cache en memoria para libros ya cargados
-- Búsqueda eficiente con resultados instantáneos
+## Datos
 
-## 🚀 Tecnologías
+- Fuente principal en runtime: `public/books/*.json`.
+- Índice de catálogo: `public/books/index.json`.
+- Los JSON de `src/data/` se usan como insumo de scripts de extracción/normalización, no como fuente principal en runtime.
 
-- **React 18+** - Framework UI
-- **Vite** - Bundler ultrarrápido
-- **Material-UI (MUI)** - Biblioteca de componentes y sistema de diseño
-- **Zustand** - Gestión de estado global ligera y potente
-- **Bun** - Runtime y package manager
-- **Tailwind CSS** - Utilidades CSS auxiliares
+## Arquitectura (resumen)
 
-## 📦 Estructura del Proyecto
+- `src/context/BibleContext.jsx`: carga índice, versionado de libros, caché en memoria, carga bajo demanda.
+- `src/workers/search.worker.js`: búsqueda global y scoring fuera del hilo principal.
+- `src/services/gospelService.js`: integración de lecturas diarias con cache local y sanitización HTML.
+- `src/components/DailyGospel.jsx`: render de lecturas del día.
+- `vite.config.js`: PWA, proxy dev, y endpoint local `POST /__local/book-verse`.
 
-```
-new_biblia/
-├── src/
-│   ├── App.jsx                 # Componente principal (MUI Layout)
-│   ├── App.css                 # Estilos globales
-│   ├── main.jsx                # Punto de entrada
-│   ├── components/
-│   │   ├── Sidebar.jsx         # Navegación lateral (MUI Drawer)
-│   │   ├── MainContent.jsx     # Contenido principal
-│   │   ├── SearchBar.jsx       # Barra de búsqueda
-│   │   ├── BookSelector.jsx    # Selector de libros y capítulos
-│   │   ├── ChapterView.jsx     # Vista del capítulo
-│   │   └── VerseItem.jsx       # Componente individual de versículo
-│   ├── context/
-│   │   └── BibleContext.jsx    # (Deprecado/Migrando a Zustand)
-│   ├── stores/                 # Stores de Zustand (si aplica)
-│   ├── hooks/
-│   │   └── useBibleSearch.js   # Hook para búsqueda en Biblia
-│   └── data/
-│       ├── books/              # Archivos JSON por libro
-│       │   ├── genesis.json
-│       │   ├── exodo.json
-│       │   └── ... (74 más)
-│       └── index.json          # Índice de metadatos
-├── scripts/
-│   ├── splitBibleByBook.js     # Genera archivos por libro
-│   ├── checkDuplicates.js      # Verifica duplicados
-│   └── ... (otros scripts)
-├── vite.config.js              # Configuración de Vite
-└── eslint.config.js            # Configuración de ESLint
-```
-
-## 🛠️ Instalación
-
-### Prerrequisitos
-- Node.js o Bun instalado
-
-### Pasos
-```bash
-# Clonar el repositorio
-git clone <tu-repo>
-cd new_biblia
-
-# Instalar dependencias
-bun install
-
-# Ejecutar servidor de desarrollo
-bun run dev
-
-# Acceder a http://localhost:5173
-```
-
-## 📝 Scripts Disponibles
+## Desarrollo
 
 ```bash
-# Desarrollo
-bun run dev              # Inicia servidor con HMR
-
-# Producción
-bun run build            # Build optimizado
-bun run preview          # Preview del build
-
-# Utilidades
-bun scripts/splitBibleByBook.js    # Divide Biblia en libros
-bun scripts/checkDuplicates.js     # Verifica capítulos duplicados
+npm install
+npm run dev
 ```
 
-## 🎯 Casos de Uso
+## Scripts Disponibles
 
-1. **Lectura diaria** - Navega cómodamente entre libros y capítulos
-2. **Investigación** - Busca palabras clave en toda la Biblia
-3. **Estudios temáticos** - Selecciona múltiples versículos para copiar y analizar
-4. **Exploración de palabras** - Haz clic en palabras dentro de versículos para encontrar todas sus ocurrencias
+```bash
+# App
+npm run dev
+npm run build
+npm run preview
+npm run lint
+npm run test
+npm run test:run
 
-## 🔧 Características Técnicas
+# Performance
+npm run performance
 
-### Carga Dinámica
-- Los libros se cargan mediante `import()` cuando se expanden en el selector
-- Cache en memoria para optimizar acceso repetido
-- Índice ligero para navegación rápida
+# Utilidades de datos
+npm run extract:bible
+npm run books:init-versions
+```
 
-### Búsqueda con Regex
-- Usa límites de palabra `\b` para búsquedas exactas
-- Evita coincidencias parciales (ej: "fe" no coincide con "feliz")
-- Búsqueda sensible a mayúsculas/minúsculas
+`npm run performance`:
+1. Build de producción.
+2. Levanta `vite preview` en `http://127.0.0.1:4173`.
+3. Ejecuta Lighthouse.
+4. Genera `lighthouse-report.html`.
 
-### Diseño y UI
-- **Material-UI v6**: Uso extensivo de componentes como `AppBar`, `Drawer`, `Card`, `Typography`.
-- **Tema Personalizado**: Paleta de colores cálida (Amber) para evocar la sensación de un libro clásico.
-- **Responsive**: Adaptación fluida a diferentes tamaños de pantalla usando el sistema de breakpoints de MUI.
+## PWA y Caché
 
-## 🌙 Modo Oscuro
+- `books/index.json`: estrategia `NetworkFirst` para detectar cambios rápido.
+- `books/*.json`: estrategia `CacheFirst` con versionado por query param `?v=...`.
+- Limpieza de caches viejas activada (`cleanupOutdatedCaches`).
 
-Toggle de oscuridad en el header. Las preferencias se mantienen durante la sesión, adaptando todos los componentes MUI automáticamente.
+## Calidad
 
-## 📄 Versión de la Biblia
+- Lint con ESLint.
+- Tests unitarios con Vitest.
+- Cobertura de contexto, páginas principales, conjugaciones y sanitización de evangelio.
 
-**Biblia del Pueblo de Dios** - Traducción ecuménica de 2007
+## Notas de Seguridad
 
-## 📞 Soporte
+- El contenido HTML remoto del Evangelio se sanitiza con `DOMPurify` antes de renderizarse.
 
-Para reportar bugs o sugerir mejoras, contacta al equipo de desarrollo.
+## Deploy
 
-## 📄 Licencia
-
-Este proyecto contiene contenido de dominio público de la Biblia del Pueblo de Dios.
-
----
-
-**Desarrollado con ❤️ para lectores modernos de la Biblia**
+- Configuración de headers y rewrites en `vercel.json`.
+- SPA rewrite a `index.html`.
+- Rewrites de API para Evangelizo y Vatican News.
