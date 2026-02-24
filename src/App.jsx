@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme, CssBaseline, CircularProgress, Box } from "@mui/material";
 import { useBible } from "./context/BibleContext";
 import { useSettings } from "./context/SettingsContext";
+import { SelectionProvider } from "./context/SelectionContext";
 import TelemetryBootstrap from "./components/TelemetryBootstrap";
 import "./App.css";
 
@@ -112,7 +113,14 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<HomePage />} />
-            <Route path="read/:bookId/:chapter" element={<ReadPage />} />
+            <Route
+              path="read/:bookId/:chapter"
+              element={(
+                <SelectionProvider>
+                  <ReadPage />
+                </SelectionProvider>
+              )}
+            />
             <Route path="search" element={<SearchPage />} />
           </Route>
         </Routes>
