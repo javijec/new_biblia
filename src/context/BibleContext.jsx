@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback, use
 import { logError } from '../utils/telemetry';
 
 const BibleContext = createContext();
+const MAX_PRELOAD_BOOKS = 12;
 
 // Cache para libros cargados
 const bookCache = {};
@@ -12,11 +13,12 @@ export function BibleProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [loadedBooks, setLoadedBooks] = useState(new Set());
   const loadedBooksRef = useRef(new Set());
+  const dataRef = useRef(null);
 
   const getBookVersion = useCallback((bookId) => {
-    const entry = data?.bookIndex?.books?.find((book) => book.id === bookId);
+    const entry = dataRef.current?.bookIndex?.books?.find((book) => book.id === bookId);
     return entry?.version || null;
-  }, [data]);
+  }, []);
 
   const loadBook = useCallback(async (bookId, options = {}) => {
     const { force = false } = options;
@@ -71,8 +73,15 @@ export function BibleProvider({ children }) {
   }, [getBookVersion]);
 
   const preloadAllBooks = useCallback(async (books) => {
+    const connection = navigator?.connection;
+    const saveData = connection?.saveData === true;
+    const lowBandwidth = connection?.effectiveType === 'slow-2g' || connection?.effectiveType === '2g';
+    if (saveData || lowBandwidth) return;
+
+    const booksToPreload = books.slice(0, MAX_PRELOAD_BOOKS);
+
     // Precarga todos los libros en background sin bloquear
-    for (const bookInfo of books) {
+    for (const bookInfo of booksToPreload) {
       // Usar requestIdleCallback si disponible, si no, usar setTimeout
       if ('requestIdleCallback' in window) {
         requestIdleCallback(() => loadBook(bookInfo.id));
@@ -94,6 +103,7 @@ export function BibleProvider({ children }) {
         if (ignore) return;
 
         const organized = organizeIndex(indexData);
+        dataRef.current = organized;
         setData(organized);
         setLoading(false);
 

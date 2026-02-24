@@ -1,4 +1,5 @@
 import { spawn } from 'node:child_process';
+import { existsSync } from 'node:fs';
 
 const PREVIEW_URL = 'http://127.0.0.1:4173';
 const LIGHTHOUSE_OUTPUT = './lighthouse-report.html';
@@ -22,6 +23,36 @@ function runCommand(command, args, options = {}) {
         return;
       }
       reject(new Error(`${command} exited with code ${code}`));
+    });
+  });
+}
+
+function runLighthouse(url) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(
+      'npx',
+      ['lighthouse', url, '--output-path', LIGHTHOUSE_OUTPUT],
+      {
+        stdio: 'inherit',
+        shell: process.platform === 'win32',
+      }
+    );
+
+    child.on('error', reject);
+    child.on('exit', (code) => {
+      if (code === 0) {
+        resolve();
+        return;
+      }
+
+      // Lighthouse can fail on Windows with EPERM while cleaning temp files after writing the report.
+      if (existsSync(LIGHTHOUSE_OUTPUT)) {
+        console.warn(`Lighthouse exited with code ${code}, but report was generated: ${LIGHTHOUSE_OUTPUT}`);
+        resolve();
+        return;
+      }
+
+      reject(new Error(`lighthouse exited with code ${code}`));
     });
   });
 }
@@ -63,12 +94,7 @@ async function main() {
 
   try {
     await waitForServer(PREVIEW_URL);
-    await runCommand('npx', [
-      'lighthouse',
-      PREVIEW_URL,
-      '--output-path',
-      LIGHTHOUSE_OUTPUT,
-    ]);
+    await runLighthouse(PREVIEW_URL);
   } finally {
     await stopPreview(preview);
   }

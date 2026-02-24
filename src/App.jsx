@@ -1,23 +1,30 @@
-import React, { useMemo, lazy, Suspense } from "react";
+import React, { useMemo, lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme, CssBaseline, CircularProgress, Box } from "@mui/material";
 import { useBible } from "./context/BibleContext";
 import { useSettings } from "./context/SettingsContext";
-import OfflineIndicator from "./components/OfflineIndicator";
-import InstallPrompt from "./components/InstallPrompt";
-import PwaUpdatePrompt from "./components/PwaUpdatePrompt";
 import TelemetryBootstrap from "./components/TelemetryBootstrap";
-import TelemetryDebugPanel from "./components/TelemetryDebugPanel";
 import "./App.css";
 
 const MainLayout = lazy(() => import("./layouts/MainLayout"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 const ReadPage = lazy(() => import("./pages/ReadPage"));
 const SearchPage = lazy(() => import("./pages/SearchPage"));
+const OfflineIndicator = lazy(() => import("./components/OfflineIndicator"));
+const InstallPrompt = lazy(() => import("./components/InstallPrompt"));
+const PwaUpdatePrompt = lazy(() => import("./components/PwaUpdatePrompt"));
+const TelemetryDebugPanel = lazy(() => import("./components/TelemetryDebugPanel"));
 
 function App() {
   const { loading } = useBible();
   const { currentTheme, fontFamily } = useSettings();
+  const showTelemetryDebugPanel = import.meta.env.DEV;
+  const [deferNonCriticalUi, setDeferNonCriticalUi] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDeferNonCriticalUi(true), 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   const theme = useMemo(
     () =>
@@ -83,10 +90,18 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <TelemetryBootstrap />
-      <OfflineIndicator />
-      <InstallPrompt />
-      <PwaUpdatePrompt />
-      <TelemetryDebugPanel />
+      {deferNonCriticalUi && (
+        <Suspense fallback={null}>
+          <OfflineIndicator />
+          <InstallPrompt />
+          <PwaUpdatePrompt />
+        </Suspense>
+      )}
+      {showTelemetryDebugPanel && (
+        <Suspense fallback={null}>
+          <TelemetryDebugPanel />
+        </Suspense>
+      )}
       <Suspense
         fallback={
           <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
