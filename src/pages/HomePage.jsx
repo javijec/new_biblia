@@ -1,13 +1,28 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
 import { Box, Typography, Paper, CircularProgress } from "@mui/material";
 
-const DailyGospel = lazy(() => import("../components/DailyGospel"));
+const DAILY_GOSPEL_DELAY_MS = 1200;
+let hasDailyGospelInMemory = false;
+
+const loadDailyGospel = () =>
+    import("../components/DailyGospel").then((module) => {
+        hasDailyGospelInMemory = true;
+        return module;
+    });
+
+const DailyGospel = lazy(loadDailyGospel);
 
 export default function HomePage() {
-    const [showDailyGospel, setShowDailyGospel] = useState(false);
+    const [showDailyGospel, setShowDailyGospel] = useState(hasDailyGospelInMemory);
 
     useEffect(() => {
-        const timer = setTimeout(() => setShowDailyGospel(true), 1200);
+        if (hasDailyGospelInMemory) return;
+
+        const timer = setTimeout(() => {
+            setShowDailyGospel(true);
+            void loadDailyGospel();
+        }, DAILY_GOSPEL_DELAY_MS);
+
         return () => clearTimeout(timer);
     }, []);
 
