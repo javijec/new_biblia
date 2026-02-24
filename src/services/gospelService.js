@@ -1,4 +1,6 @@
 
+import DOMPurify from 'dompurify';
+
 /**
  * Service to fetch the Gospel of the Day from Evangelizo Reader API
  * Docs: /v2/reader.php?type=reading&content=GSP
@@ -18,6 +20,8 @@ const READING_LABELS = {
     GSP: 'Evangelio'
 };
 const GOSPEL_CACHE_KEY = 'daily_gospel_cache_v1';
+const SAFE_READING_TAGS = ['p', 'br', 'strong', 'em', 'b', 'i', 'u', 'sup', 'sub', 'blockquote'];
+const SAFE_READING_ATTRS = [];
 let cachedDate = null;
 let cachedGospel = null;
 let inFlightDate = null;
@@ -72,7 +76,9 @@ const decodeHtml = (value) => {
     return (doc.body.textContent || '').trim();
 };
 
-const sanitizeReadingHtml = (rawReading) => {
+export const sanitizeReadingHtml = (rawReading) => {
+    if (typeof rawReading !== 'string') return '';
+
     let cleaned = rawReading.replace(/\r/g, '');
 
     cleaned = cleaned.replace(
@@ -88,7 +94,16 @@ const sanitizeReadingHtml = (rawReading) => {
     const plainText = decodeHtml(cleaned).replace(/\s+/g, ' ').trim();
     if (!plainText) return '';
 
-    return `<p>${cleaned}</p>`;
+    const sanitized = DOMPurify.sanitize(`<p>${cleaned}</p>`, {
+        ALLOWED_TAGS: SAFE_READING_TAGS,
+        ALLOWED_ATTR: SAFE_READING_ATTRS
+    }).trim();
+
+    if (!decodeHtml(sanitized).replace(/\s+/g, ' ').trim()) {
+        return '';
+    }
+
+    return sanitized;
 };
 
 const extractSaintOfDay = (rawSaint) => {
