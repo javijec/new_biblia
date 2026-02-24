@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import {
     Box,
@@ -19,10 +19,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import Sidebar from "../components/Sidebar";
-import ReadingSettings from "../components/ReadingSettings";
 import { useBible } from "../context/BibleContext";
-import Tutorial from "../components/Tutorial";
 import { logEvent } from "../utils/telemetry";
+
+const ReadingSettings = lazy(() => import("../components/ReadingSettings"));
+const Tutorial = lazy(() => import("../components/Tutorial"));
 
 export default function MainLayout() {
     const { data } = useBible();
@@ -34,6 +35,7 @@ export default function MainLayout() {
     const location = useLocation();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+    const [showTutorial, setShowTutorial] = useState(false);
 
     const mainContentRef = useRef(null);
 
@@ -43,6 +45,17 @@ export default function MainLayout() {
             mainContentRef.current.scrollTop = 0;
         }
     }, [location.pathname]);
+
+    useEffect(() => {
+        const tutorialSeen = localStorage.getItem('tutorial_seen');
+        if (tutorialSeen) return;
+
+        const timer = setTimeout(() => {
+            setShowTutorial(true);
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -65,7 +78,11 @@ export default function MainLayout() {
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", height: "100vh", bgcolor: "background.default" }}>
-            <Tutorial />
+            {showTutorial && (
+                <Suspense fallback={null}>
+                    <Tutorial />
+                </Suspense>
+            )}
             {/* AppBar */}
             <AppBar position="static" elevation={0} sx={{ borderBottom: "1px solid", borderColor: "divider" }}>
                 <Toolbar sx={{ gap: 2, minHeight: { xs: 56, sm: 64 } }}>
@@ -169,7 +186,9 @@ export default function MainLayout() {
                     </Fade>
 
                     <Box id="settings-trigger">
-                        <ReadingSettings />
+                        <Suspense fallback={null}>
+                            <ReadingSettings />
+                        </Suspense>
                     </Box>
 
                     <IconButton
